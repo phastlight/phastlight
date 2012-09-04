@@ -5,7 +5,7 @@ class Module
 {
   private $node;
 
-  public function __construct($node)
+  public function setNode($node)
   {
     $this->node = $node; 
   }

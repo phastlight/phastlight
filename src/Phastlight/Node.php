@@ -30,6 +30,7 @@ class Node extends Object
       'process' => $module_prefix.'Process\\Main',
       'os' => $module_prefix.'OS\\Main', 
       'http' => $module_prefix.'HTTP\\Main',
+      'timer' => $module_prefix.'Timer\\Main',
     );
 
     $this->modules = array();
@@ -44,7 +45,8 @@ class Node extends Object
     if(!isset($this->modules[$name])){
       if(isset($this->module_map[$name])){
         $object_class = $this->module_map[$name];
-        $object = new $object_class($this);
+        $object = new $object_class();
+        $object->setNode($this);
         $this->modules[$name] = $object;
       }
     }
