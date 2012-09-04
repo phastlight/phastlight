@@ -26,7 +26,7 @@ Phastlight is an asynchronous, event-driven web server written in PHP 5.3+ enlig
     extension=uv.so
     extension=httpparser.so
 
-### Simple HTTP server, bench marked with PHP 5.4.6 and Node.js v0.8.8
+### Simple HTTP server, benchmarked with PHP 5.4.6 and Node.js v0.8.8
 ```php
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
