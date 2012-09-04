@@ -6,7 +6,7 @@
     "license": "MIT",
     "authors": [
     {
-      "name": "Zike Huang",
+      "name": "Zike Huang (Jim)",
       "email": "jim.javathunderbird@gmail.com",
       "homepage": "http://www.pamground.com",
       "role": "Developer"
@@ -22,7 +22,7 @@
     },
     "extra": {
       "branch-alias": {
-        "dev-master": "0.1.0.2-dev"
+        "dev-master": "0.1.0.3-dev"
       }
     }
 }
