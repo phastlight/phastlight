@@ -31,6 +31,8 @@ class Node extends Object
       'os' => $module_prefix.'OS\\Main', 
       'http' => $module_prefix.'HTTP\\Main',
       'timer' => $module_prefix.'Timer\\Main',
+      'event' => $module_prefix.'Event\\Main',
+      'util' => $module_prefix.'Util\\Main',
     );
 
     $this->modules = array();
