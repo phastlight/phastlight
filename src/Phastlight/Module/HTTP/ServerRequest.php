@@ -9,4 +9,9 @@ class ServerRequest
   {
     return $_SERVER['PATH_INFO'];
   }
+
+  public function getMethod()
+  {
+    return $_SERVER['REQUEST_METHOD']; 
+  }
 } 
