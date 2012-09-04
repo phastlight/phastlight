@@ -1,5 +1,5 @@
 {
-  "name": "phastlight",
+  "name": "phastlight/phastlight",
     "description": "asynchronous, event-driven web server written in PHP 5.3+ enlightened by Node.js",
     "keywords": ["webserver","node.js","event-driven","asynchronous"],
     "homepage": "https://github.com/jimthunderbird/phastlight",
@@ -22,7 +22,7 @@
     },
     "extra": {
       "branch-alias": {
-        "dev-master": "0.1.0.4-dev"
+        "dev-master": "0.1.0.5-dev"
       }
     }
 }
