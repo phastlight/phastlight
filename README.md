@@ -42,3 +42,6 @@ $http->createServer(function($req, $res){
   $res->end("Requet path is ".$req->getURL());
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
+```
+
+Now in command line, run php server/server.php and go to http://127.0.0.1:1337/ to see the result.
