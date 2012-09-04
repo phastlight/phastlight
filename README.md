@@ -67,3 +67,41 @@ $interval_id = $timer->setInterval(function($word) use (&$count, &$interval_id, 
   }
 }, 1000, "world");
 ```
+
+### Process next tick
+We can distribute some heavy tasks into every "tick" of the server and make it non-blocking for other tasks.
+
+In the script below, we do sum from 1 to 100 keeping track of the counter value, we distribute the sum operation into every "tick"
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$node = new \Phastlight\Node();
+
+$console = $node->import("console");
+$process = $node->import("process");
+
+$count = 0;
+$sum = 0;
+$node->method("sumFromOneToOneHundred", function() use ($node, &$count, &$sum){
+  $console = $node->import("console"); //use the console module
+  $count ++;
+  if($count <= 100){
+    $sum += $count;
+    $process = $node->import("process"); //use the process module
+    $process->nextTick(array($node,"sumFromOneToOneHundred"));
+  }
+  else{
+    $console->log("Sum is $sum"); 
+  }
+});
+
+$node->sumFromOneToOneHundred();
+
+$console->log("Start Computing Sum From 1 to 100...");
+```
+
+Now in the command line, run php server/server.php, we should see:
+    Start Computing Sum From 1 to 100...
+    Sum is 5050
