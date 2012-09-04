@@ -106,3 +106,46 @@ Now in the command line, run php server/server.php, we should see:
 
     Start Computing Sum From 1 to 100...
     Sum is 5050
+
+### Multi tasking in one single event loop
+Using process next tick technique, we can perform mult-tasking in one single event loop.
+
+In the script below, we perform a heavy task for suming 1 to 1 million, while also setting up a http server listening to port 1337
+```
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$node = new \Phastlight\Node();
+
+$console = $node->import("console");
+$process = $node->import("process");
+
+$count = 0;
+$sum = 0;
+$n = 1000000;
+$node->method("heavySum", function() use ($node, &$count, &$sum, $n){
+  $console = $node->import("console"); //use the console module
+  $count ++;
+  if($count <= $n){
+    $console->log("coming on $count");
+    $sum += $count;
+    $process = $node->import("process"); //use the process module
+    $process->nextTick(array($node,"heavySum"));
+  }
+  else{
+    $console->log("Sum is $sum"); 
+  }
+});
+
+$node->heavySum();
+
+$console->log("Start Computing Sum From 1 to $n...");
+
+$http = $node->import("http");
+$http->createServer(function($req, $res) use ($interval_id, $node){
+  $res->writeHead(200, array('Content-Type' => 'text/plain'));
+  $res->end("Requet path is ".$req->getURL());
+})->listen(1337, '127.0.0.1');
+$console->log('Server running at http://127.0.0.1:1337/');
+```
