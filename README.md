@@ -103,5 +103,6 @@ $console->log("Start Computing Sum From 1 to 100...");
 ```
 
 Now in the command line, run php server/server.php, we should see:
+
     Start Computing Sum From 1 to 100...
     Sum is 5050
