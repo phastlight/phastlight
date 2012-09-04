@@ -26,7 +26,7 @@ Phastlight is an asynchronous, event-driven web server written in PHP 5.3+ enlig
     extension=uv.so
     extension=httpparser.so
 
-### Simple HTTP server
+### Simple HTTP server, bench marked with PHP 5.4.6 and Node.js v0.8.8
 ```php
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
@@ -39,12 +39,52 @@ $http = $node->import("http");
 
 $http->createServer(function($req, $res){
   $res->writeHead(200, array('Content-Type' => 'text/plain'));
-  $res->end("Requet path is ".$req->getURL());
+  $res->end($req->getURL());
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
 ```
 
 Now in command line, run php server/server.php and go to http://127.0.0.1:1337/ to see the result.
+
+Below is the benchmark performed with Apache AB again the following Node.js script, the operating system is CENTOS 6 64bit, we simulate 20k requests and 5k concurrent requests
+
+Node.js script
+```javascript
+var http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end(req.url);
+  }).listen(1337, '127.0.0.1');
+console.log('Server running at http://127.0.0.1:1337/');
+```
+
+The PHP HTTP Server
+
+    Concurrency Level:      5000
+    Time taken for tests:   49.206 seconds
+    Complete requests:      200000
+    Failed requests:        0
+    Write errors:           0
+    Total transferred:      11414535 bytes
+    HTML transferred:       2403060 bytes
+    Requests per second:    4064.58 [#/sec] (mean)
+    Time per request:       1230.139 [ms] (mean)
+    Time per request:       0.246 [ms] (mean, across all concurrent requests)
+    Transfer rate:          226.54 [Kbytes/sec] received
+
+Node.js
+
+    Concurrency Level:      5000
+    Time taken for tests:   54.519 seconds
+    Complete requests:      200000
+    Failed requests:        0
+    Write errors:           0
+    Total transferred:      20454060 bytes
+    HTML transferred:       200530 bytes
+    Requests per second:    3668.43 [#/sec] (mean)
+    Time per request:       1362.982 [ms] (mean)
+    Time per request:       0.273 [ms] (mean, across all concurrent requests)
+    Transfer rate:          366.38 [Kbytes/sec] received
 
 ### Server side timer
 In the script below, we import the timer module and make the timer run every 1 second, after the counter hits 3, we stop the timer.
