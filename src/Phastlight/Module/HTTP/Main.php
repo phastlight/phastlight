@@ -18,7 +18,7 @@ class Main extends \Phastlight\Module
     return $server;    
   } 
 
-  public function listen($port, $host = '127.0.0.1')
+  public function listen($port, $host = '127.0.0.1', $backlog = 100)
   {
     $_SERVER['SERVER_PORT'] = $port;
     $_SERVER['SERVER_ADDR'] = $host;
@@ -37,7 +37,7 @@ class Main extends \Phastlight\Module
 
     uv_tcp_bind($this->server, uv_ip4_addr($host, $port));
 
-    uv_listen($this->server,100, function($server) use ($self, $parser, $process, &$request, &$response, &$request_listener) {
+    uv_listen($this->server,$backlog, function($server) use ($self, $parser, $process, &$request, &$response, &$request_listener) {
       $client = uv_tcp_init();
       uv_accept($server, $client);
 
