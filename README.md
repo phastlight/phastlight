@@ -45,3 +45,25 @@ $console->log('Server running at http://127.0.0.1:1337/');
 ```
 
 Now in command line, run php server/server.php and go to http://127.0.0.1:1337/ to see the result.
+
+### Server side timer
+In the script below, we import the timer module and make the timer run every 1 second, after the counter hits 3, we stop the timer.
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$node = new \Phastlight\Node();
+
+$timer = $node->import("timer");
+$count = 0;
+$interval_id = $timer->setInterval(function($word) use (&$count, &$interval_id, $timer){
+  $count ++;
+  if($count <=3){
+    echo $count.":".$word."\n";
+  }
+  else{
+    $timer->clearInterval($interval_id); 
+  }
+}, 1000, "world");
+```
