@@ -1,0 +1,16 @@
+<?php
+spl_autoload_register(function ($class) {
+  $class = str_replace("\\","/", $class);
+  require __DIR__."/../src/$class.php";
+});
+
+$node = new \Phastlight\Node();
+
+$console = $node->import("console");
+$http = $node->import("http");
+
+$http->createServer(function($req, $res) {
+  $res->writeHead(200, array('Content-Type' => 'text/plain'));
+  $res->end("hello world");
+})->listen(8000, '127.0.0.1');
+$console->log('Server running at http://127.0.0.1:8000/');
