@@ -5,7 +5,7 @@ Phastlight is an asynchronous, event-driven web server written in PHP 5.3+ enlig
 
 ##Installation:
 
-#### install package "phastlight" using composer (http://getcomposer.org/)
+#### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### install sockets extension (http://www.php.net/manual/en/sockets.installation.php)
 #### install php-uv and php-httpparser
     git clone https://github.com/chobie/php-uv.git --recursive
