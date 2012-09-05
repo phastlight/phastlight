@@ -49,7 +49,7 @@ class Main extends \Phastlight\Module
 
         //constructing server variables
         $_SERVER['REQUEST_METHOD'] = $result['REQUEST_METHOD'];
-        $_SERVER['PATH_INFO'] = $result['path'];
+        $_SERVER['REQUEST_URI'] = $_SERVER['PATH_INFO'] = $result['path'];
         $_SERVER['HTTP_USER_AGENT'] = $result['headers']['User-Agent'];
 
         //constructing global variables
