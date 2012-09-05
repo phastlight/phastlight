@@ -4,10 +4,10 @@ spl_autoload_register(function ($class) {
   require __DIR__."/../src/$class.php";
 });
 
-$node = new \Phastlight\System();
+$system = new \Phastlight\System();
 
-$console = $node->import("console");
-$http = $node->import("http");
+$console = $system->import("console");
+$http = $system->import("http");
 
 $http->createServer(function($req, $res) {
   $res->writeHead(200, array('Content-Type' => 'text/plain'));
