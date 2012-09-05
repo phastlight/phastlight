@@ -29,7 +29,7 @@ class Main extends \Phastlight\Module
 
   public function nextTick($callback)
   {
-    $loop = $this->getNode()->getEventLoop();
+    $loop = $this->getSystem()->getEventLoop();
 
     $plugin = $this;
     $plugin->addTickCallback($callback);
