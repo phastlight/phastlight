@@ -183,7 +183,7 @@ $node->heavySum();
 $console->log("Start Computing Sum From 1 to $n...");
 
 $http = $node->import("http");
-$http->createServer(function($req, $res) use ($interval_id, $node){
+$http->createServer(function($req, $res){
   $res->writeHead(200, array('Content-Type' => 'text/plain'));
   $res->end("Requet path is ".$req->getURL());
 })->listen(1337, '127.0.0.1');
