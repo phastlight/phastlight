@@ -214,3 +214,27 @@ $http->createServer(function($req, $res) use ($interval_id, $system){
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
 ```
+
+### Output HTML with Symfony2 HTTP Foundation component
+The following examples show how to use Symfony2 HTTP Foundation component and phastlight to output HTML
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+$system = new \Phastlight\System();
+
+$console = $system->import("console");
+$http = $system->import("http");
+
+$http->createServer(function($req, $res) use ($interval_id, $system){
+  $res->writeHead(200, array('Content-Type' => 'text/html'));
+  $request = Request::createFromGlobals();
+  $response = Response::create("<h1>Hello World</h1>");
+  $res->end($response->getContent());
+})->listen(1337, '127.0.0.1');
+$console->log('Server running at http://127.0.0.1:1337/');
+```
