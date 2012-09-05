@@ -203,7 +203,7 @@ $system = new \Phastlight\System();
 $console = $system->import("console");
 $http = $system->import("http");
 
-$http->createServer(function($req, $res) use ($interval_id, $system){
+$http->createServer(function($req, $res){
   $res->writeHead(200, array('Content-Type' => 'text/plain'));
   $request = Request::createFromGlobals();
 
@@ -230,7 +230,7 @@ $system = new \Phastlight\System();
 $console = $system->import("console");
 $http = $system->import("http");
 
-$http->createServer(function($req, $res) use ($interval_id, $system){
+$http->createServer(function($req, $res){
   $res->writeHead(200, array('Content-Type' => 'text/html'));
   $request = Request::createFromGlobals();
   $response = Response::create("<h1>Hello World</h1>");
