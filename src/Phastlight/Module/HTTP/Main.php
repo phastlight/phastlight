@@ -25,8 +25,8 @@ class Main extends \Phastlight\Module
 
     $self = $this;
 
-    $node = $this->getNode();
-    $process = $node->import("process");
+    $system = $this->getSystem();
+    $process = $system->import("process");
 
     $this->server = uv_tcp_init();
 

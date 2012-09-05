@@ -3,16 +3,16 @@ namespace Phastlight;
 
 class Module 
 {
-  private $node;
+  private $system;
   private $event_emitter;
 
-  public function setNode($node)
+  public function setSystem($system)
   {
-    $this->node = $node; 
+    $this->system = $system; 
   }
 
-  public function getNode()
+  public function getSystem()
   {
-    return $this->node; 
+    return $this->system; 
   }
 }

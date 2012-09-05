@@ -1,6 +1,6 @@
 {
   "name": "phastlight/phastlight",
-    "description": "Phastlight -- Asynchronous, event-driven web server written in PHP 5.3+ enlightened by Node.js",
+    "description": "Phastlight -- Asynchronous, event-driven command line tool and web server written in PHP 5.3+ inspired by Node.js",
     "keywords": ["webserver","node.js","event-driven","asynchronous"],
     "homepage": "https://github.com/jimthunderbird/phastlight",
     "license": "MIT",
@@ -22,7 +22,7 @@
     },
     "extra": {
       "branch-alias": {
-        "dev-master": "0.1.0.24-dev"
+        "dev-master": "0.1.0.25-dev"
       }
     }
 }

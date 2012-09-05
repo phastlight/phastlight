@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Node -- the base to simulate some behaviors of Node.js
+ * The main system class
  */
 
 namespace Phastlight;
 
-class Node extends Object
+class System extends Object
 {
 
   private $event_loop;
@@ -47,7 +47,7 @@ class Node extends Object
       if(isset($this->module_map[$name])){
         $object_class = $this->module_map[$name];
         $object = new $object_class();
-        $object->setNode($this);
+        $object->setSystem($this);
         $this->modules[$name] = $object;
       }
     }

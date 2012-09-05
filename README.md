@@ -1,7 +1,7 @@
 Phastlight
 ===========
 
-Phastlight is an asynchronous, event-driven web server written in PHP 5.3+ enlightened by Node.js
+Phastlight is an asynchronous, event-driven command line tool and web server written in PHP 5.3+ enlightened by Node.js
 
 ##Installation:
 
@@ -32,10 +32,10 @@ Phastlight is an asynchronous, event-driven web server written in PHP 5.3+ enlig
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
 require_once __DIR__.'/../vendor/autoload.php';
 
-$node = new \Phastlight\Node();
+$system = new \Phastlight\System();
 
-$console = $node->import("console");
-$http = $node->import("http");
+$console = $system->import("console");
+$http = $system->import("http");
 
 $http->createServer(function($req, $res){
   $res->writeHead(200, array('Content-Type' => 'text/plain'));
@@ -93,9 +93,9 @@ In the script below, we import the timer module and make the timer run every 1 s
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
 require_once __DIR__.'/../vendor/autoload.php';
 
-$node = new \Phastlight\Node();
+$system = new \Phastlight\System();
 
-$timer = $node->import("timer");
+$timer = $system->import("timer");
 $count = 0;
 $interval_id = $timer->setInterval(function($word) use (&$count, &$interval_id, $timer){
   $count ++;
@@ -117,27 +117,27 @@ In the script below, we do sum from 1 to 100 keeping track of the counter value,
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
 require_once __DIR__.'/../vendor/autoload.php';
 
-$node = new \Phastlight\Node();
+$system = new \Phastlight\System();
 
-$console = $node->import("console");
-$process = $node->import("process");
+$console = $system->import("console");
+$process = $system->import("process");
 
 $count = 0;
 $sum = 0;
-$node->method("sumFromOneToOneHundred", function() use ($node, &$count, &$sum){
-  $console = $node->import("console"); //use the console module
+$system->method("sumFromOneToOneHundred", function() use ($system, &$count, &$sum){
+  $console = $system->import("console"); //use the console module
   $count ++;
   if($count <= 100){
     $sum += $count;
-    $process = $node->import("process"); //use the process module
-    $process->nextTick(array($node,"sumFromOneToOneHundred"));
+    $process = $system->import("process"); //use the process module
+    $process->nextTick(array($system,"sumFromOneToOneHundred"));
   }
   else{
     $console->log("Sum is $sum"); 
   }
 });
 
-$node->sumFromOneToOneHundred();
+$system->sumFromOneToOneHundred();
 
 $console->log("Start Computing Sum From 1 to 100...");
 ```
@@ -156,32 +156,32 @@ In the script below, we perform a heavy task for suming 1 to 1 million, while al
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
 require_once __DIR__.'/../vendor/autoload.php';
 
-$node = new \Phastlight\Node();
+$system = new \Phastlight\System();
 
-$console = $node->import("console");
-$process = $node->import("process");
+$console = $system->import("console");
+$process = $system->import("process");
 
 $count = 0;
 $sum = 0;
 $n = 1000000;
-$node->method("heavySum", function() use ($node, &$count, &$sum, $n){
-  $console = $node->import("console"); //use the console module
+$system->method("heavySum", function() use ($system, &$count, &$sum, $n){
+  $console = $system->import("console"); //use the console module
   $count ++;
   if($count <= $n){
     $sum += $count;
-    $process = $node->import("process"); //use the process module
-    $process->nextTick(array($node,"heavySum"));
+    $process = $system->import("process"); //use the process module
+    $process->nextTick(array($system,"heavySum"));
   }
   else{
     $console->log("Sum is $sum"); 
   }
 });
 
-$node->heavySum();
+$system->heavySum();
 
 $console->log("Start Computing Sum From 1 to $n...");
 
-$http = $node->import("http");
+$http = $system->import("http");
 $http->createServer(function($req, $res){
   $res->writeHead(200, array('Content-Type' => 'text/plain'));
   $res->end("Requet path is ".$req->getURL());

@@ -4,7 +4,7 @@ spl_autoload_register(function ($class) {
   require __DIR__."/../src/$class.php";
 });
 
-$node = new \Phastlight\Node();
+$node = new \Phastlight\System();
 
 $console = $node->import("console");
 $http = $node->import("http");
