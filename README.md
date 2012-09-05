@@ -168,7 +168,6 @@ $node->method("heavySum", function() use ($node, &$count, &$sum, $n){
   $console = $node->import("console"); //use the console module
   $count ++;
   if($count <= $n){
-    $console->log("coming on $count");
     $sum += $count;
     $process = $node->import("process"); //use the process module
     $process->nextTick(array($node,"heavySum"));
