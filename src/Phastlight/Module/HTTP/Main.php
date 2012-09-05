@@ -54,10 +54,14 @@ class Main extends \Phastlight\Module
 
         //constructing global variables
         if($request_method == 'GET'){
-          $result['headers']['body'] = $result['query']; //bind body to query if it is a get request
+          if(isset($result['query'])){
+            $result['headers']['body'] = $result['query']; //bind body to query if it is a get request
+          }
         }
 
-        $GLOBALS["_$request_method"] = explode("&", $result['headers']['body']); 
+        if(isset($result['headers']['body'])){
+          $GLOBALS["_$request_method"] = explode("&", $result['headers']['body']); 
+        }
 
         call_user_func_array($request_listener, array($request, $response));
 
