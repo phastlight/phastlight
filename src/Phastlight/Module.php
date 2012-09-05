@@ -4,6 +4,7 @@ namespace Phastlight;
 class Module 
 {
   private $node;
+  private $event_emitter;
 
   public function setNode($node)
   {

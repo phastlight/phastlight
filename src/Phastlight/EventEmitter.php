@@ -1,5 +1,5 @@
 <?php
-namespace Phastlight\Module\Event;
+namespace Phastlight;
 
 class EventEmitter extends \Phastlight\Object
 {

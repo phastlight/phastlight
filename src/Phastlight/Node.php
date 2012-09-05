@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Node -- the base to simulate the behavior of Node.js
+ * Node -- the base to simulate some behaviors of Node.js
  */
 
 namespace Phastlight;
@@ -31,7 +31,6 @@ class Node extends Object
       'os' => $module_prefix.'OS\\Main', 
       'http' => $module_prefix.'HTTP\\Main',
       'timer' => $module_prefix.'Timer\\Main',
-      'event' => $module_prefix.'Event\\Main',
       'util' => $module_prefix.'Util\\Main',
     );
 

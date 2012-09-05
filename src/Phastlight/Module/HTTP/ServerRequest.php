@@ -1,7 +1,7 @@
 <?php
 namespace Phastlight\Module\HTTP;
 
-class ServerRequest
+class ServerRequest extends \Phastlight\EventEmitter 
 {
   private $url;
 

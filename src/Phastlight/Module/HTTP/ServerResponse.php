@@ -1,7 +1,7 @@
 <?php
 namespace Phastlight\Module\HTTP;
 
-class ServerResponse
+class ServerResponse extends \Phastlight\EventEmitter
 {
   private $data = "";
   private $status_code = 200;
