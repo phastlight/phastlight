@@ -26,7 +26,6 @@ Howerver, benchmark do show that the following frameworks/components show good r
 
 + Phalcon PHP Framework (http://phalconphp.com/)
 + Symfony2 HTTP Foundation component
-+ PPI Framework (http://www.ppi.io/)
 
 At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web/mobible applications.
 
@@ -325,43 +324,4 @@ $http->createServer(function($req, $res){
   $res->end($response->getContent());
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
-```
-
-### Integrate with PPI PHP Framework
-The following example shows how to integrate PPI PHP Framework and phastlight
-
-The benchmark is quite good, ab -n 100000 -c 20 shows 6077.68 requests per second on machine with:
-
-+ 4 core - Intel(R) Xeon(R) CPU X7550  @ 2.00GHz 
-+ CENTOS 6.3
-+ 2GB RAM
-
-```php
-<?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
-$system = new \Phastlight\System();
-
-$console = $system->import("console");
-$http = $system->import("http");
-
-chdir(__DIR__."/../");
-
-// Lets include PPI
-include('app/init.php');
-
-$app = new PPI\App();
-$app->moduleConfig = require 'app/modules.config.php';
-$app->config = require 'app/app.config.php';
-$app->setOption('app.auto_dispatch',false); //disable auto_dispatch
-$app->boot();
-
-$http->createServer(function($req, $res) use ($app){
-  $app->dispatch();
-  $response = $app->getServiceManager()->get('response');
-  $res->writeHead(200, array('Content-Type' => 'text/html'));
-  $res->end($response->getContent());
-})->listen(9000, '127.0.0.1');
-$console->log('Server running at http://127.0.0.1:9000/');
 ```
