@@ -17,7 +17,10 @@ Due to a lot of the frameworks are built in a synchronous fashion for web server
 phrase, they can be used only as local development server and as a proof of concept integrating with phastlight. It will be ideal if each framework in PHP can come up with some
 asynchronous components. 
 
-Benchmark do show that Phalcon Framework and Symfony2 HTTP Foundation integration brings quite good results.
+Howerver, benchmark do show that the following frameworks/components show good results integrating with Phastlight on request and response.
+1. Phalcon PHP Framework (http://phalconphp.com/)
+2. Symfony2 HTTP Foundation component
+3. PPI Framework (http://www.ppi.io/)
 
 At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web/mobible applications.
 
@@ -308,35 +311,41 @@ $http->createServer(function($req, $res){
 $console->log('Server running at http://127.0.0.1:1337/');
 ```
 
-### Integrate with Silex PHP Microframework
-The following example shows how to integrate Phastlight with Silex PHP Microframework
+### Integrate with PPI PHP Framework
+The following example shows how to integrate PPI PHP Framework and phastlight
 
-This is served as proof of concept.
+The benchmark is quite good, ab -n 100000 -c 20 shows 6077.68 requests per second on machine with:
+
++ 4 core - Intel(R) Xeon(R) CPU X7550  @ 2.00GHz 
++ CENTOS 6.3
++ 2GB RAM
 
 ```php
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
 require_once __DIR__.'/../vendor/autoload.php';
 
-use Symfony\Component\HttpFoundation\Request;
-
 $system = new \Phastlight\System();
 
 $console = $system->import("console");
 $http = $system->import("http");
 
-$app = new Silex\Application(); 
+chdir(__DIR__."/../");
 
-$app->get('/hello/{name}', function($name) use($app) { 
-    return 'Hello '.$app->escape($name); 
-}); 
+// Lets include PPI
+include('app/init.php');
+
+$app = new PPI\App();
+$app->moduleConfig = require 'app/modules.config.php';
+$app->config = require 'app/app.config.php';
+$app->setOption('app.auto_dispatch',false); //disable auto_dispatch
+$app->boot();
 
 $http->createServer(function($req, $res) use ($app){
-  $request = Request::createFromGlobals();
-  $response = $app->handle($request);
-  $app->terminate($request, $response);
+  $app->dispatch();
+  $response = $app->getServiceManager()->get('response');
   $res->writeHead(200, array('Content-Type' => 'text/html'));
   $res->end($response->getContent());
-})->listen(1337, '127.0.0.1');
-$console->log('Server running at http://127.0.0.1:1337/');
+})->listen(9000, '127.0.0.1');
+$console->log('Server running at http://127.0.0.1:9000/');
 ```
