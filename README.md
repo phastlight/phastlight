@@ -3,7 +3,7 @@ Phastlight
 
 Phastlight is an asynchronous, event-driven command line tool and web server written in PHP 5.3+ enlightened by Node.js
 
-At this time, Phastlight is on its very early development phrases: it currently supports:
+At this time, Phastlight is on its very early development phrases,it currently supports:
 
 + Async HTTP server
 + Async Timer, similar to http://nodejs.org/api/timers.html
