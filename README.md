@@ -62,7 +62,8 @@ $console->log('Server running at http://127.0.0.1:1337/');
 
 Now in command line, run php server/server.php and go to http://127.0.0.1:1337/ to see the result.
 
-Below is the benchmark performed with Apache AB again the following Node.js script, the operating system is CENTOS 6 64bit, we simulate 200k requests and 5k concurrent requests
+Below is the benchmark performed with Apache AB again the following Node.js script, the operating system is CENTOS 6 64bit, we simulate 200k requests and 5k concurrent requests.
+Result shows phastlight is faster than Node.js.
 
 Node.js script
 ```javascript
@@ -77,30 +78,30 @@ console.log('Server running at http://127.0.0.1:1337/');
 The PHP HTTP Server
 
     Concurrency Level:      5000
-    Time taken for tests:   49.206 seconds
+    Time taken for tests:   37.387 seconds
     Complete requests:      200000
     Failed requests:        0
     Write errors:           0
-    Total transferred:      11414535 bytes
-    HTML transferred:       2403060 bytes
-    Requests per second:    4064.58 [#/sec] (mean)
-    Time per request:       1230.139 [ms] (mean)
-    Time per request:       0.246 [ms] (mean, across all concurrent requests)
-    Transfer rate:          226.54 [Kbytes/sec] received
+    Total transferred:      9084015 bytes
+    HTML transferred:       201867 bytes
+    Requests per second:    5349.40 [#/sec] (mean)
+    Time per request:       934.685 [ms] (mean)
+    Time per request:       0.187 [ms] (mean, across all concurrent requests)
+    Transfer rate:          237.28 [Kbytes/sec] received
 
 Node.js
 
     Concurrency Level:      5000
-    Time taken for tests:   54.519 seconds
+    Time taken for tests:   53.565 seconds
     Complete requests:      200000
     Failed requests:        0
     Write errors:           0
-    Total transferred:      20454060 bytes
-    HTML transferred:       200530 bytes
-    Requests per second:    3668.43 [#/sec] (mean)
-    Time per request:       1362.982 [ms] (mean)
-    Time per request:       0.273 [ms] (mean, across all concurrent requests)
-    Transfer rate:          366.38 [Kbytes/sec] received
+    Total transferred:      20451000 bytes
+    HTML transferred:       200500 bytes
+    Requests per second:    3733.75 [#/sec] (mean)
+    Time per request:       1339.136 [ms] (mean)
+    Time per request:       0.268 [ms] (mean, across all concurrent requests)
+    Transfer rate:          372.85 [Kbytes/sec] received
 
 ### Server side timer
 In the script below, we import the timer module and make the timer run every 1 second, after the counter hits 3, we stop the timer.
@@ -204,6 +205,78 @@ $http->createServer(function($req, $res){
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
 ```
+
+### Integrating phastlight with Phalcon PHP Framework Routing Component
+Phalcon is a web framework delivered as a C extension providing high performance and low resource consumption, the example below shows a basic micro framework integrating phastlight with
+Phalcon's routing component. The benchmark is quite good, benchark on ab -n 200000 -c 5000 shows 4593.84 requests per second in centos 6 server with 512MB memory.  
+
+```php
+<?php
+class ClosureRouter extends \Phalcon_Router_Regex
+{
+  private $routes;
+
+  public function addRoute($route, $closure)
+  {
+    $this->routes[$route] = $closure;
+    $route_comps = explode("/", $route);
+    $route_comps_count = count($route_comps);
+    $params = array('_closure' => $closure);
+    if($route_comps_count > 0){
+      for($k = 1; $k < $route_comps_count; $k++){
+        if($route_comps[$k][0] == ":"){
+          $name = $route_comps[$k];
+          $name[0] = "";
+          $name = trim($name);
+          $params[$name] = $k;
+          $route_comps[$k] = "([a-zA-Z0-9_-].+)"; //include -,_ and .
+        }
+      }
+    }
+
+    $route = implode("/", $route_comps);
+
+    $this->add($route, $params);
+  }
+
+  public function getClosure($route)
+  {
+    return $this->routes[$route];
+  }
+}
+
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$router = new \ClosureRouter();
+
+$router->addRoute('/news/:year/:month/:day', function($req, $res, $params){
+  return json_encode($params);
+});
+
+$front = \Phalcon_Controller_Front::getInstance();
+$front->setRouter($router);
+
+///////////////////////////// Start The Server ///////////////////////////////
+
+$system = new \Phastlight\System();
+
+$console = $system->import("console");
+$http = $system->import("http");
+
+$http->createServer(function($req, $res) use (&$router, &$front) {
+  $res->writeHead(200, array('Content-Type' => 'application/json'));
+  $_GET['_url'] = $req->getURL();
+  $router->handle();
+  $params = $router->getParams();
+  $content = "";
+  $route = $router->getCurrentRoute();
+  $closure = $route['paths']['_closure'];
+  unset($params['_closure']);
+  $content = $closure($req, $res, $params);
+  $res->end($content);
+})->listen(8000, '50.116.5.52');
+$console->log('Server running at http://50.116.5.52:8000/');
 
 ### Output HTML with Symfony2 HTTP Foundation component
 The following example shows how to use Symfony2 HTTP Foundation component and phastlight to output HTML
