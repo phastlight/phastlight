@@ -8,8 +8,16 @@ At this time, Phastlight is on its very early development phrases,it currently s
 + Async HTTP server
 + Async Timer, similar to http://nodejs.org/api/timers.html
 + "Tick" in Process, similar to http://nodejs.org/api/process.html#process_process_nexttick_callback
++ Log message to the console: similar to Console.log in Javascript
 
-More features will be on the way, stay tuned.
+More features will be on the way, like file, database related apis.
+
+Phastlight is built with asynchronous fashion in mind, since it is written in PHP, it can be integrated with some existing PHP Frameworks and Microframework components.
+Due to a lot of the frameworks are built in a synchronous fashion for web servers like Apache, the benchmark against raw phastlight output is not good yet. So in the current
+phrase, they can be used only as local development server and as a proof of concept integrating with phastlight. It will be ideal if each framework in PHP can come up with some
+asynchronous components. 
+
+At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web/mobible applications.
 
 ##Installation:
 
