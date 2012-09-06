@@ -32,7 +32,7 @@ class System extends Object
       'http' => $module_prefix.'HTTP\\Main',
       'timer' => $module_prefix.'Timer\\Main',
       'util' => $module_prefix.'Util\\Main',
-      'fs' => $module_prefix.'Util\\FileSystem',
+      'fs' => $module_prefix.'FileSystem\\Main',
     );
 
     $this->modules = array();
