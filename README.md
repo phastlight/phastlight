@@ -216,7 +216,7 @@ $console->log('Server running at http://127.0.0.1:1337/');
 ```
 
 ### Output HTML with Symfony2 HTTP Foundation component
-The following examples show how to use Symfony2 HTTP Foundation component and phastlight to output HTML
+The following example shows how to use Symfony2 HTTP Foundation component and phastlight to output HTML
 ```php
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
@@ -234,6 +234,35 @@ $http->createServer(function($req, $res){
   $res->writeHead(200, array('Content-Type' => 'text/html'));
   $request = Request::createFromGlobals();
   $response = Response::create("<h1>Hello World</h1>");
+  $res->end($response->getContent());
+})->listen(1337, '127.0.0.1');
+$console->log('Server running at http://127.0.0.1:1337/');
+```
+
+### Integrate with Silex PHP Microframework
+The following example shows how to integrate Phastlight with Silex PHP Microframework
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+use Symfony\Component\HttpFoundation\Request;
+
+$system = new \Phastlight\System();
+
+$console = $system->import("console");
+$http = $system->import("http");
+
+$app = new Silex\Application(); 
+
+$app->get('/hello/{name}', function($name) use($app) { 
+    return 'Hello '.$app->escape($name); 
+}); 
+
+$http->createServer(function($req, $res) use ($app){
+  $request = Request::createFromGlobals();
+  $response = $app->handle($request);
+  $res->writeHead(200, array('Content-Type' => 'text/html'));
   $res->end($response->getContent());
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
