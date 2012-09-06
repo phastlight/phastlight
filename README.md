@@ -205,39 +205,10 @@ $http->createServer(function($req, $res){
 $console->log('Server running at http://127.0.0.1:1337/');
 ```
 
-### Integrating with Symfony2 HTTP Foundation component
-We can easily integrate Symonfy2's HTTP Foundation component with Phastlight
-
-This is only served as proof of concept.
-
-```php
-<?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
-use Symfony\Component\HttpFoundation\Request;
-
-$system = new \Phastlight\System();
-
-$console = $system->import("console");
-$http = $system->import("http");
-
-$http->createServer(function($req, $res){
-  $res->writeHead(200, array('Content-Type' => 'text/plain'));
-  $request = Request::createFromGlobals();
-
-  $res->end(
-    $request->getRequestUri()."\n"
-    .$request->getHttpHost()."\n"
-  );
-})->listen(1337, '127.0.0.1');
-$console->log('Server running at http://127.0.0.1:1337/');
-```
-
 ### Output HTML with Symfony2 HTTP Foundation component
 The following example shows how to use Symfony2 HTTP Foundation component and phastlight to output HTML
 
-This is only served as proof of concept.
+The benchmark is not bad, ab -n 10000 -c 500 shows 3245.07 reqs/second in centos 6 server with 512MB memory.
 
 ```php
 <?php
