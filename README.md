@@ -207,6 +207,9 @@ $console->log('Server running at http://127.0.0.1:1337/');
 
 ### Integrating with Symfony2 HTTP Foundation component
 We can easily integrate Symonfy2's HTTP Foundation component with Phastlight
+
+This is only served as proof of concept.
+
 ```php
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
@@ -233,6 +236,9 @@ $console->log('Server running at http://127.0.0.1:1337/');
 
 ### Output HTML with Symfony2 HTTP Foundation component
 The following example shows how to use Symfony2 HTTP Foundation component and phastlight to output HTML
+
+This is only served as proof of concept.
+
 ```php
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
@@ -257,6 +263,9 @@ $console->log('Server running at http://127.0.0.1:1337/');
 
 ### Integrate with Silex PHP Microframework
 The following example shows how to integrate Phastlight with Silex PHP Microframework
+
+This is served as proof of concept.
+
 ```php
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
