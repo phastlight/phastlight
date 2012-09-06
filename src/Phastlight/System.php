@@ -32,6 +32,7 @@ class System extends Object
       'http' => $module_prefix.'HTTP\\Main',
       'timer' => $module_prefix.'Timer\\Main',
       'util' => $module_prefix.'Util\\Main',
+      'fs' => $module_prefix.'Util\\FileSystem',
     );
 
     $this->modules = array();
@@ -48,6 +49,7 @@ class System extends Object
         $object_class = $this->module_map[$name];
         $object = new $object_class();
         $object->setSystem($this);
+        $object->setEventLoop($this->event_loop);
         $this->modules[$name] = $object;
       }
     }
