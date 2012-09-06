@@ -17,6 +17,8 @@ Due to a lot of the frameworks are built in a synchronous fashion for web server
 phrase, they can be used only as local development server and as a proof of concept integrating with phastlight. It will be ideal if each framework in PHP can come up with some
 asynchronous components. 
 
+Benchmark do show that Phalcon Framework and Symfony2 HTTP Foundation integration brings quite good results.
+
 At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web/mobible applications.
 
 ##Installation:
@@ -277,6 +279,7 @@ $http->createServer(function($req, $res) use (&$router, &$front) {
   $res->end($content);
 })->listen(8000, '50.116.5.52');
 $console->log('Server running at http://50.116.5.52:8000/');
+```
 
 ### Output HTML with Symfony2 HTTP Foundation component
 The following example shows how to use Symfony2 HTTP Foundation component and phastlight to output HTML
