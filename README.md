@@ -35,13 +35,15 @@ At this phrase, phastlight is good for high concurrency, low data transfer, non 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### install sockets extension (http://www.php.net/manual/en/sockets.installation.php)
 #### install php-uv and php-httpparser
+    export CFLAGS='-fPIC'
+
     git clone https://github.com/chobie/php-uv.git --recursive
     cd php-uv/libuv
-    make && cp uv.a libuv.a (my experience on both centos 64bit and ubuntu 64bit server is, we need to add -fPIC flag in config.m4)
+    make && cp uv.a libuv.a
     cd ..
     phpize
     ./configure
-    make && make install (my experience on both centos64bit and ubuntu64bit  server is, we need to add -fPIC flag in config.m4)
+    make && make install
 
     git clone https://github.com/chobie/php-httpparser.git --recursive
     cd php-httpparser
