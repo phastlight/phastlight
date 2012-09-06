@@ -262,6 +262,7 @@ $app->get('/hello/{name}', function($name) use($app) {
 $http->createServer(function($req, $res) use ($app){
   $request = Request::createFromGlobals();
   $response = $app->handle($request);
+  $app->terminate($request, $response);
   $res->writeHead(200, array('Content-Type' => 'text/html'));
   $res->end($response->getContent());
 })->listen(1337, '127.0.0.1');
