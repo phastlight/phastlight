@@ -19,7 +19,7 @@ asynchronous components.
 
 Howerver, benchmark do show that the following frameworks/components show good results integrating with Phastlight on request and response.
 
-+  Phalcon PHP Framework (http://phalconphp.com/)
++ Phalcon PHP Framework (http://phalconphp.com/)
 + Symfony2 HTTP Foundation component
 + PPI Framework (http://www.ppi.io/)
 
