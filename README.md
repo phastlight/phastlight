@@ -262,11 +262,6 @@ class ClosureRouter extends \Phalcon_Router_Regex
 
     $this->add($route, $params);
   }
-
-  public function getClosure($route)
-  {
-    return $this->routes[$route];
-  }
 }
 
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
