@@ -9,6 +9,11 @@ At this time, Phastlight is on its very early development phrases,it currently s
 + Async Timer, similar to http://nodejs.org/api/timers.html
 + "Tick" in Process, similar to http://nodejs.org/api/process.html#process_process_nexttick_callback
 + Log message to the console: similar to Console.log in Javascript
++ File System: 
+  + read content of directory asynchronously
+  + rename file asynchronously
+  + remove file asynchronously
+  + get file stat asynchronously
 
 More features will be on the way, like file, database related apis.
 
@@ -211,6 +216,19 @@ $http->createServer(function($req, $res){
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
 ```
+
+### File System : reads the contents of a directory in async fashion
+The example belows show how to read the content of the current directory in the async fashion
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$fs = $system->import("fs");
+$fs->readDir(".",function($result, $data){
+  print_r($data);
+});
 
 ### Integrating phastlight with Phalcon PHP Framework Routing Component
 Phalcon is a web framework delivered as a C extension providing high performance and low resource consumption, the example below shows a basic micro framework integrating phastlight with
