@@ -277,8 +277,8 @@ $http->createServer(function($req, $res) use (&$router, &$front) {
   unset($params['_closure']);
   $content = $closure($req, $res, $params);
   $res->end($content);
-})->listen(8000, '50.116.5.52');
-$console->log('Server running at http://50.116.5.52:8000/');
+})->listen(8000, '127.0.0.1');
+$console->log('Server running at http://127.0.0.1:8000/');
 ```
 
 ### Output HTML with Symfony2 HTTP Foundation component
