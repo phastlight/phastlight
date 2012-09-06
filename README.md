@@ -18,9 +18,10 @@ phrase, they can be used only as local development server and as a proof of conc
 asynchronous components. 
 
 Howerver, benchmark do show that the following frameworks/components show good results integrating with Phastlight on request and response.
-1. Phalcon PHP Framework (http://phalconphp.com/)
-2. Symfony2 HTTP Foundation component
-3. PPI Framework (http://www.ppi.io/)
+
++  Phalcon PHP Framework (http://phalconphp.com/)
++ Symfony2 HTTP Foundation component
++ PPI Framework (http://www.ppi.io/)
 
 At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web/mobible applications.
 
