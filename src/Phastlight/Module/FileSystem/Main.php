@@ -22,4 +22,14 @@ class Main extends \Phastlight\Module
   {
     uv_fs_readdir($this->getEventLoop(), $path, 0, $callback);
   }
+
+  public function open($file_path, $callback)
+  {
+    uv_fs_open($this->getEventLoop(), $file_path, \UV::O_RDONLY, 0, $callback);  
+  }
+
+  public function read($fd, $callback)
+  {
+    uv_fs_read($this->getEventLoop(), $fd, $callback);   
+  }
 }
