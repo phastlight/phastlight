@@ -34,7 +34,7 @@ At this phrase, phastlight is good for high concurrency, low data transfer, non 
 
 ##Installation:
 
-### Option 1: Run the installation script ###
+### Option 1: Run the installation script (Linux Only)###
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.4.6 plus php-uv.so and httpparser.so)
