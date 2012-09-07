@@ -26,14 +26,14 @@ git clone https://github.com/chobie/php-uv.git --recursive
 cd php-uv/libuv
 make && cp uv.a libuv.a
 cd ..
-phpize
+$dir/bin/phpize
 ./configure --with-php-config=$dir/bin/php-config
 make && make install
 
 # Install httpparser
 git clone https://github.com/chobie/php-httpparser.git --recursive
 cd php-httpparser
-phpize
+$dir/bin/phpize
 ./configure --with-php-config=$dir/bin/php-config
 make && make install
 
