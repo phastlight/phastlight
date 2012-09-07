@@ -34,6 +34,14 @@ At this phrase, phastlight is good for high concurrency, low data transfer, non 
 
 ##Installation:
 
+### Option 1: Run the installation script ###
+
+#### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
+#### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.4.6 plus php-uv.so and httpparser.so)
+#### When running server, do: /usr/local/phastlight/bin/php -c /usr/local/phastlight/php.ini [server file full path]
+
+### Option 2: Manual install with existing PHP source ###
+
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### install sockets extension (http://www.php.net/manual/en/sockets.installation.php)
 #### install php-uv and php-httpparser
@@ -56,6 +64,8 @@ At this phrase, phastlight is good for high concurrency, low data transfer, non 
     add following extensions to your php.ini
     extension=uv.so
     extension=httpparser.so
+#### When running server, do php [server file full path]
+
 
 ### Simple HTTP server, benchmarked with PHP 5.4.6 and Node.js v0.8.8
 ```php
