@@ -16,6 +16,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
   + get file stat asynchronously
   + open file asynchronously
   + read file asynchronously
+  + close file asynchronously
 
 More features will be on the way, like file, database related apis.
 
