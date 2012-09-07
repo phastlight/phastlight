@@ -220,6 +220,7 @@ $console->log('Server running at http://127.0.0.1:1337/');
 
 ### File System : reads the contents of a directory in async fashion
 The example belows show how to read the content of the current directory in the async fashion
+```php
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
 require_once __DIR__.'/../vendor/autoload.php';
@@ -230,6 +231,7 @@ $fs = $system->import("fs");
 $fs->readDir(".",function($result, $data){
   print_r($data);
 });
+```
 
 ### Integrating phastlight with Phalcon PHP Framework Routing Component
 Phalcon is a web framework delivered as a C extension providing high performance and low resource consumption, the example below shows a basic micro framework integrating phastlight with
