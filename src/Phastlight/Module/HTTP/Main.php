@@ -43,6 +43,9 @@ class Main extends \Phastlight\Module
 
       uv_read_start($client, function($socket, $nread, $buffer) use ($self, $parser, $process, &$request, &$response, &$requestListener){
         $result = array();
+
+        $_SERVER['RAW_HTTP_HEADER'] = $buffer;
+
         http_parser_execute($parser, $buffer, $result);
 
         $requestMethod = $result['REQUEST_METHOD'];

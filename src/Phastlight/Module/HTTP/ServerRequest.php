@@ -14,4 +14,9 @@ class ServerRequest extends \Phastlight\EventEmitter
   {
     return $_SERVER['REQUEST_METHOD']; 
   }
+
+  public function getHeader()
+  {
+    return $_SERVER['RAW_HTTP_HEADER']; 
+  }
 } 
