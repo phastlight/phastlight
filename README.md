@@ -5,6 +5,7 @@ Phastlight is an asynchronous, event-driven command line tool and web server wri
 
 At this time, Phastlight is on its very early development phrases,it currently supports:
 
++ [Dynamic method creation]
 + [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
 + [Async Timer](#server-side-timer) similar to http://nodejs.org/api/timers.html
 + ["Tick" in Process](#process-next-tick) similar to http://nodejs.org/api/process.html#process_process_nexttick_callback
@@ -192,6 +193,20 @@ React Server:
     Transfer rate:          168.93 [Kbytes/sec] received
 
 Result shows Phastlight is much faster than React
+
+### Dynamic method creation
+Phastlight object allows dynamic method creation, in the example below, we create a hello method in the system object
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+$system->method("hello", function($word){
+  echo "Hello $word\n";
+});
+$system->hello("world");
+```
 
 ### Server side timer
 In the script below, we import the timer module and make the timer run every 1 second, after the counter hits 3, we stop the timer.
