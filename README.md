@@ -204,13 +204,13 @@ $system = new \Phastlight\System();
 
 $timer = $system->import("timer");
 $count = 0;
-$interval_id = $timer->setInterval(function($word) use (&$count, &$interval_id, $timer){
+$intervalId = $timer->setInterval(function($word) use (&$count, &$intervalId, $timer){
   $count ++;
   if($count <=3){
     echo $count.":".$word."\n";
   }
   else{
-    $timer->clearInterval($interval_id); 
+    $timer->clearInterval($intervalId); 
   }
 }, 1000, "world");
 ```
