@@ -1,8 +1,7 @@
 <?php
-spl_autoload_register(function ($class) {
-  $class = str_replace("\\","/", $class);
-  require __DIR__."/../src/$class.php";
-});
+
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
 
 $system = new \Phastlight\System();
 
