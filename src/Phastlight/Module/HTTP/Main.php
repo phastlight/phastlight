@@ -4,16 +4,16 @@ namespace Phastlight\Module\HTTP;
 class Main extends \Phastlight\Module
 {
   private $http_parser;
-  private $server_request;
-  private $server_response;
+  private $serverRequest;
+  private $serverResponse;
   private $server;
-  private $request_listener;
+  private $requestListener;
 
-  public function createServer($request_listener)
+  public function createServer($requestListener)
   {
-    $this->request_listener = $request_listener;
-    $this->server_request = new ServerRequest();
-    $this->server_response = new ServerResponse();
+    $this->requestListener = $requestListener;
+    $this->serverRequest = new ServerRequest();
+    $this->serverResponse = new ServerResponse();
     $server = clone($this); //tricky, we need to create a clone of the server object
     return $server;    
   } 
@@ -33,19 +33,19 @@ class Main extends \Phastlight\Module
     $parser = http_parser_init();
     $request = $self->getServerRequest();
     $response = $self->getServerResponse();
-    $request_listener = $self->getRequestListener();
+    $requestListener = $self->getRequestListener();
 
     uv_tcp_bind($this->server, uv_ip4_addr($host, $port));
 
-    uv_listen($this->server,$backlog, function($server) use ($self, $parser, $process, &$request, &$response, &$request_listener) {
+    uv_listen($this->server,$backlog, function($server) use ($self, $parser, $process, &$request, &$response, &$requestListener) {
       $client = uv_tcp_init();
       uv_accept($server, $client);
 
-      uv_read_start($client, function($socket, $nread, $buffer) use ($self, $parser, $process, &$request, &$response, &$request_listener){
+      uv_read_start($client, function($socket, $nread, $buffer) use ($self, $parser, $process, &$request, &$response, &$requestListener){
         $result = array();
         http_parser_execute($parser, $buffer, $result);
 
-        $request_method = $result['REQUEST_METHOD'];
+        $requestMethod = $result['REQUEST_METHOD'];
 
         //constructing server variables
         $_SERVER['REQUEST_METHOD'] = $result['REQUEST_METHOD'];
@@ -57,20 +57,20 @@ class Main extends \Phastlight\Module
         }
 
         //constructing global variables
-        if($request_method == 'GET'){
+        if($requestMethod == 'GET'){
           if(isset($result['query'])){
             $result['headers']['body'] = $result['query']; //bind body to query if it is a get request
           }
         }
 
         if(isset($result['headers']['body'])){
-          $GLOBALS["_$request_method"] = explode("&", $result['headers']['body']); 
+          $GLOBALS["_$requestMethod"] = explode("&", $result['headers']['body']); 
         }
 
-        call_user_func_array($request_listener, array($request, $response));
+        call_user_func_array($requestListener, array($request, $response));
 
         $status_code = $response->getStatusCode();
-        $status_message = $response->getReasonPhrase();
+        $statusMessage = $response->getReasonPhrase();
         $headers = $response->getHeaders();
         $header = "";
         if(count($headers) > 0){
@@ -79,7 +79,7 @@ class Main extends \Phastlight\Module
           }
         } 
         $output = $response->getData();
-        $buffer = "HTTP/1.1 $status_code $status_message\r\n$header\r\n$output";
+        $buffer = "HTTP/1.1 $status_code $statusMessage\r\n$header\r\n$output";
         uv_write($socket, $buffer);
         uv_close($socket);
       });
@@ -89,17 +89,17 @@ class Main extends \Phastlight\Module
 
   public function getRequestListener()
   {
-    return $this->request_listener; 
+    return $this->requestListener; 
   }
 
   public function getServerRequest()
   {
-    return $this->server_request; 
+    return $this->serverRequest; 
   }
 
   public function getServerResponse()
   {
-    return $this->server_response; 
+    return $this->serverResponse; 
   }
 
   public function getProtocol()

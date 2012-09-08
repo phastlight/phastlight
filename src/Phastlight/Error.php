@@ -5,14 +5,14 @@ class Error extends Object
 {
   private $severity;
   private $message;
-  private $file_path;
+  private $filePath;
   private $line;
 
-  public function __construct($severity, $message, $file_path, $line)
+  public function __construct($severity, $message, $filePath, $line)
   {
     $this->severity = $severity;
     $this->message = $message;
-    $this->file_path = $file_path;
+    $this->filePath = $filePath;
     $this->line = $line;
   }
 
@@ -28,7 +28,7 @@ class Error extends Object
 
   public function getFilePath()
   {
-    return $this->file_path;
+    return $this->filePath;
   }
 
   public function getLine()

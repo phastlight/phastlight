@@ -4,22 +4,22 @@ namespace Phastlight\Module\HTTP;
 class ServerResponse extends \Phastlight\EventEmitter
 {
   private $data = "";
-  private $status_code = 200;
-  private $reason_phrase = "OK";
+  private $statusCode = 200;
+  private $reasonPhrase = "OK";
   private $headers = array();
 
   public function writeHead()
   {
     $args = func_get_args();
-    $args_count = count($args);
+    $argsCount = count($args);
 
-    if($args_count == 2){
-      $this->status_code = $args[0];
+    if($argsCount == 2){
+      $this->statusCode = $args[0];
       $this->headers = $args[1]; 
     }
-    else if($args_count == 3){
-      $this->status_code = $args[0];
-      $this->reason_phrase = $args[1];
+    else if($argsCount == 3){
+      $this->statusCode = $args[0];
+      $this->reasonPhrase = $args[1];
       $this->headers = $args[2]; 
     }
   }
@@ -36,7 +36,7 @@ class ServerResponse extends \Phastlight\EventEmitter
 
   public function getStatusCode()
   {
-    return $this->status_code; 
+    return $this->statusCode; 
   }
 
   public function getHeaders()
@@ -46,7 +46,7 @@ class ServerResponse extends \Phastlight\EventEmitter
 
   public function getReasonPhrase()
   {
-    return $this->reason_phrase; 
+    return $this->reasonPhrase; 
   }
 
   public function getData()

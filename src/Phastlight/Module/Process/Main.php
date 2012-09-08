@@ -3,28 +3,28 @@ namespace Phastlight\Module\Process;
 
 class Main extends \Phastlight\Module
 {
-  private $tick_callbacks = array();
+  private $tickCallbacks = array();
   private $tick = 0;
 
   public function addTickCallback($callback)
   {
     $this->tick ++;
-    $this->tick_callbacks[$this->tick] = $callback;
+    $this->tickCallbacks[$this->tick] = $callback;
   }
 
   public function getTickCallback($tick)
   {
-    return $this->tick_callbacks[$tick]; 
+    return $this->tickCallbacks[$tick]; 
   }
 
   public function removeTickCallback($tick)
   {
-    unset($this->tick_callbacks[$tick]); 
+    unset($this->tickCallbacks[$tick]); 
   }
 
   public function getTickCallbacks()
   {
-    return $this->tick_callbacks; 
+    return $this->tickCallbacks; 
   }
 
   public function nextTick($callback)

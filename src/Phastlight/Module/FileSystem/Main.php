@@ -4,11 +4,11 @@ namespace Phastlight\Module\FileSystem;
 class Main extends \Phastlight\Module
 {
 
-  private $file_flags;
+  private $fileFlags;
 
   public function __construct()
   {
-    $this->file_flags = array(
+    $this->fileFlags = array(
       'r' => \UV::O_RDONLY, //read only
       'w' => \UV::O_WRONLY | \UV::O_CREAT, //write only
       'a' => \UV::O_APPEND | \UV::O_CREAT | \UV::O_WRONLY, //apend
@@ -38,8 +38,8 @@ class Main extends \Phastlight\Module
 
   public function open($file_path, $flag, $callback)
   {
-    if(isset($this->file_flags[$flag])){
-      uv_fs_open($this->getEventLoop(), $file_path, $this->file_flags[$flag], 0, $callback);  
+    if(isset($this->fileFlags[$flag])){
+      uv_fs_open($this->getEventLoop(), $file_path, $this->fileFlags[$flag], 0, $callback);  
     }
   }
 

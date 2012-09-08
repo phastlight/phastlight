@@ -9,8 +9,8 @@ namespace Phastlight;
 class System extends Object
 {
 
-  private $event_loop;
-  private $module_map; //the modules map
+  private $eventLoop;
+  private $moduleMap; //the modules map
   private $modules; //the module instances
 
   public function __construct()
@@ -21,18 +21,18 @@ class System extends Object
     });
 
     // start the event loop
-    $this->event_loop = uv_default_loop();
+    $this->eventLoop = uv_default_loop();
 
     //set up the core module map
-    $module_prefix = "\\Phastlight\\Module\\";
-    $this->module_map = array(
-      'console' => $module_prefix.'Console\\Main',
-      'process' => $module_prefix.'Process\\Main',
-      'os' => $module_prefix.'OS\\Main', 
-      'http' => $module_prefix.'HTTP\\Main',
-      'timer' => $module_prefix.'Timer\\Main',
-      'util' => $module_prefix.'Util\\Main',
-      'fs' => $module_prefix.'FileSystem\\Main',
+    $modulePrefix = "\\Phastlight\\Module\\";
+    $this->moduleMap = array(
+      'console' => $modulePrefix.'Console\\Main',
+      'process' => $modulePrefix.'Process\\Main',
+      'os' => $modulePrefix.'OS\\Main', 
+      'http' => $modulePrefix.'HTTP\\Main',
+      'timer' => $modulePrefix.'Timer\\Main',
+      'util' => $modulePrefix.'Util\\Main',
+      'fs' => $modulePrefix.'FileSystem\\Main',
     );
 
     $this->modules = array();
@@ -45,11 +45,11 @@ class System extends Object
   {
     $object = null;
     if(!isset($this->modules[$name])){
-      if(isset($this->module_map[$name])){
-        $object_class = $this->module_map[$name];
+      if(isset($this->moduleMap[$name])){
+        $object_class = $this->moduleMap[$name];
         $object = new $object_class();
         $object->setSystem($this);
-        $object->setEventLoop($this->event_loop);
+        $object->setEventLoop($this->eventLoop);
         $this->modules[$name] = $object;
       }
     }
@@ -66,7 +66,7 @@ class System extends Object
    */
   public function export($module_name, $module_classname)
   {
-    $this->module_map[$module_name] = $module_classname; 
+    $this->moduleMap[$module_name] = $module_classname; 
   }
 
   /**
@@ -74,6 +74,6 @@ class System extends Object
    */
   public function getEventLoop()
   {
-    return $this->event_loop;
+    return $this->eventLoop;
   }
 }

@@ -3,17 +3,17 @@ namespace Phastlight;
 
 class EventEmitter extends \Phastlight\Object
 {
-  private $event_listeners;
+  private $eventListeners;
 
   public function __construct()
   {
-    $this->event_listeners = array();
+    $this->eventListeners = array();
   } 
 
   public function addListener($event, $listener) 
   {
-    if(!isset($this->event_listeners[$even])){
-      $this->event_listeners[$event] = array();
+    if(!isset($this->eventListeners[$even])){
+      $this->eventListeners[$event] = array();
     }  
   } 
  
@@ -23,10 +23,10 @@ class EventEmitter extends \Phastlight\Object
    */
   public function on($event, $listener)
   {
-    if(!isset($this->event_listeners[$even])){
-      $this->event_listeners[$event] = array();
+    if(!isset($this->eventListeners[$even])){
+      $this->eventListeners[$event] = array();
     }  
-    $this->event_listeners[$event][] = $listener;
+    $this->eventListeners[$event][] = $listener;
   }
 
   public function removeListener($event, $listener)
@@ -36,28 +36,28 @@ class EventEmitter extends \Phastlight\Object
 
   public function removeAllListeners($event)
   {
-    if(!isset($this->event_listeners[$even])){
-      unset($this->event_listeners[$event]);
+    if(!isset($this->eventListeners[$even])){
+      unset($this->eventListeners[$event]);
     }
   }
 
   public function getListeners($event)
   {
     $listeners = array();
-    if(!isset($this->event_listeners[$event])){
-      $listeners = $this->event_listeners[$event];
+    if(!isset($this->eventListeners[$event])){
+      $listeners = $this->eventListeners[$event];
     }
     return $listeners;
   }
 
   public function emit($event/*,$arg1,$arg2...*/)
   {
-    if(isset($this->event_listeners[$event])){
-      $listener_count = count($this->event_listeners);
+    if(isset($this->eventListeners[$event])){
+      $listener_count = count($this->eventListeners);
       $args = func_get_args();
       array_shift($args); //skip $event
       for($k = 0; $k < $listener_count; $k++){
-        call_user_func_array($this->event_listeners[$k], $args);
+        call_user_func_array($this->eventListeners[$k], $args);
       }
     }
   }
