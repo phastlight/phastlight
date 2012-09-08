@@ -145,8 +145,8 @@ $http = $system->import("http");
 $http->createServer(function($req, $res){
   $res->writeHead(200, array('Content-Type' => 'text/plain'));
   $res->end("Hello World");
-})->listen(1337, '50.116.5.52');
-$console->log('Server running at http://50.116.5.52:1337/');
+})->listen(1337, '127.0.0.1');
+$console->log('Server running at http://127.0.0.1:1337/');
 ```
 
 React serve script
@@ -157,8 +157,8 @@ $stack = new React\Espresso\Stack(function ($request, $response) {
   $response->writeHead(200, array('Content-Type' => 'text/plain'));
   $response->end("Hello World\n");
 });
-echo "Server running at http://50.116.5.52:1337\n";
-$stack->listen(1337, '50.116.5.52');
+echo "Server running at http://127.0.0.1:1337\n";
+$stack->listen(1337, '127.0.0.1');
 ```
 
 Benchmark result:
