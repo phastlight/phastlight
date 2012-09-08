@@ -329,6 +329,7 @@ $fs->open("test", "w", function($fd) use ($fs) {
 ```
 
 ### File System: on each http request, append a message to a file named "weblog" in async fashion
+The example below shows how to log a message into weblog in async fashion when there is a http request comes in
 ```php
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
