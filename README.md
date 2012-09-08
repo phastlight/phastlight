@@ -369,22 +369,22 @@ class ClosureRouter extends \Phalcon_Router_Regex
   public function addRoute($route, $closure)
   {
     $this->routes[$route] = $closure;
-    $route_comps = explode("/", $route);
-    $route_comps_count = count($route_comps);
+    $routeComps = explode("/", $route);
+    $routeCompsCount = count($routeComps);
     $params = array('_closure' => $closure);
-    if($route_comps_count > 0){
-      for($k = 1; $k < $route_comps_count; $k++){
-        if($route_comps[$k][0] == ":"){
-          $name = $route_comps[$k];
+    if($routeCompsCount > 0){
+      for($k = 1; $k < $routeCompsCount; $k++){
+        if($routeComps[$k][0] == ":"){
+          $name = $routeComps[$k];
           $name[0] = "";
           $name = trim($name);
           $params[$name] = $k;
-          $route_comps[$k] = "([a-zA-Z0-9_-].+)"; //include -,_ and .
+          $routeComps[$k] = "([a-zA-Z0-9_-].+)"; //include -,_ and .
         }
       }
     }
 
-    $route = implode("/", $route_comps);
+    $route = implode("/", $routeComps);
 
     $this->add($route, $params);
   }
