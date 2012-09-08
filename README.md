@@ -128,7 +128,7 @@ Node.js
     Time per request:       0.268 [ms] (mean, across all concurrent requests)
     Transfer rate:          372.85 [Kbytes/sec] received
 
-### Below is the benchmark on React PHP on a simple "hello world" response, we simulate 10k request with 500 concurrent requests
+### Below is the benchmark on Phastlight v.s React on a simple "hello world" response, we simulate 10k request with 500 concurrent requests
 
 Phastlight server script:
 ```php
