@@ -5,8 +5,8 @@ Phastlight is an asynchronous, event-driven command line tool and web server wri
 
 At this time, Phastlight is on its very early development phrases,it currently supports:
 
-+ [Dynamic method creation]
 + [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
++ [Dynamic method creation](#dynamic-method-creation)
 + [Async Timer](#server-side-timer) similar to http://nodejs.org/api/timers.html
 + ["Tick" in Process](#process-next-tick) similar to http://nodejs.org/api/process.html#process_process_nexttick_callback
 + Log message to the console: similar to Console.log in Javascript
