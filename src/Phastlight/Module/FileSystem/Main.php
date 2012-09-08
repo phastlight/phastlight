@@ -11,7 +11,7 @@ class Main extends \Phastlight\Module
     $this->file_flags = array(
       'r' => \UV::O_RDONLY, //read only
       'w' => \UV::O_WRONLY | \UV::O_CREAT, //write only
-      'a' => \UV::O_APPEND, //apend
+      'a' => \UV::O_APPEND | \UV::O_CREAT | \UV::O_WRONLY, //apend
       'w+' => \UV::O_RDONLY | \UV::O_WRONLY //read and write
       ); 
   }
