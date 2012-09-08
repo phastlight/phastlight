@@ -16,6 +16,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
   + get file stat asynchronously
   + open file asynchronously
   + read file asynchronously
+  + write file asynchronously
   + close file asynchronously
 
 More features will be on the way, like file, database related apis.
@@ -307,6 +308,23 @@ $system = new \Phastlight\System();
 $fs = $system->import("fs");
 $fs->readDir(".",function($result, $data){
   print_r($data);
+});
+```
+
+### File System: create a new file and write content to it
+The example below will create a file named "test" and write the string "hello world" in it in async fashion
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+$fs = $system->import("fs");
+
+$fs->open("test", "w", function($fd) use ($fs) {
+  $fs->write($fd, "hello world", 0, function(){
+    echo "done!\n"; 
+  }); 
 });
 ```
 
