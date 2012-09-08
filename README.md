@@ -328,6 +328,33 @@ $fs->open("test", "w", function($fd) use ($fs) {
 });
 ```
 
+### File System: on each http request, append a message to a file named "weblog" in async fashion
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$console = $system->import("console");
+$http = $system->import("http");
+$fs = $system->import("fs");
+
+$http->createServer(function($req, $res) use ($fs) {
+  $fs->open("weblog", "a", function($fd) use ($fs) {
+    $time_string = microtime(true);
+    $msg = "request coming in at $time_string\n";
+    $fs->write($fd, $msg, null, function($fd) use ($fs) { //when the position is null, we append the message after the current position
+      $fs->close($fd, function(){
+      });
+    }); 
+  });
+  $res->writeHead(200, array('Content-Type' => 'text/plain'));
+  $res->end("hello, you are connected");
+})->listen(1337, '127.0.0.1');
+$console->log('Server running at http://127.0.0.1:1337/');
+```
+
 ### Integrating phastlight with Phalcon PHP Framework Routing Component
 Phalcon is a web framework delivered as a C extension providing high performance and low resource consumption, the example below shows a basic micro framework integrating phastlight with
 Phalcon's routing component. The benchmark is quite good, benchark on ab -n 200000 -c 5000 shows 4593.84 requests per second in centos 6 server with 512MB memory.  
