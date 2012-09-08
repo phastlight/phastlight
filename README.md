@@ -30,7 +30,7 @@ asynchronous components.
 Howerver, benchmark do show that the following frameworks/components show good results integrating with Phastlight on request and response.
 
 + Phalcon PHP Framework (http://phalconphp.com/)
-+ Symfony2 HTTP Foundation component
++ Symfony2 HTTP Foundation Request and Response component
 
 At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web/mobible applications.
 
