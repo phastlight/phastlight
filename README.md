@@ -238,6 +238,19 @@ $intervalId = $timer->setInterval(function($word) use (&$count, &$intervalId, $t
 }, 1000, "world");
 ```
 
+### console log like javascript
+Phastlight can do console logging like javascript
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$console = $system->import("console");
+$console->log("a message log to the console");
+```
+
 ### Process next tick
 We can distribute some heavy tasks into every "tick" of the server and make it non-blocking for other tasks.
 
