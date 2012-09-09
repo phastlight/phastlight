@@ -3,6 +3,12 @@ Phastlight
 
 Phastlight is an asynchronous, event-driven command line tool and web server written in PHP 5.3+ inspired by Node.js
 
+[Install Phastlight](#installation)
+
+[Benchmark against Node.js](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
+
+[Benchmark against React](#below-is-the-benchmark-on-phastlight-vs-react-on-a-simple-hello-world-response-we-simulate-10k-request-with-500-concurrent-requests)
+
 At this time, Phastlight is on its very early development phrases,it currently supports:
 
 + [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
@@ -20,7 +26,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
   + write file asynchronously
   + close file asynchronously
 
-More features will be on the way, like file, database related apis.
+More features will be on the way, stay tuned...
 
 Phastlight is built with asynchronous fashion in mind, since it is written in PHP, it can be integrated with some existing PHP Frameworks and Microframework components.
 Due to a lot of the frameworks are built in a synchronous fashion for web servers like Apache, the benchmark against raw phastlight output is not good yet. So in the current
