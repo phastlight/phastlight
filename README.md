@@ -3,6 +3,8 @@ Phastlight
 
 Phastlight is an asynchronous, event-driven command line tool and web server written in PHP 5.3+ inspired by Node.js
 
+Phastlight is built on top of libuv, the same library used behind Node.js.
+
 [Install Phastlight](#installation)
 
 [Benchmark against Node.js](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
