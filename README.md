@@ -21,10 +21,10 @@ At this time, Phastlight is on its very early development phrases,it currently s
 + [Log message to the console](#console-log-like-javascript) similar to Console.log in Javascript
 + File System: 
   + [read content of directory asynchronously](#file-system--reads-the-contents-of-a-directory-in-async-fashion)
-  + open file asynchronously(#file-system-create-a-new-file-and-write-content-to-it)
-  + read file asynchronously(#file-system--reads-the-contents-of-a-directory-in-async-fashion)
-  + write file asynchronously(#file-system-create-a-new-file-and-write-content-to-it)
-  + close file asynchronously(#file-system-on-each-http-request-append-a-message-to-a-file-named-weblog-in-async-fashion)
+  + [open file asynchronously](#file-system-create-a-new-file-and-write-content-to-it)
+  + [read file asynchronously](#file-system--reads-the-contents-of-a-directory-in-async-fashion)
+  + [write file asynchronously](#file-system-create-a-new-file-and-write-content-to-it)
+  + [close file asynchronously](#file-system-on-each-http-request-append-a-message-to-a-file-named-weblog-in-async-fashion)
   + rename file asynchronously
   + remove file asynchronously
   + get file stat asynchronously
