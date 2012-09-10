@@ -15,6 +15,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
 
 + [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
 + [Dynamic method creation](#dynamic-method-creation)
++ [Module Creation]
 + [Async Timer](#server-side-timer) similar to http://nodejs.org/api/timers.html
 + ["Tick" in Process](#process-next-tick) similar to http://nodejs.org/api/process.html#process_process_nexttick_callback
 + [Log message to the console](#console-log-like-javascript) similar to Console.log in Javascript
@@ -214,6 +215,28 @@ $system->method("hello", function($word){
   echo "Hello $word\n";
 });
 $system->hello("world");
+```
+
+### Module creation
+Phastlight supports a flexible module system with export and import, the following example shows how to create a simple
+module that can print "hello world"
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+class MyModule extends \Phastlight\Module
+{
+  public function hello($word)
+  {
+    echo "hello $word";
+  }
+}
+
+$system = new \Phastlight\System();
+$system->export("mymodule", "\MyModule"); //we first export the MyModule module
+$module = $system->import("mymodule"); //now we can import it
+$module->hello("world");
 ```
 
 ### Server side timer
