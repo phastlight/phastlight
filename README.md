@@ -20,7 +20,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
 + ["Tick" in Process](#process-next-tick) similar to http://nodejs.org/api/process.html#process_process_nexttick_callback
 + [Log message to the console](#console-log-like-javascript) similar to Console.log in Javascript
 + File System: 
-  + read content of directory asynchronously
+  + [read content of directory asynchronously](#file-system--reads-the-contents-of-a-directory-in-async-fashion)
   + rename file asynchronously
   + remove file asynchronously
   + get file stat asynchronously
