@@ -26,9 +26,12 @@ class Socket extends \Phastlight\EventEmitter
     }  
   }
 
-  public function close()
+  public function end($data = null)
   {
     if($this->stream){
+      if($data){
+        uv_write($this->stream, $data); 
+      }
       uv_close($this->stream); 
       $this->emit('close');
     }
