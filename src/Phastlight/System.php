@@ -33,6 +33,7 @@ class System extends Object
       'timer' => $modulePrefix.'Timer\\Main',
       'util' => $modulePrefix.'Util\\Main',
       'fs' => $modulePrefix.'FileSystem\\Main',
+      'net' => $modulePrefix.'NET\\Main',
     );
 
     $this->modules = array();
