@@ -1,7 +1,7 @@
 <?php
 namespace Phastlight\Module\NET;
 
-class Server
+class Server extends \Phastlight\EventEmitter
 {
 
 }
