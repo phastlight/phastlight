@@ -16,6 +16,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
 + [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
 + [Dynamic method creation](#dynamic-method-creation)
 + [Module Creation](#module-creation)
++ [Event Emitting](#event-emitting)
 + [Async Timer](#server-side-timer) similar to http://nodejs.org/api/timers.html
 + ["Tick" in Process](#process-next-tick) similar to http://nodejs.org/api/process.html#process_process_nexttick_callback
 + [Log message to the console](#console-log-like-javascript) similar to Console.log in Javascript
@@ -237,6 +238,22 @@ $system = new \Phastlight\System();
 $system->export("mymodule", "\MyModule"); //we first export the MyModule module
 $module = $system->import("mymodule"); //now we can import it
 $module->hello("world");
+```
+
+### Event Emitting
+Event Emitter is a core component in phastlight, we can use it to emit and handle an event
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$eventEmitter = new \Phastlight\EventEmitter();
+
+$eventEmitter->on("test", function(){
+  echo "hello in test\n";
+});
+
+$eventEmitter->emit("test");
 ```
 
 ### Server side timer
