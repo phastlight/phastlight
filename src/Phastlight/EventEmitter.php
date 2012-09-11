@@ -53,10 +53,10 @@ class EventEmitter extends \Phastlight\Object
   public function emit($event/*,$arg1,$arg2...*/)
   {
     if(isset($this->eventListeners[$event])){
-      $listener_count = count($this->eventListeners);
+      $listenerCount = count($this->eventListeners);
       $args = func_get_args();
       array_shift($args); //skip $event
-      for($k = 0; $k < $listener_count; $k++){
+      for($k = 0; $k < $listenerCount; $k++){
         call_user_func_array($this->eventListeners[$k], $args);
       }
     }
