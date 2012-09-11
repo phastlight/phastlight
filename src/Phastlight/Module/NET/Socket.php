@@ -1,7 +1,7 @@
 <?php
 namespace Phastlight\Module\NET;
 
-class Socket
+class Socket extends \Phastlight\EventEmitter
 {
 
 }
