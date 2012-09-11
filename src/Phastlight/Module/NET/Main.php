@@ -20,6 +20,7 @@ class Main extends \Phastlight\Module
     uv_tcp_connect($c, uv_ip4_addr($options['host'],$options['port']), function($stream, $stat) use ($socket){
       if ($stat == 0) {
         $socket->emit("connect"); 
+        $socket->setStream($stream);
       }
     });
     return $socket;
