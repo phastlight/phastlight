@@ -17,10 +17,11 @@ class Main extends \Phastlight\Module
   {
     $c = uv_tcp_init();
     $socket = new \Phastlight\Module\NET\Socket();
-    uv_tcp_connect($c, uv_ip4_addr($options['host'],$options['port']), function($stream, $stat) use ($socket){
+    uv_tcp_connect($c, uv_ip4_addr($options['host'],$options['port']), function($stream, $stat) use ($socket, $connectionListener){
       if ($stat == 0) {
         $socket->emit("connect"); 
         $socket->setStream($stream);
+        call_user_func_array($connectionListener, array($socket));
       }
     });
     return $socket;
