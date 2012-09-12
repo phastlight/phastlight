@@ -8,6 +8,7 @@ class TCPServer extends \Phastlight\EventEmitter
   private $backlog;
   private $connectionListener;
   private $listeningListener;
+  private $server;
 
   public function setPort($port)
   {
@@ -59,15 +60,34 @@ class TCPServer extends \Phastlight\EventEmitter
     return $this->listeningListener; 
   }
 
-  public function listen($options = array(
-    'port' => 1337, 
-    'host' => '127.0.0.1', 
-    'backlog' => 100
-  ), $listeningListener)
+  public function listen($options = array(), $listeningListener = '')
   {
-     $this->setPort($options['port']);
-     $this->setHost($options['host']);
-     $this->setBacklog($options['backlog']);
-     $this->setListeningListener($listeningListener);
+
+    $default_options = array(
+      'port' => 1337, 
+      'host' => '127.0.0.1', 
+      'backlog' => 100,
+    );
+
+    $options = array_merge($default_options, $options);
+
+    $this->setPort($options['port']);
+    $this->setHost($options['host']);
+    $this->setBacklog($options['backlog']);
+    $this->setListeningListener($listeningListener);
+
+    $this->server = uv_tcp_init(); //very tricky, must use $this->server, using local variable will lead to segmentation fault
+    uv_tcp_bind($this->server, uv_ip4_addr($options['host'],$options['port']));
+
+    $self = $this;
+    uv_listen($this->server,$options['backlog'],function($server) use ($self){
+      $client = uv_tcp_init();
+      uv_accept($server, $client);
+      uv_read_start($client, function($stream, $nread, $buffer) use ($self){
+        $socket = new \Phastlight\Module\NET\Socket();
+        $socket->setStream($stream);
+        call_user_func_array($self->getConnectionListener(), array($socket));
+      });
+    }); 
   }
 }

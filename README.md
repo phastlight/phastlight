@@ -29,6 +29,8 @@ At this time, Phastlight is on its very early development phrases,it currently s
   + rename file asynchronously
   + remove file asynchronously
   + get file stat asynchronously
++ Asynchronous Network Wrapper
+  + [TCP Server](#tcp-server)
 
 More features will be on the way, stay tuned...
 
@@ -430,6 +432,27 @@ $http->createServer(function($req, $res) use ($fs) {
   $res->end("hello, you are connected");
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
+```
+
+### TCP Server 
+Below is an example to create a TCP server using the network module
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$net = $system->import("net");
+
+$net->createTCPServer(function($client){
+  $output = "<h1>hello jim</h1>";
+  $buffer = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n$output";
+  $client->end($buffer);
+})->listen(array(
+  'port' => 8888,
+  'host' => '127.0.0.1'
+));
 ```
 
 ### Integrating phastlight with Phalcon PHP Framework Routing Component

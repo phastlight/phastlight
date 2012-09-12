@@ -30,9 +30,9 @@ class Socket extends \Phastlight\EventEmitter
   {
     if($this->stream){
       $self = $this;
-      uv_write($this->stream, $data, function($stream, $stat) use ($self){
+      uv_write($this->stream, $data, function($stream, $stat) use ($self,$callback){
         $self->setStream($stream);
-        $callback();        
+        $callback();       
       });
     }  
   }
@@ -40,6 +40,7 @@ class Socket extends \Phastlight\EventEmitter
   public function end($data = null)
   {
     if($this->stream){
+      $this->emit('end');
       if($data){
         uv_write($this->stream, $data); 
       }
