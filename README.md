@@ -26,7 +26,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
   + [read file asynchronously](#file-system--reads-the-contents-of-a-directory-in-async-fashion)
   + [write file asynchronously](#file-system-create-a-new-file-and-write-content-to-it)
   + [close file asynchronously](#file-system-on-each-http-request-append-a-message-to-a-file-named-weblog-in-async-fashion)
-  + rename file asynchronously
+  + [rename file asynchronously](#rename-file-asynchronously)
   + remove file asynchronously
   + get file stat asynchronously
 + Asynchronous Network Wrapper
@@ -432,6 +432,25 @@ $http->createServer(function($req, $res) use ($fs) {
   $res->end("hello, you are connected");
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
+```
+
+### Rename file asynchronously
+In the example below, we rename a file named "test" in the current directory to "test2"
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$fs = $system->import("fs");
+$console = $system->import("console");
+
+$fs->rename("test","test2",function($result) use ($console){
+  if($result == 0){
+    $console->log("rename ok!"); 
+  }
+});
 ```
 
 ### TCP Server 
