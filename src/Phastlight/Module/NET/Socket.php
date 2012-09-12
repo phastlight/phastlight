@@ -4,6 +4,7 @@ namespace Phastlight\Module\NET;
 class Socket extends \Phastlight\EventEmitter
 {
   private $stream;
+  private $type; //the socket type
 
   public function setStream($stream)
   {
@@ -13,6 +14,16 @@ class Socket extends \Phastlight\EventEmitter
   public function getStream()
   {
     return $this->stream; 
+  }
+
+  public function setType($type)
+  {
+    $this->type = $type; 
+  }
+
+  public function getType()
+  {
+    return $this->type; 
   }
 
   public function write($data, $callback)
