@@ -26,12 +26,14 @@ class Main extends \Phastlight\Module
   {
     $c = uv_tcp_init();
     $socket = new \Phastlight\Module\NET\Socket();
-    uv_tcp_connect($c, uv_ip4_addr($options['host'],$options['port']), function($stream, $stat) use ($socket, $connectionListener){
+    uv_tcp_connect($c, uv_ip4_addr($options['host'],$options['port']), function($uvSocket, $stat) use ($socket, $connectionListener){
       $socket->setType("tcp4");
       if ($stat == 0) {
+        $socket->setSocket($uvSocket);
         $socket->emit("connect"); 
-        $socket->setStream($stream);
-        call_user_func_array($connectionListener, array($socket));
+        if(is_callable($connectionListener)){
+          $connectionListener();
+        }
       }
     });
     return $socket;
