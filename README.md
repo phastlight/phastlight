@@ -31,6 +31,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
   + get file stat asynchronously
 + Asynchronous Network Wrapper
   + [TCP Server](#tcp-server)
+  + [TCP Connection](#tcp-connection)
 
 More features will be on the way, stay tuned...
 
@@ -472,6 +473,39 @@ $net->createTCPServer(function($socket){
   'port' => 8888,
   'host' => '127.0.0.1'
 ));
+```
+
+### TCP Connection
+Below is an example to show how to create a tcp connection. 
+We first create a tcp server listening to port 8888 in 127.0.0.1
+When a tcp connection is created and starts writing to the server, we then can see what is coming back
+from the server.
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$net = $system->import("net");
+
+$net->createTCPServer(function($client){
+  $output = "<h1>hello jim</h1>";
+  $buffer = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n$output";
+  $client->end($buffer);
+})->listen(array(
+  'port' => 8888,
+  'host' => '127.0.0.1'
+));
+
+$client = $net->connect(array('host' => '127.0.0.1', 'port' => 8888), function() use (&$client){
+  $client->write('world!\r\n');
+  $client->end();
+});
+
+$client->on('data', function($data){
+  print $data;
+});
 ```
 
 ### Integrating phastlight with Phalcon PHP Framework Routing Component
