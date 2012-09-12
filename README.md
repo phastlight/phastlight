@@ -445,10 +445,10 @@ $system = new \Phastlight\System();
 
 $net = $system->import("net");
 
-$net->createTCPServer(function($client){
+$net->createTCPServer(function($socket){
   $output = "<h1>hello jim</h1>";
   $buffer = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n$output";
-  $client->end($buffer);
+  $socket->end($buffer);
 })->listen(array(
   'port' => 8888,
   'host' => '127.0.0.1'
