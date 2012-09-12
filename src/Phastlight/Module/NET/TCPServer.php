@@ -83,10 +83,13 @@ class TCPServer extends \Phastlight\EventEmitter
     uv_listen($this->server,$options['backlog'],function($server) use ($self){
       $client = uv_tcp_init();
       uv_accept($server, $client);
-      uv_read_start($client, function($stream, $nread, $buffer) use ($self){
-        $socket = new \Phastlight\Module\NET\Socket();
-        $socket->setStream($stream);
-        call_user_func_array($self->getConnectionListener(), array($socket));
+      $socket = new \Phastlight\Module\NET\Socket();
+      uv_read_start($client, function($stream, $nread, $buffer) use ($self, $socket){
+        if($nread > 0){
+          $socket->emit("data", $buffer);
+          $socket->setStream($stream);
+          call_user_func_array($self->getConnectionListener(), array($socket));
+        }
       });
     }); 
   }
