@@ -15,18 +15,16 @@ class EventEmitter extends \Phastlight\Object
     if(!isset($this->eventListeners[$even])){
       $this->eventListeners[$event] = array();
     }  
+    $this->eventListeners[$event][] = $listener;
   } 
- 
+
 
   /**
    * add a listener to the end of the listeners array for the specified event
    */
   public function on($event, $listener)
   {
-    if(!isset($this->eventListeners[$even])){
-      $this->eventListeners[$event] = array();
-    }  
-    $this->eventListeners[$event][] = $listener;
+    $this->addListener($event, $listener);
   }
 
   public function removeListener($event, $listener)
