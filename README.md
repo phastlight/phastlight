@@ -40,7 +40,7 @@ Due to a lot of the frameworks are built in a synchronous fashion for web server
 phrase, they can be used only as local development server and as a proof of concept integrating with phastlight. It will be ideal if each framework in PHP can come up with some
 asynchronous components. 
 
-Howerver, benchmark do show that the following frameworks/components show good results integrating with Phastlight on request and response.
+However, benchmarks do show that the following frameworks/components show good results integrating with Phastlight on request and response.
 
 + Phalcon PHP Framework (http://phalconphp.com/)
 + Symfony2 HTTP Foundation Request and Response component
