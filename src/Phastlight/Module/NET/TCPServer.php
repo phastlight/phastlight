@@ -88,6 +88,7 @@ class TCPServer extends \Phastlight\EventEmitter
         if($nread > 0){
           $socket->setSocket($uvSocket);
           call_user_func_array($self->getConnectionListener(), array($socket));
+          $socket->emit('data', $buffer);
         }
       });
     }); 
