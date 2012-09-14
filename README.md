@@ -634,9 +634,9 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 11211), function(
   $clrf = "\r\n";
 
   $client->on('data', function($data) use ($key, $clrf, &$client){
-    if(trim($data) == 'STORED'){ //with the 'STORED' string comming back from the server, we know that the key is stored successfully
+    //according to the protocol, when server returns "STORED\r\n", we know that the key is successfully stored
+    if($data == "STORED\r\n"){       
       $client->removeAllListeners('data'); //we unbind the previous 'data' event listeners
-
       //we know re-add a new listener for event 'data'
       $client->on('data', function($data) use(&$client){
         print $data; //here we can see the details of the key that we just stored  
