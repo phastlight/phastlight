@@ -5,6 +5,7 @@ class Socket extends \Phastlight\EventEmitter
 {
   private $socket; //the underlying uv socket
   private $type; //the socket type
+  private $shouldClose; //whether this socket should close or not
 
   public function setSocket($socket)
   {
@@ -26,6 +27,16 @@ class Socket extends \Phastlight\EventEmitter
     return $this->type; 
   }
 
+  public function setShouldClose($shouldClose)
+  {
+    $this->shouldClose = $shouldClose; 
+  }
+
+  public function getShouldClose()
+  {
+    return $this->shouldClose;
+  }
+
   public function write($data, $callback = '')
   {
     if($this->socket){
@@ -37,10 +48,19 @@ class Socket extends \Phastlight\EventEmitter
             if($nread > 0){
               $self->emit('data', $buffer);
             }
+            $self->emit('end'); //send the "end" event
+            if(is_callable($callback)){
+              $callback(); 
+            }
+
+            //finally, see if we should close the socket or not
+            $shouldClose = $self->getShouldClose();
+            if($shouldClose){
+              uv_close($uvSocket); 
+              $self->emit('close');
+            }
+
           });
-          if(is_callable($callback)){
-            $callback(); 
-          }
         }
       });
     }  
@@ -48,13 +68,12 @@ class Socket extends \Phastlight\EventEmitter
 
   public function end($data = null)
   {
-    $this->emit('end');
-    $self = $this;
     if($data){
-      uv_write($this->socket, $data, function($uvSocket, $stat) use ($self){
-        uv_close($uvSocket);
-        $self->emit('close');
-      }); 
+      $this->write($data);
+      $this->end();
+    }
+    else{
+      $this->shouldClose = true; 
     }
   }
 }
