@@ -46,15 +46,10 @@ At this time, Phastlight is on its very early development phrases,it currently s
 
 More features will be on the way, stay tuned...
 
-Phastlight is built with asynchronous fashion in mind, since it is written in PHP, it can be integrated with some existing PHP Frameworks and Microframework components.
-Due to a lot of the frameworks are built in a synchronous fashion for web servers like Apache, the benchmark against raw phastlight output is not good yet. So in the current
-phrase, they can be used only as local development server and as a proof of concept integrating with phastlight. It will be ideal if each framework in PHP can come up with some
-asynchronous components. 
+Phastlight Application Examples:
 
-However, benchmarks do show that the following frameworks/components show good results integrating with Phastlight on request and response.
-
-+ Phalcon PHP Framework (http://phalconphp.com/)
-+ Symfony2 HTTP Foundation Request and Response component
++ [Simple Microframework on top of Phalcon PHP Framework Routing Component](#integrating-phastlight-with-phalcon-php-framework-routing-component)
++ Symfony2 HTTP Foundation Request and Response component(#output-html-with-symfony2-http-foundation-component)
 
 At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web/mobible applications.
 
