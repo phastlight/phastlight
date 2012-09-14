@@ -612,7 +612,7 @@ $console->log('Server running at http://127.0.0.1:1337/');
 
 ### Asynchronous Memcache Get and Set
 With the net module in phastlight, we can now do some interesting things with memcache over TCP.
-The example below shows how to set a key in memcache asynchronously over TCP, and then when the key is successfully, 
+The example below shows how to set a key in memcache asynchronously over TCP, and then when the key is successfully stored, 
 we read the details of the key.
 ```php
 <?php
@@ -631,7 +631,7 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 11211), function(
   $clrf = "\r\n";
 
   $client->on('data', function($data) use ($key, $clrf, &$net, &$client){
-    if(trim($data) == 'STORED'){
+    if(trim($data) == 'STORED'){ //with the 'STORED' string comming back from the server, we know that the key is stored successfully
       $client->removeAllListeners('data'); //we unbind the previous 'data' event listeners
 
       //we know re-add a new listener for event 'data'
