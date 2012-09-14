@@ -62,6 +62,14 @@ class Socket extends \Phastlight\EventEmitter
 
           });
         }
+
+        //finally, see if we should close the socket or not, we need to do it again in case the socket is not closed in read callback
+        $shouldClose = $self->getShouldClose();
+        if($shouldClose){
+          uv_close($uvSocket); 
+          $self->emit('close');
+        }
+
       });
     }  
   }
