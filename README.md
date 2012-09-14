@@ -49,7 +49,7 @@ More features will be on the way, stay tuned...
 Phastlight Application Examples:
 
 + [Simple Microframework on top of Phalcon PHP Framework Routing Component](#integrating-phastlight-with-phalcon-php-framework-routing-component)
-+ Symfony2 HTTP Foundation Request and Response component(#output-html-with-symfony2-http-foundation-component)
++ [Symfony2 HTTP Foundation Request and Response component](#output-html-with-symfony2-http-foundation-component)
 
 At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web/mobible applications.
 
