@@ -614,6 +614,10 @@ $console->log('Server running at http://127.0.0.1:1337/');
 With the net module in phastlight, we can now do some interesting things with memcache over TCP.
 The example below shows how to set a key in memcache asynchronously over TCP, and then when the key is successfully stored, 
 we read the details of the key.
+
+For more details on the memcached tcp protocol, please click [here](http://memcachedb.googlecode.com/svn/trunk/doc/protocol.txt) for more 
+details, we can now create some async memcache libraries with memcache just by following the protocol.
+
 ```php
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
