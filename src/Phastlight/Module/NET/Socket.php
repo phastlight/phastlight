@@ -37,7 +37,6 @@ class Socket extends \Phastlight\EventEmitter
             if($nread > 0){
               $self->emit('data', $buffer);
             }
-            uv_close($uvSocket);
           });
           if(is_callable($callback)){
             $callback(); 
