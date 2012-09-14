@@ -118,16 +118,16 @@ console.log('Server running at http://127.0.0.1:1337/');
 The PHP HTTP Server
 
     Concurrency Level:      5000
-    Time taken for tests:   37.387 seconds
+    Time taken for tests:   38.994 seconds
     Complete requests:      200000
     Failed requests:        0
     Write errors:           0
-    Total transferred:      9084015 bytes
-    HTML transferred:       201867 bytes
-    Requests per second:    5349.40 [#/sec] (mean)
-    Time per request:       934.685 [ms] (mean)
-    Time per request:       0.187 [ms] (mean, across all concurrent requests)
-    Transfer rate:          237.28 [Kbytes/sec] received
+    Total transferred:      9057240 bytes
+    HTML transferred:       201272 bytes
+    Requests per second:    5129.06 [#/sec] (mean)
+    Time per request:       974.838 [ms] (mean)
+    Time per request:       0.195 [ms] (mean, across all concurrent requests)
+    Transfer rate:          226.83 [Kbytes/sec] received
 
 Node.js
 

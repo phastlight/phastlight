@@ -44,7 +44,7 @@ class Main extends \Phastlight\Module
 
       uv_read_start($client, function($socket, $nread, $buffer) use ($self, &$request, &$response, &$requestListener){
 
-        $self->generateServerVariables($buffer);
+        $self->generateServerVariables($buffer, $socket);
 
         call_user_func_array($requestListener, array($request, $response));
 
@@ -86,10 +86,16 @@ class Main extends \Phastlight\Module
     return $this->protocol; 
   }
 
-  public function generateServerVariables($buffer)
+  public function generateServerVariables($buffer, $socket)
   {
     $_SERVER['SERVER_PORT'] = $this->port;
     $_SERVER['SERVER_ADDR'] = $this->host;
+
+    $socketInfo = uv_tcp_getpeername($socket);
+
+    if(isset($socketInfo['address'])){
+      $_SERVER['REMOTE_ADDR'] = $socketInfo['address']; 
+    }
 
     $result = array();
 
@@ -100,7 +106,6 @@ class Main extends \Phastlight\Module
     if(isset($result['headers']['Host'])){
       $_SERVER['HTTP_HOST'] = $result['headers']['Host']; 
     }
-
     $requestMethod = $result['REQUEST_METHOD'];
 
     //constructing server variables
