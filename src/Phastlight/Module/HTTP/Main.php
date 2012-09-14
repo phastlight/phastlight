@@ -11,12 +11,16 @@ class Main extends \Phastlight\Module
   private $port;
   private $host;
 
+  public function __construct()
+  {
+    $this->http_parser = http_parser_init(); //set up http parser
+  }
+
   public function createServer($requestListener)
   {
     $this->requestListener = $requestListener;
     $this->serverRequest = new ServerRequest();
     $this->serverResponse = new ServerResponse();
-    $this->http_parser = http_parser_init(); //create the http parser
     $server = clone($this); //tricky, we need to create a clone of the server object
     return $server;    
   } 
