@@ -623,7 +623,7 @@ $system = new \Phastlight\System();
 
 $net = $system->import("net");
 
-$client = $net->connect(array('host' => '127.0.0.1', 'port' => 11211), function() use (&$client, &$net){
+$client = $net->connect(array('host' => '127.0.0.1', 'port' => 11211), function() use (&$client){
   $key = "samplekey";
   $duration = 3600; //duration of 1 hour
   $value = 250;
