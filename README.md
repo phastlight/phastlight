@@ -51,6 +51,7 @@ Phastlight Application Examples:
 + [Simple Microframework on top of Phalcon PHP Framework Routing Component](#integrating-phastlight-with-phalcon-php-framework-routing-component)
 + [Working with Symfony2 HTTP Foundation Request and Response component](#output-html-with-symfony2-http-foundation-component)
 + [Simple asynchronous Memcache get and set](#asynchronous-memcache-get-and-set)
++ [Simple asynchronous Redis get and set](#asynchronous-redis-get-and-set)
 
 At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web/mobible applications.
 
@@ -647,5 +648,39 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 11211), function(
   });
 
   $client->write("set $key 0 $duration $valueLength$clrf$value$clrf"); //setting the memcache key is a simple command over tcp
+});
+```
+
+### Asynchronous Redis Get and Set
+With the net module in phastlight, we can now do some interesting things with Redis over TCP.
+The example below shows how to set a key in redis asynchronously over TCP, and then when the key is successfully stored, 
+we read the details of the key.
+
+For more details on the redis tcp protocol, please click [here](http://redis.io/topics/protocol), we can now create some async redis libraries just by following the protocol.
+
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$net = $system->import("net");
+
+$client = $net->connect(array('host' => '127.0.0.1', 'port' => 6379), function() use (&$client, &$net){
+  $clrf = "\r\n";
+
+  $client->on('data', function($data) use ($key, $clrf, &$client){
+    if($data == "+OK$clrf"){ //from the protocol, we know that now the key is successfully stored
+      $client->removeAllListeners('data'); 
+      $client->on('data', function($data) use(&$client){
+        print $data; //here we can see the details of the key that we just stored  
+        $client->end(); //close the connection
+      });
+      $client->write("GET mykey\r\n"); //we can get the key in one simple command over tcp
+    }
+  });
+
+  $client->write("SET mykey myvalue234\r\n"); //we can set the value of a key in one simple command over tcp
 });
 ```
