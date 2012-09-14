@@ -49,7 +49,8 @@ More features will be on the way, stay tuned...
 Phastlight Application Examples:
 
 + [Simple Microframework on top of Phalcon PHP Framework Routing Component](#integrating-phastlight-with-phalcon-php-framework-routing-component)
-+ [Symfony2 HTTP Foundation Request and Response component](#output-html-with-symfony2-http-foundation-component)
++ [Working with Symfony2 HTTP Foundation Request and Response component](#output-html-with-symfony2-http-foundation-component)
++ [Simple asynchronous Memcache get and set](#asynchronous-memcache-get-and-set)
 
 At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web/mobible applications.
 
@@ -607,4 +608,41 @@ $http->createServer(function($req, $res){
   $res->end($response->getContent());
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
+```
+
+### Asynchronous Memcache Get and Set
+With the net module in phastlight, we can now do some interesting things with memcache over TCP.
+The example below shows how to set a key in memcache asynchronously over TCP, and then when the key is successfully, 
+we read the details of the key.
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$net = $system->import("net");
+
+$client = $net->connect(array('host' => '127.0.0.1', 'port' => 11211), function() use (&$client, &$net){
+  $key = "samplekey";
+  $duration = 3600; //duration of 1 hour
+  $value = 250;
+  $valueLength = strlen($value); 
+  $clrf = "\r\n";
+
+  $client->on('data', function($data) use ($key, $clrf, &$net, &$client){
+    if(trim($data) == 'STORED'){
+      $client->removeAllListeners('data'); //we unbind the previous 'data' event listeners
+
+      //we know re-add a new listener for event 'data'
+      $client->on('data', function($data) use(&$client){
+        print $data; //here we can see the details of the key that we just stored  
+        $client->end(); //we now close the connection
+      });
+      $client->write("get $key$clrf"); //getting the memcache key is another simple command over tcp
+    }
+  });
+
+  $client->write("set $key 0 $duration $valueLength$clrf$value$clrf"); //setting the memcache key is a simple command over tcp
+});
 ```
