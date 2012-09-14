@@ -667,7 +667,7 @@ $system = new \Phastlight\System();
 
 $net = $system->import("net");
 
-$client = $net->connect(array('host' => '127.0.0.1', 'port' => 6379), function() use (&$client, &$net){
+$client = $net->connect(array('host' => '127.0.0.1', 'port' => 6379), function() use (&$client){
   $clrf = "\r\n";
 
   $client->on('data', function($data) use ($key, $clrf, &$client){
