@@ -677,10 +677,10 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 6379), function()
         print $data; //here we can see the details of the key that we just stored  
         $client->end(); //close the connection
       });
-      $client->write("GET mykey\r\n"); //we can get the key in one simple command over tcp
+      $client->write("GET mykey$clrf"); //we can get the key in one simple command over tcp
     }
   });
 
-  $client->write("SET mykey myvalue234\r\n"); //we can set the value of a key in one simple command over tcp
+  $client->write("SET mykey myvalue234$clrf"); //we can set the value of a key in one simple command over tcp
 });
 ```
