@@ -86,8 +86,7 @@ class Main extends \Phastlight\Module
     return $this->protocol; 
   }
 
-  public function generateServerVariables($buffer, $socket)
-  {
+  public function generateServerVariables($buffer, $socket) {
     $_SERVER['SERVER_PORT'] = $this->port;
     $_SERVER['SERVER_ADDR'] = $this->host;
 
