@@ -15,7 +15,7 @@ then
 fi
 tar xvf php-5.4.7.tar.gz
 cd php-5.4.7
-./configure --enable-sockets --with-curl --prefix=$dir
+./configure --enable-sockets --prefix=$dir
 make
 make install
 cd ..
