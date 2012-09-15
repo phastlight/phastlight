@@ -57,6 +57,8 @@ At this phrase, phastlight is good for high concurrency, low data transfer, non 
 
 ##Installation:
 
+### Make sure you have superuser access
+
 ### Option 1: Run the installation script (Linux Server Only)###
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
