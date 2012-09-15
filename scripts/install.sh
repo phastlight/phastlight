@@ -9,12 +9,12 @@ mkdir $dir
 cd $dir
 
 # Download php src and enable sockets extension
-if [ ! -f php-5.4.6.tar.gz ];
+if [ ! -f php-5.4.7.tar.gz ];
 then
-  wget http://us2.php.net/get/php-5.4.6.tar.gz/from/this/mirror
+  wget http://us2.php.net/get/php-5.4.7.tar.gz/from/this/mirror
 fi
-tar xvf php-5.4.6.tar.gz
-cd php-5.4.6
+tar xvf php-5.4.7.tar.gz
+cd php-5.4.7
 ./configure --enable-sockets --prefix=$dir
 make
 make install
