@@ -11,7 +11,7 @@ cd $dir
 # Download php src and enable sockets extension
 if [ ! -f php-5.4.7.tar.gz ];
 then
-  wget http://us2.php.net/get/php-5.4.7.tar.gz/from/this/mirror
+  wget http://us2.php.net/get/php-5.4.7.tar.gz/from/us.php.net/mirror -O php-5.4.7.tar.gz
 fi
 tar xvf php-5.4.7.tar.gz
 cd php-5.4.7
@@ -40,5 +40,5 @@ make && make install
 cd $dir
 
 # write php.ini file
-echo -e "extension_dir="$dir"/lib/php/extensions/no-debug-non-zts-20100525\n" > php.ini
-echo -e "extension=uv.so\nextension=httpparser.so" >> php.ini
+echo "extension_dir=$dir/lib/php/extensions/no-debug-non-zts-20100525\n" > php.ini
+echo "extension=uv.so\nextension=httpparser.so" >> php.ini
