@@ -5,7 +5,10 @@ else
   dir=$1
 fi
 
-mkdir $dir
+if [ ! -d $dir ]; 
+then
+  mkdir $dir
+fi
 cd $dir
 
 # Download php src and enable sockets extension
