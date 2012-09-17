@@ -61,9 +61,13 @@ At this phrase, phastlight is good for high concurrency, low data transfer, non 
 
 ### Option 1: Run the installation script 
 Tested on:
+----------------------------------
 Ubuntu 11.04 64bit with gcc 4.4.x
+----------------------------------
 Ubuntu 12.04 64bit with gcc 4.4.x
+----------------------------------
 CentOS 6.2 64bit with gcc 4.4.x
+----------------------------------
 Mac OS 10.8 with gcc 4.2.1
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
