@@ -59,7 +59,14 @@ At this phrase, phastlight is good for high concurrency, low data transfer, non 
 
 ### Make sure you have superuser access
 
-### Option 1: Run the installation script (Tested on Linux with gcc 4.4.x)
+### Option 1: Run the installation script 
+Tested on:
+
+Ubuntu 11.04 64bit with gcc 4.4.x
+
+Ubuntu 12.04 64bit with gcc 4.4.x
+
+CentOS 6.2 64bit with gcc 4.4.x
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.4.7 plus php-uv.so and httpparser.so)
