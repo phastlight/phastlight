@@ -27,7 +27,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
   + [write file asynchronously](#file-system-create-a-new-file-and-write-content-to-it)
   + [close file asynchronously](#file-system-on-each-http-request-append-a-message-to-a-file-named-weblog-in-async-fashion)
   + [rename file asynchronously](#rename-file-asynchronously)
-  + remove file asynchronously
+  + [remove file asynchronously](#remove-file-asynchronously)
   + get file stat asynchronously
 + Asynchronous Network Wrapper
   + [TCP Server](#tcp-server)
@@ -460,6 +460,23 @@ $console = $system->import("console");
 $fs->rename("test","test2",function($result) use ($console){
   if($result == 0){
     $console->log("rename ok!"); 
+  }
+});
+```
+
+### Remove file asynchronously
+In the example below, we remove a filed named "test" in the current directory
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$fs = $system->import("fs");
+$fs->unlink("test",function($result){
+  if($result == 0){
+    echo "File test is successfully removed.\n"; 
   }
 });
 ```
