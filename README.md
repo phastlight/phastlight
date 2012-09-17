@@ -59,13 +59,13 @@ At this phrase, phastlight is good for high concurrency, low data transfer, non 
 
 ### Make sure you have superuser access
 
-### Option 1: Run the installation script (Linux Server Only)###
+### Option 1: Run the installation script (Centos Server Only)###
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.4.7 plus php-uv.so and httpparser.so)
 #### When running server, do: /usr/local/phastlight/bin/php -c /usr/local/phastlight/php.ini [server file full path]
 
-### Option 2: Manual install with existing PHP source ###
+### Option 2: Manual install with existing PHP source (Centos and MacOS only)###
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### install sockets extension (http://www.php.net/manual/en/sockets.installation.php)
