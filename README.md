@@ -33,6 +33,9 @@ At this time, Phastlight is on its very early development phrases,it currently s
 + Asynchronous Network Wrapper
   + [TCP Server](#tcp-server)
   + [TCP Connection](#tcp-connection)
++ [OS](#operating-system-information)
+  + Get CPU Information
+  + Get Memory Information
 + PHP server variables simulation
 
   Phastlight simulates the following PHP server variables:
@@ -558,6 +561,27 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 8888), function()
 $client->on('data', function($data){
   print $data;
 });
+```
+
+### Operating System Information
+Phastlight has the os module to return some data related to the operating system, like cpu and memory information
+```php
+<?php
+/**
+ * OS Information in phastlight
+ */
+
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$os = $system->import("os");
+$console = $system->import("console");
+$util= $system->import("util");
+
+$console->log($os->getFreeMemoryInfo());
+$console->log($util->inspect($os->getCPUInfo()));
 ```
 
 ### Integrating phastlight with Phalcon PHP Framework Routing Component
