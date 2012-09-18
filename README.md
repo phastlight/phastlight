@@ -28,7 +28,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
   + [close file asynchronously](#file-system-on-each-http-request-append-a-message-to-a-file-named-weblog-in-async-fashion)
   + [rename file asynchronously](#rename-file-asynchronously)
   + [remove file asynchronously](#remove-file-asynchronously)
-  + get file stat asynchronously
+  + [get file stat asynchronously](#get-file-stat-asynchronously)
 + Asynchronous Network Wrapper
   + [TCP Server](#tcp-server)
   + [TCP Connection](#tcp-connection)
@@ -482,6 +482,24 @@ $fs = $system->import("fs");
 $fs->unlink("test",function($result){
   if($result == 0){
     echo "File test is successfully removed.\n"; 
+  }
+});
+```
+
+### Get file stat asynchronously 
+In the example below, we will monitor the php script itself and see its information in async fashion
+```
+<?php
+
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+$fs = $system->import("fs");
+
+$fs->lstat(__FILE__, function($result, $data){
+  if($result == 0){
+    print_r($data);
   }
 });
 ```
