@@ -34,8 +34,8 @@ At this time, Phastlight is on its very early development phrases,it currently s
   + [TCP Server](#tcp-server)
   + [TCP Connection](#tcp-connection)
 + Operating System
-  + Get CPU Information(#operating-system-information)
-  + Get Memory Information(#operating-system-information)
+  + [Get CPU Information](#operating-system-information)
+  + [Get Memory Information](#operating-system-information)
 + PHP server variables simulation
 
   Phastlight simulates the following PHP server variables:
