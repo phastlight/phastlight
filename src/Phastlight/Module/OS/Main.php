@@ -12,4 +12,14 @@ class Main extends \Phastlight\Module
   {
     return uv_cpu_info(); 
   }
+
+  public function getFreeMemoryInfo()
+  {
+    return uv_get_free_memory();  
+  }
+
+  public function getTotalMemoryInfo()
+  {
+    return uv_get_total_memory(); 
+  }
 }
