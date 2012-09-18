@@ -7,4 +7,9 @@ class Main extends \Phastlight\Module
   {
     return PHP_EOL; 
   }
+
+  public function getCPUInfo()
+  {
+    return uv_cpu_info(); 
+  }
 }
