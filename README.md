@@ -581,6 +581,7 @@ $console = $system->import("console");
 $util= $system->import("util");
 
 $console->log($os->getFreeMemoryInfo());
+$console->log($os->getTotalMemoryInfo());
 $console->log($util->inspect($os->getCPUInfo()));
 ```
 
