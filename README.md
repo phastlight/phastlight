@@ -488,7 +488,7 @@ $fs->unlink("test",function($result){
 
 ### Get file stat asynchronously 
 In the example below, we will monitor the php script itself and see its information in async fashion
-```
+```php
 <?php
 
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
