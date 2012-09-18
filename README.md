@@ -18,7 +18,8 @@ At this time, Phastlight is on its very early development phrases,it currently s
 + [Module Creation](#module-creation)
 + [Event Emitting](#event-emitting)
 + [Async Timer](#server-side-timer) similar to http://nodejs.org/api/timers.html
-+ ["Tick" in Process](#process-next-tick) similar to http://nodejs.org/api/process.html#process_process_nexttick_callback
++ Process
+  + [Next Tick](#process-next-tick) similar to http://nodejs.org/api/process.html#process_process_nexttick_callback
 + [Log message to the console](#console-log-like-javascript) similar to Console.log in Javascript
 + File System: 
   + [read content of directory asynchronously](#file-system--reads-the-contents-of-a-directory-in-async-fashion)
