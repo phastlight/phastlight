@@ -21,7 +21,12 @@ class System extends EventEmitter
     //set up the event handler
     set_error_handler(function($severity, $message, $filePath, $line) use (&$system){
       $error = new Error($severity, $message, $filePath, $line);
-      $system->emit("system.error");
+      $system->emit("system.error",$error);
+    });
+
+    //set up exception handler
+    set_exception_handler(function($exception) use (&$system){
+      $system->emit("system.exception",$exception);
     });
 
     //on shutdown, run the event loop
