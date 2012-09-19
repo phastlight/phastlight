@@ -4,7 +4,6 @@ namespace Phastlight;
 class Module 
 {
   private $system;
-  private $eventEmitter;
   private $eventLoop;
 
   public function setSystem($system)

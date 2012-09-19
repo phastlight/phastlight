@@ -6,7 +6,7 @@
 
 namespace Phastlight;
 
-class System extends Object
+class System extends EventEmitter
 {
 
   private $eventLoop;
@@ -16,6 +16,15 @@ class System extends Object
   public function __construct()
   {
 
+    $system = $this;
+
+    //set up the event handler
+    set_error_handler(function($severity, $message, $filePath, $line) use (&$system){
+      $error = new Error($severity, $message, $filePath, $line);
+      $system->emit("system.error");
+    });
+
+    //on shutdown, run the event loop
     register_shutdown_function(function(){
       uv_run();
     });
@@ -76,5 +85,13 @@ class System extends Object
   public function getEventLoop()
   {
     return $this->eventLoop;
+  }
+
+  /**
+   * get event emitter
+   */
+  public function getEventEmitter()
+  {
+    return $this->eventEmitter; 
   }
 }
