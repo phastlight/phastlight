@@ -13,10 +13,10 @@ Phastlight is built on top of libuv, the same library used behind Node.js.
 
 At this time, Phastlight is on its very early development phrases,it currently supports the following features:
 
-+ HTTP
-  + [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
 + [Dynamic method creation](#dynamic-method-creation)
 + [Module Creation](#module-creation)
++ HTTP
+  + [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
 + Event
   + [Event Emitting](#event-emitting)
 + Timer
