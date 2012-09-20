@@ -11,16 +11,20 @@ Phastlight is built on top of libuv, the same library used behind Node.js.
 
 [Benchmark against React](#below-is-the-benchmark-on-phastlight-vs-react-on-a-simple-hello-world-response-we-simulate-10k-request-with-500-concurrent-requests)
 
-At this time, Phastlight is on its very early development phrases,it currently supports:
+At this time, Phastlight is on its very early development phrases,it currently supports the following features:
 
-+ [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
++ HTTP
+  + [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
 + [Dynamic method creation](#dynamic-method-creation)
 + [Module Creation](#module-creation)
-+ [Event Emitting](#event-emitting)
-+ [Async Timer](#server-side-timer) similar to http://nodejs.org/api/timers.html
++ Event
+  + [Event Emitting](#event-emitting)
++ Timer
+  + [Async Timer](#server-side-timer) similar to http://nodejs.org/api/timers.html
 + Process
   + [Next Tick](#process-next-tick) similar to http://nodejs.org/api/process.html#process_process_nexttick_callback
-+ [Log message to the console](#console-log-like-javascript) similar to Console.log in Javascript
++ Console
+  + [Log message to the console](#console-log-like-javascript) similar to Console.log in Javascript
 + File System: 
   + [read content of directory asynchronously](#file-system--reads-the-contents-of-a-directory-in-async-fashion)
   + [open file asynchronously](#file-system-create-a-new-file-and-write-content-to-it)
