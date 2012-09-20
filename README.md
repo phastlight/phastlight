@@ -17,6 +17,16 @@ At this time, Phastlight is on its very early development phrases,it currently s
 + [Module Creation](#module-creation)
 + HTTP
   + [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
+  + PHP server variables simulation on HTTP Request
+    Phastlight simulates the following PHP server variables on each HTTP Request:
+    + $_SERVER['SERVER_PORT']
+    + $_SERVER['SERVER_ADDR']
+    + $_SERVER['REMOTE_ADDR']
+    + $_SERVER['HTTP_HOST']
+    + $_SERVER['REQUEST_METHOD']
+    + $_SERVER['REQUEST_URI']
+    + $_SERVER['PATH_INFO'], 
+    + $_SERVER['HTTP_USER_AGENT']
 + Event
   + [Event Emitting](#event-emitting)
 + Timer
@@ -40,17 +50,6 @@ At this time, Phastlight is on its very early development phrases,it currently s
 + Operating System
   + [Get CPU Information](#operating-system-information)
   + [Get Memory Information](#operating-system-information)
-+ PHP server variables simulation
-
-  Phastlight simulates the following PHP server variables:
-  + $_SERVER['SERVER_PORT']
-  + $_SERVER['SERVER_ADDR']
-  + $_SERVER['REMOTE_ADDR']
-  + $_SERVER['HTTP_HOST']
-  + $_SERVER['REQUEST_METHOD']
-  + $_SERVER['REQUEST_URI']
-  + $_SERVER['PATH_INFO'], 
-  + $_SERVER['HTTP_USER_AGENT']
 
 More features will be on the way, stay tuned...
 
