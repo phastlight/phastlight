@@ -9,8 +9,6 @@ Phastlight is built on top of libuv, the same library used behind Node.js.
 
 [Benchmark against Node.js](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
 
-[Benchmark against React](#below-is-the-benchmark-on-phastlight-vs-react-on-a-simple-hello-world-response-we-simulate-10k-request-with-500-concurrent-requests)
-
 At this time, Phastlight is on its very early development phrases,it currently supports the following features:
 
 + [Dynamic method creation](#dynamic-method-creation)
@@ -257,70 +255,6 @@ Node.js
     Time per request:       1339.136 [ms] (mean)
     Time per request:       0.268 [ms] (mean, across all concurrent requests)
     Transfer rate:          372.85 [Kbytes/sec] received
-
-### Below is the benchmark on Phastlight v.s React on a simple "hello world" response, we simulate 10k request with 500 concurrent requests
-
-Phastlight server script:
-```php
-<?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
-$system = new \Phastlight\System();
-
-$console = $system->import("console");
-$http = $system->import("http");
-
-$http->createServer(function($req, $res){
-  $res->writeHead(200, array('Content-Type' => 'text/plain'));
-  $res->end("Hello World");
-})->listen(1337, '127.0.0.1');
-$console->log('Server running at http://127.0.0.1:1337/');
-```
-
-React serve script
-```php
-<?php
-require __DIR__.'/../vendor/autoload.php';
-$stack = new React\Espresso\Stack(function ($request, $response) {
-  $response->writeHead(200, array('Content-Type' => 'text/plain'));
-  $response->end("Hello World\n");
-});
-echo "Server running at http://127.0.0.1:1337\n";
-$stack->listen(1337, '127.0.0.1');
-```
-
-Benchmark result:
-
-Phastlight Server:
-
-    Concurrency Level:      500
-    Time taken for tests:   1.544 seconds
-    Complete requests:      10000
-    Failed requests:        0
-    Write errors:           0
-    Total transferred:      571368 bytes
-    HTML transferred:       112233 bytes
-    Requests per second:    6476.25 [#/sec] (mean)
-    Time per request:       77.205 [ms] (mean)
-    Time per request:       0.154 [ms] (mean, across all concurrent requests)
-    Transfer rate:          361.36 [Kbytes/sec] received
-
-React Server:
-
-    Concurrency Level:      500
-    Time taken for tests:   7.053 seconds
-    Complete requests:      10000
-    Failed requests:        0
-    Write errors:           0
-    Total transferred:      1220000 bytes
-    HTML transferred:       220000 bytes
-    Requests per second:    1417.88 [#/sec] (mean)
-    Time per request:       352.639 [ms] (mean)
-    Time per request:       0.705 [ms] (mean, across all concurrent requests)
-    Transfer rate:          168.93 [Kbytes/sec] received
-
-Result shows Phastlight is much faster than React
 
 ### Server side timer
 In the script below, we import the timer module and make the timer run every 1 second, after the counter hits 3, we stop the timer.
