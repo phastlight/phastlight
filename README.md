@@ -15,6 +15,11 @@ At this time, Phastlight is on its very early development phrases,it currently s
 
 + [Dynamic method creation](#dynamic-method-creation)
 + [Module Creation](#module-creation)
++ Event
+  + [Event Emitting](#event-emitting)
++ Error and Exception Handling
+  + [Error Handling and system.error event](#error-handling)
+  + [Exception Handling and system.exception event](#exception-handling)
 + HTTP
   + [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
   + PHP server variables simulation on HTTP Request
@@ -28,8 +33,6 @@ At this time, Phastlight is on its very early development phrases,it currently s
     + $_SERVER['REQUEST_URI']
     + $_SERVER['PATH_INFO'], 
     + $_SERVER['HTTP_USER_AGENT']
-+ Event
-  + [Event Emitting](#event-emitting)
 + Timer
   + [Async Timer](#server-side-timer) similar to http://nodejs.org/api/timers.html
 + Process
@@ -105,6 +108,94 @@ Tested on:
     extension=httpparser.so
 #### When running server, do php [server file full path]
 
+### Dynamic method creation
+Phastlight object allows dynamic method creation, in the example below, we create a hello method in the system object
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+$system->method("hello", function($word){
+  echo "Hello $word\n";
+});
+$system->hello("world");
+```
+
+### Module creation
+Phastlight supports a flexible module system with export and import, the following example shows how to create a simple
+module that can print "hello world"
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+class MyModule extends \Phastlight\Module
+{
+  public function hello($word)
+  {
+    echo "hello $word";
+  }
+}
+
+$system = new \Phastlight\System();
+$system->export("mymodule", "\MyModule"); //we first export the MyModule module
+$module = $system->import("mymodule"); //now we can import it
+$module->hello("world");
+```
+
+### Event Emitting
+Event Emitter is a core component in phastlight, we can use it to emit and handle an event
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$eventEmitter = new \Phastlight\EventEmitter();
+
+$eventEmitter->on("test", function(){
+  echo "hello in test\n";
+});
+
+$eventEmitter->emit("test");
+```
+
+### Error Handling
+When error occured, phastlight will emit system.error event, and we can use this event to further 
+polish the error handling
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+$system->on("system.error", function($error){
+  print $error->getFilePath()."\n";
+  print $error->getMessage()."\n";
+  print $error->getLine()."\n";
+  print $error->getSeverity()."\n";
+});
+
+$i = 12/0; //we purposely divide an integer by 0
+```
+
+### Exception Handling
+When exception occurred, phastlight will emit system.exception event, and we can use this event
+to further polish the exception handling
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+$system->on("system.exception", function($exception){
+  print $exception->getMessage()."\n";
+  print $exception->getCode()."\n";
+  print $exception->getLine()."\n";
+});
+
+throw new Exception('Uncaught Exception');
+```
 
 ### Simple HTTP server, benchmarked with PHP 5.4.6 and Node.js v0.8.8
 ```php
@@ -230,58 +321,6 @@ React Server:
     Transfer rate:          168.93 [Kbytes/sec] received
 
 Result shows Phastlight is much faster than React
-
-### Dynamic method creation
-Phastlight object allows dynamic method creation, in the example below, we create a hello method in the system object
-```php
-<?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
-$system = new \Phastlight\System();
-$system->method("hello", function($word){
-  echo "Hello $word\n";
-});
-$system->hello("world");
-```
-
-### Module creation
-Phastlight supports a flexible module system with export and import, the following example shows how to create a simple
-module that can print "hello world"
-```php
-<?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
-class MyModule extends \Phastlight\Module
-{
-  public function hello($word)
-  {
-    echo "hello $word";
-  }
-}
-
-$system = new \Phastlight\System();
-$system->export("mymodule", "\MyModule"); //we first export the MyModule module
-$module = $system->import("mymodule"); //now we can import it
-$module->hello("world");
-```
-
-### Event Emitting
-Event Emitter is a core component in phastlight, we can use it to emit and handle an event
-```php
-<?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
-$eventEmitter = new \Phastlight\EventEmitter();
-
-$eventEmitter->on("test", function(){
-  echo "hello in test\n";
-});
-
-$eventEmitter->emit("test");
-```
 
 ### Server side timer
 In the script below, we import the timer module and make the timer run every 1 second, after the counter hits 3, we stop the timer.
