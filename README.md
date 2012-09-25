@@ -35,6 +35,8 @@ At this time, Phastlight is on its very early development phrases,it currently s
   + [Async Timer](#server-side-timer) similar to http://nodejs.org/api/timers.html
 + Process
   + [Next Tick](#process-next-tick) similar to http://nodejs.org/api/process.html#process_process_nexttick_callback
++ Child Process
+  + [executing command](#execute-command-in-child-process)
 + Console
   + [Log message to the console](#console-log-like-javascript) similar to Console.log in Javascript
 + File System: 
@@ -370,6 +372,25 @@ $http->createServer(function($req, $res){
   $res->end("Requet path is ".$req->getURL());
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
+```
+
+### Execute Command In Child Process
+Phastlight can create child processes to execute a command.
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+$childProcess = $system->import("child_process");
+$childProcess->exec("ls -latr", function($error, $stdout, $stderr){
+  if($error !== null){
+    print "error occured\n"; 
+  }
+  else{
+    print $stdout."\n"; 
+  }
+});
 ```
 
 ### File System : reads the contents of a directory in async fashion
