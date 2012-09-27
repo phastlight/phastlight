@@ -59,6 +59,7 @@ More features will be on the way, stay tuned...
 
 Phastlight Application Examples:
 
++ [Mult-Tasking in one single event loop](#handle-multiple-tasks-in-one-single-event-loop)
 + [Simple Microframework on top of Phalcon PHP Framework Routing Component](#integrating-phastlight-with-phalcon-php-framework-routing-component)
 + [Working with Symfony2 HTTP Foundation Request and Response component](#output-html-with-symfony2-http-foundation-component)
 + [Simple asynchronous Memcache get and set](#asynchronous-memcache-get-and-set)
@@ -332,48 +333,6 @@ Now in the command line, run php server/server.php, we should see:
     Start Computing Sum From 1 to 100...
     Sum is 5050
 
-### Multi tasking in one single event loop
-Using process next tick technique, we can perform mult-tasking in one single event loop.
-
-In the script below, we perform a heavy task for suming 1 to 1 million, while also setting up a http server listening to port 1337
-```php
-<?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
-$system = new \Phastlight\System();
-
-$console = $system->import("console");
-$process = $system->import("process");
-
-$count = 0;
-$sum = 0;
-$n = 1000000;
-$system->method("heavySum", function() use ($system, &$count, &$sum, $n){
-  $console = $system->import("console"); //use the console module
-  $count ++;
-  if($count <= $n){
-    $sum += $count;
-    $process = $system->import("process"); //use the process module
-    $process->nextTick(array($system,"heavySum"));
-  }
-  else{
-    $console->log("Sum is $sum"); 
-  }
-});
-
-$system->heavySum();
-
-$console->log("Start Computing Sum From 1 to $n...");
-
-$http = $system->import("http");
-$http->createServer(function($req, $res){
-  $res->writeHead(200, array('Content-Type' => 'text/plain'));
-  $res->end("Requet path is ".$req->getURL());
-})->listen(1337, '127.0.0.1');
-$console->log('Server running at http://127.0.0.1:1337/');
-```
-
 ### Execute Command In Child Process
 Phastlight can create child processes to execute a command.
 ```php
@@ -581,6 +540,48 @@ $util= $system->import("util");
 $console->log($os->getFreeMemoryInfo());
 $console->log($os->getTotalMemoryInfo());
 $console->log($util->inspect($os->getCPUInfo()));
+```
+
+### Handle multiple tasks in one single event loop
+Using process next tick technique, we can perform mult-tasking in one single event loop.
+
+In the script below, we perform a heavy task for suming 1 to 1 million, while also setting up a http server listening to port 1337
+```php
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$console = $system->import("console");
+$process = $system->import("process");
+
+$count = 0;
+$sum = 0;
+$n = 1000000;
+$system->method("heavySum", function() use ($system, &$count, &$sum, $n){
+  $console = $system->import("console"); //use the console module
+  $count ++;
+  if($count <= $n){
+    $sum += $count;
+    $process = $system->import("process"); //use the process module
+    $process->nextTick(array($system,"heavySum"));
+  }
+  else{
+    $console->log("Sum is $sum"); 
+  }
+});
+
+$system->heavySum();
+
+$console->log("Start Computing Sum From 1 to $n...");
+
+$http = $system->import("http");
+$http->createServer(function($req, $res){
+  $res->writeHead(200, array('Content-Type' => 'text/plain'));
+  $res->end("Requet path is ".$req->getURL());
+})->listen(1337, '127.0.0.1');
+$console->log('Server running at http://127.0.0.1:1337/');
 ```
 
 ### Integrating phastlight with Phalcon PHP Framework Routing Component
