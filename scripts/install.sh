@@ -47,4 +47,4 @@ cd $dir
 extension_dir=$($dir/bin/php-config --extension-dir)
 
 echo "extension_dir=$extension_dir\n" > php.ini
-echo "extension=uv.so\nextension=httpparser.so" >> php.ini
+echo "extension=uv.so\n" >> php.ini
