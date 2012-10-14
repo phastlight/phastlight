@@ -40,13 +40,6 @@ $dir/bin/phpize
 ./configure --with-php-config=$dir/bin/php-config
 make && make install
 
-# Install httpparser
-git clone https://github.com/chobie/php-httpparser.git --recursive
-cd php-httpparser
-$dir/bin/phpize
-./configure --with-php-config=$dir/bin/php-config
-make && make install
-
 cd $dir
 
 # write php.ini file

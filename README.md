@@ -98,15 +98,8 @@ Tested on:
     ./configure
     make && make install
 
-    git clone https://github.com/chobie/php-httpparser.git --recursive
-    cd php-httpparser
-    phpize
-    ./configure
-    make && make install
-
     add following extensions to your php.ini
     extension=uv.so
-    extension=httpparser.so
 #### When running server, do php [server file full path]
 
 ### Dynamic method creation

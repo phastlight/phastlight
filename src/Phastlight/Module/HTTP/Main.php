@@ -13,7 +13,7 @@ class Main extends \Phastlight\Module
 
   public function __construct()
   {
-    $this->http_parser = http_parser_init(); //set up http parser
+    $this->http_parser = uv_http_parser_init(\UV::HTTP_REQUEST); //set up http parser
   }
 
   public function createServer($requestListener)
@@ -104,31 +104,31 @@ class Main extends \Phastlight\Module
 
     $_SERVER['RAW_HTTP_HEADER'] = $buffer;
 
-    http_parser_execute($this->http_parser, $buffer, $result);
+    uv_http_parser_execute($this->http_parser, $buffer, $result);
 
-    if(isset($result['headers']['Host'])){
-      $_SERVER['HTTP_HOST'] = $result['headers']['Host']; 
+    if(isset($result['HEADERS']['HOST'])){
+      $_SERVER['HTTP_HOST'] = $result['HEADERS']['HOST']; 
     }
     $requestMethod = $result['REQUEST_METHOD'];
 
     //constructing server variables
     $_SERVER['REQUEST_METHOD'] = $result['REQUEST_METHOD'];
-    if(isset($result['path'])){
-      $_SERVER['REQUEST_URI'] = $_SERVER['PATH_INFO'] = $result['path'];
+    if(isset($result['PATH'])){
+      $_SERVER['REQUEST_URI'] = $_SERVER['PATH_INFO'] = $result['PATH'];
     }
-    if(isset($result['headers']['User-Agent'])){
-      $_SERVER['HTTP_USER_AGENT'] = $result['headers']['User-Agent'];
+    if(isset($result['HEADERS']['USER_AGENT'])){
+      $_SERVER['HTTP_USER_AGENT'] = $result['HEADERS']['USER_AGENT'];
     }
 
     //constructing global variables
     if($requestMethod == 'GET'){
-      if(isset($result['query'])){
-        $result['headers']['body'] = $result['query']; //bind body to query if it is a get request
+      if(isset($result['QUERY'])){
+        $result['HEADERS']['body'] = $result['QUERY']; //bind body to query if it is a get request
       }
     }
 
-    if(isset($result['headers']['body'])){
-      $GLOBALS["_$requestMethod"] = explode("&", $result['headers']['body']); 
+    if(isset($result['HEADERS']['body'])){
+      $GLOBALS["_$requestMethod"] = explode("&", $result['HEADERS']['body']); 
     }
   }
 }
