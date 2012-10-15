@@ -77,7 +77,6 @@ class Socket extends \Phastlight\EventEmitter
   public function end($data = null)
   {
     if($data){
-      $this->emit('data', $data);
       $this->write($data);
       $this->end();
     }
