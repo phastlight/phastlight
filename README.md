@@ -65,7 +65,7 @@ Phastlight Application Examples:
 + [Simple asynchronous Memcache get and set](#asynchronous-memcache-get-and-set)
 + [Simple asynchronous Redis get and set](#asynchronous-redis-get-and-set)
 
-At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web/mobible applications.
+At this phrase, phastlight is good for high concurrency, low data transfer, non cpu intensive web or moble applications.
 
 ##Installation:
 
