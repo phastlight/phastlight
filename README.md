@@ -80,14 +80,14 @@ Tested on:
 ### Option 1: Run the installation script 
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
-#### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.4.7 plus php-uv.so and httpparser.so)
+#### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.4.7 plus php-uv.so)
 #### When running server, do: /usr/local/phastlight/bin/php -c /usr/local/phastlight/php.ini [server file full path]
 
 ### Option 2: Manual install with existing PHP source (Linux and MacOS only)###
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### install sockets extension (http://www.php.net/manual/en/sockets.installation.php)
-#### install php-uv and php-httpparser
+#### install php-uv
     export CFLAGS='-fPIC'
 
     git clone https://github.com/chobie/php-uv.git --recursive
