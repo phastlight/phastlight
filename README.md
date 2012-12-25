@@ -693,13 +693,13 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 9090), function()
         print_r($data);
     });
 
-    $clrf = "\r\n";
+    $crlf = "\r\n";
 
     $sql = "SELECT NOW()";
 
     $sqlEncodedObject = urlencode(json_encode(array("SQL" => $sql)));
 
-    $msg = "GET /db?".$sqlEncodedObject." HTTP/1.1".$clrf."Accept:application/json".$clrf.$clrf;
+    $msg = "GET /db?".$sqlEncodedObject." HTTP/1.1".$crlf."Accept:application/json".$crlf.$crlf;
 
     $client->write($msg);
 });
@@ -726,22 +726,22 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 11211), function(
   $duration = 3600; //duration of 1 hour
   $value = 250;
   $valueLength = strlen($value); 
-  $clrf = "\r\n";
+  $crlf = "\r\n";
 
-  $client->on('data', function($data) use ($key, $clrf, &$client){
+  $client->on('data', function($data) use ($key, $crlf, &$client){
     //according to the protocol, when server returns "STORED\r\n", we know that the key is successfully stored
-    if($data == "STORED$clrf"){       
+    if($data == "STORED$crlf"){       
       $client->removeAllListeners('data'); //we unbind the previous 'data' event listeners
       //we know re-add a new listener for event 'data'
       $client->on('data', function($data) use(&$client){
         print $data; //here we can see the details of the key that we just stored  
         $client->end(); //we now close the connection
       });
-      $client->write("get $key$clrf"); //getting the memcache key is another simple command over tcp
+      $client->write("get $key$crlf"); //getting the memcache key is another simple command over tcp
     }
   });
 
-  $client->write("set $key 0 $duration $valueLength$clrf$value$clrf"); //setting the memcache key is a simple command over tcp
+  $client->write("set $key 0 $duration $valueLength$crlf$value$crlf"); //setting the memcache key is a simple command over tcp
 });
 ```
 
@@ -762,19 +762,19 @@ $system = new \Phastlight\System();
 $net = $system->import("net");
 
 $client = $net->connect(array('host' => '127.0.0.1', 'port' => 6379), function() use (&$client){
-  $clrf = "\r\n";
+  $crlf = "\r\n";
 
-  $client->on('data', function($data) use ($key, $clrf, &$client){
-    if($data == "+OK$clrf"){ //from the protocol, we know that now the key is successfully stored
+  $client->on('data', function($data) use ($key, $crlf, &$client){
+    if($data == "+OK$crlf"){ //from the protocol, we know that now the key is successfully stored
       $client->removeAllListeners('data'); 
       $client->on('data', function($data) use(&$client){
         print $data; //here we can see the details of the key that we just stored  
         $client->end(); //close the connection
       });
-      $client->write("GET mykey$clrf"); //we can get the key in one simple command over tcp
+      $client->write("GET mykey$crlf"); //we can get the key in one simple command over tcp
     }
   });
 
-  $client->write("SET mykey myvalue234$clrf"); //we can set the value of a key in one simple command over tcp
+  $client->write("SET mykey myvalue234$crlf"); //we can set the value of a key in one simple command over tcp
 });
 ```

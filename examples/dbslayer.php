@@ -11,13 +11,13 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 9090), function()
         print_r($data);
     });
 
-    $clrf = "\r\n";
+    $crlf = "\r\n";
 
     $sql = "SELECT NOW()";
 
     $sqlEncodedObject = urlencode(json_encode(array("SQL" => $sql)));
 
-    $msg = "GET /db?$sqlEncodedObject HTTP/1.1".$clrf."Accept:application/json".$clrf.$clrf;
+    $msg = "GET /db?$sqlEncodedObject HTTP/1.1".$crlf."Accept:application/json".$crlf.$crlf;
 
     $client->write($msg);
 });
