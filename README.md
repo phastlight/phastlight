@@ -62,6 +62,7 @@ Phastlight Application Examples:
 + [Mult-Tasking in one single event loop](#handle-multiple-tasks-in-one-single-event-loop)
 + [Simple Microframework on top of Phalcon PHP Framework Routing Component](#integrating-phastlight-with-phalcon-php-framework-routing-component)
 + [Working with Symfony2 HTTP Foundation Request and Response component](#output-html-with-symfony2-http-foundation-component)
++ [Simple asynchronous MYSQL query through dbslayer](#simple-asynchronous-mysql-query-through-dbslayer)
 + [Simple asynchronous Memcache get and set](#asynchronous-memcache-get-and-set)
 + [Simple asynchronous Redis get and set](#asynchronous-redis-get-and-set)
 
@@ -671,6 +672,37 @@ $http->createServer(function($req, $res){
 })->listen(1337, '127.0.0.1');
 $console->log('Server running at http://127.0.0.1:1337/');
 ```
+
+### Simple asynchronous MYSQL query through dbslayer 
+[DBSlayer](http://code.nytimes.com/projects/dbslayer) is a lightweight database abstraction layer allowing sql queries to MYSQL database through REST and JSON.
+With the net module in phastlight, we can now perform sql queries asynchronously over TCP through DBSlayer.
+Assuming DBSlayer is running at host 127.0.0.1 and port 9090, the example below shows how to get the current database time in mysql asynchronously.
+
+```php 
+<?php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$net = $system->import("net");
+
+$client = $net->connect(array('host' => '127.0.0.1', 'port' => 9090), function() use (&$client) {
+    $client->on('data', function($data) use (&$client) {
+        //we can now see the details of the data
+        print_r($data);
+    });
+
+    $clrf = "\r\n";
+
+    $sql = "SELECT NOW()";
+
+    $sqlEncodedObject = urlencode(json_encode(array("SQL" => $sql)));
+
+    $msg = "GET /db?$sqlEncodedObject HTTP/1.1".$clrf."Accept:application/json".$clrf.$clrf;
+
+    $client->write($msg);
+});
 
 ### Asynchronous Memcache Get and Set
 With the net module in phastlight, we can now do some interesting things with memcache over TCP.
