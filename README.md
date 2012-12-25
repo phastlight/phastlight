@@ -703,6 +703,7 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 9090), function()
 
     $client->write($msg);
 });
+```
 
 ### Asynchronous Memcache Get and Set
 With the net module in phastlight, we can now do some interesting things with memcache over TCP.
