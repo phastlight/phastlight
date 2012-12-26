@@ -82,7 +82,7 @@ Tested on:
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.4.10 plus php-uv.so and httpparser.so)
-#### When running server, do: /usr/local/phastlight/bin/php -c /usr/local/phastlight/php.ini [server file full path]
+#### To run the server, do: /usr/local/phastlight/bin/php -c /usr/local/phastlight/php.ini [server file full path]
 
 ### Option 2: Manual install with existing PHP source (Linux and MacOS only)###
 
@@ -109,7 +109,7 @@ Tested on:
     make 
     make install
 
-#### When running server, do php [server file full path]
+#### To run the server, do php [server file full path]
 
 ### Dynamic method creation
 Phastlight object allows dynamic method creation, in the example below, we create a hello method in the system object
