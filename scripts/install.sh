@@ -40,6 +40,13 @@ $dir/bin/phpize
 ./configure --with-php-config=$dir/bin/php-config
 make && make install
 
+# Install httpparser
+git clone https://github.com/chobie/php-httpparser.git --recursive
+cd php-httpparser
+$dir/bin/phpize
+./configure --with-php-config=$dir/bin/php-config
+make && make install
+
 cd $dir
 
 # write php.ini file
@@ -47,4 +54,4 @@ cd $dir
 extension_dir=$($dir/bin/php-config --extension-dir)
 
 echo "extension_dir=$extension_dir\n" > php.ini
-echo "extension=uv.so\n" >> php.ini
+echo "extension=uv.so\nextension=httpparser.so" >> php.ini
