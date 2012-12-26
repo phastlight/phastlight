@@ -116,9 +116,8 @@ class Main extends \Phastlight\Module
         if (isset($result['path'])) {
             $_SERVER['REQUEST_URI'] = $_SERVER['PATH_INFO'] = $result['path'];
         }
-        if (isset($result['headers']['User_Agent'])) {
-            $_SERVER['HTTP_USER_AGENT'] = $result['headers']['User_Agent'];
+        if (isset($result['headers']['User-Agent'])) {
+            $_SERVER['HTTP_USER_AGENT'] = $result['headers']['User-Agent'];
         }
-
     }
 }
