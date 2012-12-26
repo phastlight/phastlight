@@ -109,6 +109,8 @@ Tested on:
     make 
     make install
 
+    add uv.so and httpparser.so in php.ini
+
 #### To run the server, do php [server file full path]
 
 ### Dynamic method creation
