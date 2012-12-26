@@ -7,7 +7,7 @@ fi
 
 if [ $# -lt 2 ]
 then
-  phpversion="5.4.7"
+  phpversion="5.4.10"
 else
   phpversion=$2
 fi
@@ -19,33 +19,36 @@ fi
 cd $dir
 
 # Download php src and enable sockets extension
-if [ ! -f php-$phpversion.tar.gz ];
-then
-  wget http://us2.php.net/get/php-$phpversion.tar.gz/from/us.php.net/mirror -O php-$phpversion.tar.gz
-fi
+wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O php-$phpversion.tar.gz
 tar xvf php-$phpversion.tar.gz
 cd php-$phpversion
-./configure --enable-sockets --prefix=$dir
-make
+./configure --enable-sockets --prefix=$dir 
+make clean
+make 
 make install
 cd ..
 
 # Install php-uv
 export CFLAGS='-fPIC' 
 git clone https://github.com/chobie/php-uv.git --recursive
-cd php-uv/libuv
-make && cp uv.a libuv.a
+cd php-uv/libuv 
+make clean
+make 
+cp uv.a libuv.a
 cd ..
 $dir/bin/phpize
 ./configure --with-php-config=$dir/bin/php-config
-make && make install
+make
+make install
 
 # Install httpparser
 git clone https://github.com/chobie/php-httpparser.git --recursive
 cd php-httpparser
 $dir/bin/phpize
 ./configure --with-php-config=$dir/bin/php-config
-make && make install
+make clean
+make 
+make install
 
 cd $dir
 

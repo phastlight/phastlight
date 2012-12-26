@@ -88,7 +88,7 @@ Tested on:
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### install sockets extension (http://www.php.net/manual/en/sockets.installation.php)
-#### install php-uv
+#### install php-uv and httpparser extension
     export CFLAGS='-fPIC'
 
     git clone https://github.com/chobie/php-uv.git --recursive
@@ -99,8 +99,16 @@ Tested on:
     ./configure
     make && make install
 
+    git clone https://github.com/chobie/php-httpparser.git --recursive
+    cd php-httpparser
+    $dir/bin/phpize
+    ./configure --with-php-config=$dir/bin/php-config
+    make && make install
+
     add following extensions to your php.ini
     extension=uv.so
+    extension=httpparser.so 
+
 #### When running server, do php [server file full path]
 
 ### Dynamic method creation
