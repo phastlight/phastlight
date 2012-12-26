@@ -120,15 +120,5 @@ class Main extends \Phastlight\Module
             $_SERVER['HTTP_USER_AGENT'] = $result['headers']['User_Agent'];
         }
 
-        //constructing global variables
-        if ($requestMethod == 'GET') {
-            if (isset($result['QUERY_STRING'])) {
-                $result['headers']['body'] = $result['QUERY_STRING']; //bind body to query if it is a get request
-            }
-        }
-
-        if (isset($result['headers']['body'])) {
-            $GLOBALS["_$requestMethod"] = explode("&", $result['headers']['body']); 
-        }
     }
 }
