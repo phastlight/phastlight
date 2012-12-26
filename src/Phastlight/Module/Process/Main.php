@@ -40,7 +40,6 @@ class Main extends \Phastlight\Module
             $f = function($r, $status) use ($plugin, &$tick) {
                 $callback = $plugin->getTickCallback($tick);
                 if (is_callable($callback)) {
-                    //$callback();
                     call_user_func($callback);
                     $plugin->removeTickCallback($tick);
                     $tick ++;
