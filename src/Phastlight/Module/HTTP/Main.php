@@ -13,7 +13,7 @@ class Main extends \Phastlight\Module
 
     public function __construct()
     {
-        $this->httpParser = http_parser_init(); //set up http parser
+        $this->httpParser = new HTTPParser();
     }
 
     public function createServer($requestListener)
@@ -104,7 +104,7 @@ class Main extends \Phastlight\Module
 
         $_SERVER['RAW_HTTP_HEADER'] = $buffer;
 
-        http_parser_execute($this->httpParser, $buffer, $result);
+        $result = $this->httpParser->parse($buffer);
 
         if (isset($result['headers']['Host'])) {
             $_SERVER['HTTP_HOST'] = $result['headers']['Host']; 
@@ -119,5 +119,10 @@ class Main extends \Phastlight\Module
         if (isset($result['headers']['User-Agent'])) {
             $_SERVER['HTTP_USER_AGENT'] = $result['headers']['User-Agent'];
         }
+    }
+
+    public function getParser()
+    {
+        return $this->httpParser;
     }
 }
