@@ -81,7 +81,7 @@ Tested on:
 ### Option 1: Run the installation script 
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
-#### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.4.7 plus php-uv.so)
+#### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.4.10 plus php-uv.so and httpparser.so)
 #### When running server, do: /usr/local/phastlight/bin/php -c /usr/local/phastlight/php.ini [server file full path]
 
 ### Option 2: Manual install with existing PHP source (Linux and MacOS only)###
@@ -89,25 +89,25 @@ Tested on:
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### install sockets extension (http://www.php.net/manual/en/sockets.installation.php)
 #### install php-uv and httpparser extension
-    export CFLAGS='-fPIC'
+export CFLAGS='-fPIC' 
+git clone https://github.com/chobie/php-uv.git --recursive
+cd php-uv/libuv 
+make clean
+make 
+cp uv.a libuv.a
+cd ..
+$dir/bin/phpize
+./configure --with-php-config=$dir/bin/php-config
+make
+make install
 
-    git clone https://github.com/chobie/php-uv.git --recursive
-    cd php-uv/libuv
-    make && cp uv.a libuv.a
-    cd ..
-    phpize
-    ./configure
-    make && make install
-
-    git clone https://github.com/chobie/php-httpparser.git --recursive
-    cd php-httpparser
-    $dir/bin/phpize
-    ./configure --with-php-config=$dir/bin/php-config
-    make && make install
-
-    add following extensions to your php.ini
-    extension=uv.so
-    extension=httpparser.so 
+git clone https://github.com/chobie/php-httpparser.git --recursive
+cd php-httpparser
+$dir/bin/phpize
+./configure --with-php-config=$dir/bin/php-config
+make clean
+make 
+make install
 
 #### When running server, do php [server file full path]
 
