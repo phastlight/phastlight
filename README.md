@@ -89,25 +89,25 @@ Tested on:
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### install sockets extension (http://www.php.net/manual/en/sockets.installation.php)
 #### install php-uv and httpparser extension
-export CFLAGS='-fPIC' 
-git clone https://github.com/chobie/php-uv.git --recursive
-cd php-uv/libuv 
-make clean
-make 
-cp uv.a libuv.a
-cd ..
-$dir/bin/phpize
-./configure --with-php-config=$dir/bin/php-config
-make
-make install
+    export CFLAGS='-fPIC' 
+    git clone https://github.com/chobie/php-uv.git --recursive
+    cd php-uv/libuv 
+    make clean
+    make 
+    cp uv.a libuv.a
+    cd ..
+    $dir/bin/phpize
+    ./configure --with-php-config=$dir/bin/php-config
+    make
+    make install
 
-git clone https://github.com/chobie/php-httpparser.git --recursive
-cd php-httpparser
-$dir/bin/phpize
-./configure --with-php-config=$dir/bin/php-config
-make clean
-make 
-make install
+    git clone https://github.com/chobie/php-httpparser.git --recursive
+    cd php-httpparser
+    $dir/bin/phpize
+    ./configure --with-php-config=$dir/bin/php-config
+    make clean
+    make 
+    make install
 
 #### When running server, do php [server file full path]
 
