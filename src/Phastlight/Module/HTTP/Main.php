@@ -105,19 +105,18 @@ class Main extends \Phastlight\Module
         $_SERVER['RAW_HTTP_HEADER'] = $buffer;
 
         $result = $this->httpParser->parse($buffer);
-
-        if (isset($result['headers']['Host'])) {
-            $_SERVER['HTTP_HOST'] = $result['headers']['Host']; 
+        if (isset($result['HEADERS']['HOST'])) {
+            $_SERVER['HTTP_HOST'] = $result['HEADERS']['HOST']; 
         }
         $requestMethod = $result['REQUEST_METHOD'];
 
         //constructing server variables
         $_SERVER['REQUEST_METHOD'] = $result['REQUEST_METHOD'];
-        if (isset($result['path'])) {
-            $_SERVER['REQUEST_URI'] = $_SERVER['PATH_INFO'] = $result['path'];
+        if (isset($result['PATH'])) {
+            $_SERVER['REQUEST_URI'] = $_SERVER['PATH_INFO'] = $result['PATH'];
         }
-        if (isset($result['headers']['User-Agent'])) {
-            $_SERVER['HTTP_USER_AGENT'] = $result['headers']['User-Agent'];
+        if (isset($result['HEADERS']['USER_AGENT'])) {
+            $_SERVER['HTTP_USER_AGENT'] = $result['HEADERS']['USER_AGENT'];
         }
     }
 
