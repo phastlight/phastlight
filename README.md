@@ -757,3 +757,26 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 6379), function()
   $client->write("SET mykey myvalue234$crlf"); //we can set the value of a key in one simple command over tcp
 });
 ```
+
+### Connect to gearman server asynchronously
+The example below shows how to connect to gearman asynchronously over TCP
+For more details on the gearman tcp protocol, please click [here](http://gearman.org/protocol), we can now create some async gearman libraries just by following the protocol.
+
+```php
+//Assuming this is server/server.php and the composer vendor directory is ../vendor
+require_once __DIR__.'/../vendor/autoload.php';
+
+$system = new \Phastlight\System();
+
+$net = $system->import("net");
+
+$client = $net->connect(array('host' => '127.0.0.1', 'port' => 4730));
+
+$client->on('connect',  function() use (&$client) {
+    print "connected to gearman server...\n";
+});
+
+$client->on('data', function($data) use (&$client) {
+    print_r($data);
+});
+```
