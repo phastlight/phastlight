@@ -71,47 +71,16 @@ At this phrase, phastlight is good for high concurrency, low data transfer, non 
 ##Installation:
 
 Tested on:
-+ Ubuntu 11.04 64bit with gcc 4.4.x
-+ Ubuntu 12.04 64bit with gcc 4.4.x
 + CentOS 6.2 64bit with gcc 4.4.x
 + Mac OS 10.8 with gcc 4.2.1
 
 ### Make sure you have superuser access
 
-### Option 1: Run the installation script 
-
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
-#### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.4.10 plus php-uv.so and httpparser.so)
+#### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.5.9 and php-uv.so)
 #### To run the server, do: /usr/local/phastlight/bin/php -c /usr/local/phastlight/php.ini [server file full path]
 
-### Option 2: Manual install with existing PHP source (Linux and MacOS only)###
-
-#### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
-#### install sockets extension (http://www.php.net/manual/en/sockets.installation.php)
-#### install php-uv and httpparser extension
-    export CFLAGS='-fPIC' 
-    git clone https://github.com/chobie/php-uv.git --recursive
-    cd php-uv/libuv 
-    make clean
-    make 
-    cp uv.a libuv.a
-    cd ..
-    $dir/bin/phpize
-    ./configure --with-php-config=$dir/bin/php-config
-    make
-    make install
-
-    git clone https://github.com/chobie/php-httpparser.git --recursive
-    cd php-httpparser
-    $dir/bin/phpize
-    ./configure --with-php-config=$dir/bin/php-config
-    make clean
-    make 
-    make install
-
-    add uv.so and httpparser.so in php.ini
-
-#### To run the server, do php [server file full path]
+#### To run the server, do phastlight [server file full path]
 
 ### Dynamic method creation
 Phastlight object allows dynamic method creation, in the example below, we create a hello method in the system object
@@ -202,7 +171,7 @@ $system->on("system.exception", function($exception){
 throw new Exception('Uncaught Exception');
 ```
 
-### Simple HTTP server, benchmarked with PHP 5.4.6 and Node.js v0.8.8
+### Simple HTTP server, benchmarked with PHP 5.5.9 and Node.js v0.10.25
 ```php
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
