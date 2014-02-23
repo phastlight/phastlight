@@ -55,7 +55,7 @@ sudo echo -e "extension=uv.so\n" >> php.ini
 
 # generate phastlight executable  
 echo "Generating phastlight binary at /usr/local/bin"
-sudo echo "$dir/bin/php -c $dir/php.ini $*" > /usr/local/bin/phastlight 
+sudo echo "$dir/bin/php -c $dir/php.ini \$*" > /usr/local/bin/phastlight 
 sudo chmod u+x /usr/local/bin/phastlight
 
 if [ $(phastlight -m | grep uv | wc -l) -eq 1 ]; then
