@@ -59,8 +59,8 @@ sudo echo "$dir/bin/php -c $dir/php.ini \$*" > /usr/local/bin/phastlight
 sudo chmod u+x /usr/local/bin/phastlight
 
 if [ $(phastlight -m | grep uv | wc -l) -eq 1 ]; then
-    echo "Installation completed, you can start phastlight with\n"
+    echo -e "Installation completed, you can start phastlight with\n"
     echo "phastlight [Your sever file]"
 else
-    echo "Fail installing uv.so extension to $dir/bin/php\n"
+    echo -e "Fail installing uv.so extension to $dir/bin/php\n"
 fi
