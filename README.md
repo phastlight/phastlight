@@ -775,8 +775,4 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 4730));
 $client->on('connect',  function() use (&$client) {
     print "connected to gearman server...\n";
 });
-
-$client->on('data', function($data) use (&$client) {
-    print_r($data);
-});
 ```
