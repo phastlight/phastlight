@@ -189,7 +189,7 @@ $http->createServer(function($req, $res){
 $console->log('Server running at http://127.0.0.1:1337/');
 ```
 
-Now in command line, run php server/server.php and go to http://127.0.0.1:1337/ to see the result.
+Now in command line, run phastlight server/server.php and go to http://127.0.0.1:1337/ to see the result.
 
 Below is the benchmark performed with Apache AB against the following Node.js script, the operating system is CENTOS 6 64bit, we simulate 200k requests and 5k concurrent requests.
 Result shows phastlight is faster than Node.js.
@@ -301,7 +301,7 @@ $system->sumFromOneToOneHundred();
 $console->log("Start Computing Sum From 1 to 100...");
 ```
 
-Now in the command line, run php server/server.php, we should see:
+Now in the command line, run phastlight server/server.php, we should see:
 
     Start Computing Sum From 1 to 100...
     Sum is 5050
