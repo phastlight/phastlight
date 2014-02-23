@@ -78,8 +78,6 @@ Tested on:
 
 #### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
 #### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.5.9 and php-uv.so)
-#### To run the server, do: /usr/local/phastlight/bin/php -c /usr/local/phastlight/php.ini [server file full path]
-
 #### To run the server, do phastlight [server file full path]
 
 ### Dynamic method creation
