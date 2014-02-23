@@ -24,14 +24,14 @@ At this time, Phastlight is on its very early development phrases,it currently s
 
     Phastlight simulates the following PHP server variables on each HTTP Request:
     ```php
-    + $_SERVER['SERVER_PORT']
-    + $_SERVER['SERVER_ADDR']
-    + $_SERVER['REMOTE_ADDR']
-    + $_SERVER['HTTP_HOST']
-    + $_SERVER['REQUEST_METHOD']
-    + $_SERVER['REQUEST_URI']
-    + $_SERVER['PATH_INFO'], 
-    + $_SERVER['HTTP_USER_AGENT']
+    $_SERVER['SERVER_PORT']
+    $_SERVER['SERVER_ADDR']
+    $_SERVER['REMOTE_ADDR']
+    $_SERVER['HTTP_HOST']
+    $_SERVER['REQUEST_METHOD']
+    $_SERVER['REQUEST_URI']
+    $_SERVER['PATH_INFO'], 
+    $_SERVER['HTTP_USER_AGENT']
     ```
 + Timer
   + [Async Timer](#server-side-timer) similar to http://nodejs.org/api/timers.html
