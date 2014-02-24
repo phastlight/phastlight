@@ -36,8 +36,7 @@ class Socket extends \Phastlight\EventEmitter
                         $self->emit('data', $buffer);
                     }
                     
-                    $shouldClose = $self->getShouldClose();
-                    if ($shouldClose) {
+                    if ($self->shouldClose) {
                         uv_close($stream); 
                         $self->emit('close');
                     }
@@ -73,11 +72,6 @@ class Socket extends \Phastlight\EventEmitter
         else{
             $this->shouldClose = true; 
         }
-    }
-
-    private function getShouldClose()
-    {
-        return $this->shouldClose;
     }
 
 }
