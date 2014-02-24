@@ -27,4 +27,9 @@ class Main extends \Phastlight\Module
     {
         return uv_uptime();
     }
+
+    public function getLoadAverage() 
+    {
+        return uv_loadavg();
+    }
 }
