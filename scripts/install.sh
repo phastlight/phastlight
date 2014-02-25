@@ -50,7 +50,10 @@ export PATH=$OLDPATH
 
 extension_dir=$($dir/bin/php-config --extension-dir)
 
-ini_content="extension_dir=$extension_dir\nextension=uv.so"
+ini_content="
+extension_dir=$extension_dir
+extension=uv.so
+"
 
 echo $ini_content > php.ini
 
