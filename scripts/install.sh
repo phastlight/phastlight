@@ -50,12 +50,13 @@ export PATH=$OLDPATH
 
 extension_dir=$($dir/bin/php-config --extension-dir)
 
-sudo echo -e "extension_dir=$extension_dir\n" > php.ini
-sudo echo -e "extension=uv.so\n" >> php.ini 
+ini_content="extension_dir=$extension_dir\nextension=uv.so"
+
+echo $ini_content > php.ini
 
 # generate phastlight executable  
 echo "Generating phastlight binary at /usr/local/bin"
-sudo echo "$dir/bin/php -c $dir/php.ini \$*" > /usr/local/bin/phastlight 
+echo "$dir/bin/php -c $dir/php.ini \$*" > /usr/local/bin/phastlight 
 sudo chmod u+x /usr/local/bin/phastlight
 
 if [ $(phastlight -m | grep uv | wc -l) -eq 1 ]; then
