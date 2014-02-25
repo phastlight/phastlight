@@ -50,8 +50,10 @@ export PATH=$OLDPATH
 
 extension_dir=$($dir/bin/php-config --extension-dir)
 
-ini_content="extension_dir=$extension_dir$'\n'extension=uv.so"
-
+echo "extension_dir=$extension_dir" > php.ini 
+nl=$'\n'
+echo $nl >> php.ini
+echo "extension=uv.so" >> php.ini
 echo $ini_content > php.ini
 
 # generate phastlight executable  
