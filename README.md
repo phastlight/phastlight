@@ -76,10 +76,10 @@ Tested on:
 + CentOS 6.2 64bit with gcc 4.4.x
 + Mac OS 10.8 with gcc 4.2.1
 
-### Make sure you have superuser access
-
-#### install package "phastlight/phastlight" using composer (http://getcomposer.org/)
-#### sh vendor/phastlight/phastlight/scripts/install.sh  (this will install php 5.5.9 and php-uv.so)
+#### install with the installation script 
+```
+curl -sS https://raw.github.com/phastlight/phastlight/master/scripts/install.sh | sudo sh
+```
 #### To run the server, do phastlight [server file full path]
 
 ### Dynamic method creation
