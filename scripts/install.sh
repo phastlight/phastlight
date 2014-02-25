@@ -54,7 +54,6 @@ echo "extension_dir=$extension_dir" > php.ini
 nl=$'\n'
 echo $nl >> php.ini
 echo "extension=uv.so" >> php.ini
-echo $ini_content > php.ini
 
 # generate phastlight executable  
 echo "Generating phastlight binary at /usr/local/bin"
