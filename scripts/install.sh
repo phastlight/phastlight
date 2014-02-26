@@ -1,21 +1,24 @@
 echo "Starting phastlight installation..."
-if [ $# -lt 1 ]
-then
-  dir=/usr/local/phastlight
-else
-  dir=$1
-fi
 
-if [ $# -lt 2 ]
-then
-  phpversion="5.5.9"
-else
-  phpversion=$2
-fi
+dir=/usr/local/phastlight
+phpversion="5.5.9"
+
+for i in "$@"
+do 
+    case $i in 
+        --install-dir=*)
+            dir="${i#*=}"
+            ;;
+        --phpversion=*)
+            phpversion="${i#*=}"
+            ;;
+
+    esac
+done 
 
 if [ ! -d $dir ]; 
 then
-  mkdir $dir
+    mkdir $dir
 fi
 cd $dir
 
