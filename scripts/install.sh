@@ -63,14 +63,16 @@ echo "extension=uv.so" >> php.ini
 
 # generate phastlight executable  
 echo "Generating phastlight binary at /usr/local/bin"
-sudo echo "$dir/bin/php -c $dir/php.ini \$*" > /usr/local/bin/phastlight 
-sudo chmod u+x /usr/local/bin/phastlight
+sudo echo "$dir/bin/php -c $dir/php.ini \$*" > $dir/bin/phastlight 
+sudo chmod u+x $dir/bin/phastlight 
+sudo rm -f /usr/local/bin/phastlight
+sudo ln -s $dir/bin/phastlight /usr/local/bin/phastlight
 
 # installing composer 
 echo "Installing composer...\n"
 curl -sS https://getcomposer.org/installer | $dir/bin/php -- --install-dir=$dir/bin
 
-if [ $(phastlight -m | grep uv | wc -l) -eq 1 ]; then
+if [ $($dir/bin/phastlight -m | grep uv | wc -l) -eq 1 ]; then
     echo "Installation completed, you can start phastlight with"
     echo "phastlight [Your sever file]"
 else
