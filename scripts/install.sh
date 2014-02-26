@@ -1,3 +1,4 @@
+echo "Starting phastlight installation..."
 if [ $# -lt 1 ]
 then
   dir=/usr/local/phastlight
@@ -18,6 +19,7 @@ then
 fi
 cd $dir
 
+echo "Installing php..."
 # Download php src and enable sockets extension
 wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O php-$phpversion.tar.gz
 tar xvf php-$phpversion.tar.gz
@@ -32,6 +34,7 @@ OLDPATH=$PATH
 # override path so we can switch to phastlight's php 
 export PATH=$dir/bin:$PATH
 
+echo "Installing php-uv..."
 # Install php-uv
 git clone https://github.com/chobie/php-uv.git --recursive
 cd php-uv
@@ -59,6 +62,10 @@ echo "extension=uv.so" >> php.ini
 echo "Generating phastlight binary at /usr/local/bin"
 sudo echo "$dir/bin/php -c $dir/php.ini \$*" > /usr/local/bin/phastlight 
 sudo chmod u+x /usr/local/bin/phastlight
+
+# installing composer 
+echo "Installing composer...\n"
+curl -sS https://getcomposer.org/installer | $dir/bin/php -- --install-dir=$dir/bin
 
 if [ $(phastlight -m | grep uv | wc -l) -eq 1 ]; then
     echo "Installation completed, you can start phastlight with"
