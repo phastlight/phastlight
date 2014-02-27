@@ -26,16 +26,16 @@ do
 done 
 
 phastlight_dir=$(eval echo $phastlight_dir)
-phastlight_executable_path=$(eval $phastlight_executable_path)
+phastlight_executable_path=$(eval echo $phastlight_executable_path)
 
 sudo mkdir -p $phastlight_dir
 sudo mkdir -p $phastlight_executable_path 
 
 echo "Installing php..."
 # Download php src and enable sockets extension
-wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O php-$phpversion.tar.gz
+wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O $phastlight_dir/php-$phpversion.tar.gz
 tar xvf php-$phpversion.tar.gz
-cd php-$phpversion
+cd $phastlight_dir/php-$phpversion
 sudo ./configure --enable-sockets --prefix=$phastlight_dir 
 sudo make 
 sudo make install
