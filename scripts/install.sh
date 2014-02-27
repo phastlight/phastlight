@@ -86,4 +86,4 @@ if [ $($phastlight_executable_path/phastlight -m | grep uv | wc -l) -eq 1 ]; the
     echo "phastlight [Your sever file]"
 else
     echo "Fail installing uv.so extension to $phastlight_dir/bin/php"
-ffi
+fi
