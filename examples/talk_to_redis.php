@@ -1,7 +1,4 @@
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $net = $system->import("net");

@@ -77,13 +77,6 @@ nl=$'\n'
 echo $nl >> php.ini
 echo "extension=uv.so" >> php.ini
 
-# generate phastlight executable  
-echo "Generating phastlight binary at /usr/local/bin"
-sudo echo "$phastlight_dir/bin/php -c $phastlight_dir/php.ini \$*" > $phastlight_dir/bin/phastlight 
-sudo chmod u+x $phastlight_dir/bin/phastlight 
-sudo rm -f $phastlight_executable_path/phastlight
-sudo ln -s $phastlight_dir/bin/phastlight $phastlight_executable_path/phastlight
-
 # installing composer 
 echo "Installing composer...\n"
 curl -sS https://getcomposer.org/installer | $phastlight_dir/bin/php -- --install-dir=$phastlight_dir/bin
@@ -94,6 +87,33 @@ export COMPOSER_HOME=$phastlight_dir
 $phastlight_dir/bin/composer.phar global require "phastlight/phastlight=$phastlight_version"
 # set back the composer home 
 COMPOSER_HOME=$OLD_COMPOSER_HOME
+
+# generate a run file 
+echo "Generating run file"
+cat > $phastlight_dir/bin/run.php <<EOF 
+<?php
+require_once "$phastlight_dir/vendor/autoload.php";
+\$target_file = \$argv[1];
+require_once \$target_file;
+EOF
+
+# generate phastlight executable  
+echo "Generating phastlight binary"
+
+cat > $phastlight_dir/bin/phastlight <<EOF 
+#!/bin/bash
+if [ -f \$1 ]
+then 
+    $phastlight_dir/bin/php -c $phastlight_dir/php.ini \$1
+else
+    $phastlight_dir/bin/php -c $phastlight_dir/php.ini $phastlight_dir/bin/run.php\$*
+fi 
+EOF
+
+sudo chmod u+x $phastlight_dir/bin/phastlight 
+sudo rm -f $phastlight_executable_path/phastlight
+sudo ln -s $phastlight_dir/bin/phastlight $phastlight_executable_path/phastlight
+
 
 if [ $($phastlight_executable_path/phastlight -m | grep uv | wc -l) -eq 1 ]; then
     echo "Installation completed, you can start phastlight with"
