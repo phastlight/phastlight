@@ -25,8 +25,8 @@ do
     esac
 done 
 
-phastlight_dir=$(echo eval $phastlight_dir)
-phastlight_executable_path=$(echo eval $phastlight_executable_path)
+phastlight_dir=$(eval echo $phastlight_dir)
+phastlight_executable_path=$(eval $phastlight_executable_path)
 
 sudo mkdir -p $phastlight_dir
 sudo mkdir -p $phastlight_executable_path 
