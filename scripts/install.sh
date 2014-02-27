@@ -4,6 +4,7 @@ echo "Starting phastlight installation..."
 phastlight_dir=/usr/local/phastlight 
 # the php version that is tied to phastlight 
 phpversion="5.5.9" 
+phastlight_version="v0.2.3"
 # the path of the phastlight executable
 phastlight_executable_path=/usr/local/bin
 
@@ -17,6 +18,10 @@ do
         --phpversion=*)
             comps=(${i//=/ })
             phpversion=${comps[1]}
+            ;;
+        --phastlight_version=*)
+            comps=(${i//=/ })
+            phastlight_version=${comps[1]}
             ;;
         --phastlight_executable_path=*)
             comps=(${i//=/ })
@@ -82,6 +87,13 @@ sudo ln -s $phastlight_dir/bin/phastlight $phastlight_executable_path/phastlight
 # installing composer 
 echo "Installing composer...\n"
 curl -sS https://getcomposer.org/installer | $phastlight_dir/bin/php -- --install-dir=$phastlight_dir/bin
+
+# tmperarily set composer home 
+OLD_COMPOSER_HOME=$COMPOSER_HOME
+export COMPOSER_HOME=$phastlight_dir
+$phastlight_dir/bin/composer.phar global require "phastlight/phastlight=$phastlight_version"
+# set back the composer home 
+COMPOSER_HOME=$OLD_COMPOSER_HOME
 
 if [ $($phastlight_executable_path/phastlight -m | grep uv | wc -l) -eq 1 ]; then
     echo "Installation completed, you can start phastlight with"
