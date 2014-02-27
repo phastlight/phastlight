@@ -104,9 +104,9 @@ cat > $phastlight_dir/bin/phastlight <<EOF
 #!/bin/bash
 if [ -f \$1 ]
 then 
-    $phastlight_dir/bin/php -c $phastlight_dir/php.ini \$1
+    $phastlight_dir/bin/php -c $phastlight_dir/php.ini $phastlight_dir/bin/run.php \$1
 else
-    $phastlight_dir/bin/php -c $phastlight_dir/php.ini $phastlight_dir/bin/run.php \$*
+    $phastlight_dir/bin/php -c $phastlight_dir/php.ini \$*
 fi 
 EOF
 
