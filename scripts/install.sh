@@ -106,7 +106,7 @@ if [ -f \$1 ]
 then 
     $phastlight_dir/bin/php -c $phastlight_dir/php.ini \$1
 else
-    $phastlight_dir/bin/php -c $phastlight_dir/php.ini $phastlight_dir/bin/run.php\$*
+    $phastlight_dir/bin/php -c $phastlight_dir/php.ini $phastlight_dir/bin/run.php \$*
 fi 
 EOF
 
