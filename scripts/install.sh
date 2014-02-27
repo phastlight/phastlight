@@ -32,11 +32,13 @@ sudo mkdir -p $phastlight_dir
 sudo mkdir -p $phastlight_executable_path 
 
 echo "Installing php..."
+CURDIR=$(pwd)
+cd $phastlight_dir
 # Download php src and enable sockets extension
-wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O $phastlight_dir/php-$phpversion.tar.gz
-tar xvf php-$phpversion.tar.gz
-cd $phastlight_dir/php-$phpversion
-sudo ./configure --enable-sockets --prefix=$phastlight_dir 
+wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O php-$phpversion.tar.gz 
+tar xvf php-$phpversion.tar.gz 
+cd php-$phpversion
+sudo ./configure --enable-sockets --with-openssl --enable-mbstring --prefix=$phastlight_dir 
 sudo make 
 sudo make install
 cd ..
@@ -86,4 +88,7 @@ if [ $($phastlight_executable_path/phastlight -m | grep uv | wc -l) -eq 1 ]; the
     echo "phastlight [Your sever file]"
 else
     echo "Fail installing uv.so extension to $phastlight_dir/bin/php"
-fi
+fi 
+
+#back to the previous cur path 
+cd $CURDIR
