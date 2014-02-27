@@ -4,7 +4,7 @@ echo "Starting phastlight installation..."
 phastlight_dir=/usr/local/phastlight 
 # the php version that is tied to phastlight 
 phpversion="5.5.9" 
-phastlight_version="v0.2.3"
+phastlight_version="v0.2.4"
 # the path of the phastlight executable
 phastlight_executable_path=/usr/local/bin
 
