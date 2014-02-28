@@ -45,6 +45,7 @@ CURDIR=$(pwd)
 cd $phastlight_dir 
 
 if [ -d $phastlight_dir/php-$phpversion ]
+then
     # Download php src and enable sockets extension
     wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O php-$phpversion.tar.gz 
     tar xvf php-$phpversion.tar.gz 
