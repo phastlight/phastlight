@@ -101,6 +101,13 @@ require_once "$phastlight_dir/vendor/autoload.php";
 require_once \$target_file;
 EOF
 
+# generate phastlightpm 
+echo "Generating phastlight package manager"
+cat > $phastlight_dir/bin/phastlightpm << EOF 
+#!/bin/bash 
+$phastlight_dir/bin/composer.phar global require "$1=$2"
+EOF
+
 # generate phastlight executable  
 echo "Generating phastlight binary"
 
@@ -123,6 +130,10 @@ EOF
 chmod u+x $phastlight_dir/bin/phastlight 
 rm -f $phastlight_executable_path/phastlight
 ln -s $phastlight_dir/bin/phastlight $phastlight_executable_path/phastlight
+
+chmod u+x $phastlight_dir/bin/phastlightpm
+rm -f $phastlight_executable_path/phastlightpm
+ln -s $phastlight_dir/bin/phastlightpm $phastlight_executable_path/phastlightpm
 
 if [ $($phastlight_executable_path/phastlight -m | grep uv | wc -l) -eq 1 ]; then
     echo "Installation completed, you can start phastlight with"
