@@ -42,15 +42,18 @@ mkdir -p $phastlight_executable_path
 
 echo "Installing php..."
 CURDIR=$(pwd)
-cd $phastlight_dir
-# Download php src and enable sockets extension
-wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O php-$phpversion.tar.gz 
-tar xvf php-$phpversion.tar.gz 
-cd php-$phpversion
-./configure --enable-sockets --with-openssl --enable-mbstring --prefix=$phastlight_dir 
-make 
-make install
-cd ..
+cd $phastlight_dir 
+
+if [ -d $phastlight_dir/php-$phpversion ]
+    # Download php src and enable sockets extension
+    wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O php-$phpversion.tar.gz 
+    tar xvf php-$phpversion.tar.gz 
+    cd php-$phpversion
+    ./configure --enable-sockets --with-openssl --enable-mbstring --prefix=$phastlight_dir 
+    make 
+    make install
+    cd ..
+fi
 
 # get the current $PATH 
 OLDPATH=$PATH 
@@ -110,7 +113,7 @@ OLD_COMPOSER_HOME=\$COMPOSER_HOME
 export COMPOSER_HOME=$phastlight_dir 
 if [ "\$1" = "install" ]
 then
-$phastlight_dir/bin/composer.phar global require "\$2=\$3"
+    $phastlight_dir/bin/composer.phar global require "\$2=\$3"
 fi
 # set back the composer home 
 COMPOSER_HOME=\$OLD_COMPOSER_HOME
