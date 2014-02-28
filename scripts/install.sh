@@ -107,10 +107,13 @@ cat > $phastlight_dir/bin/phastlightpm << EOF
 #!/bin/bash 
 OLD_COMPOSER_HOME=\$COMPOSER_HOME 
 # set new composer home 
-COMPOSER_HOME=$phastlight_dir
-$phastlight_dir/bin/composer.phar global require "\$1=\$2"
+export COMPOSER_HOME=$phastlight_dir 
+if [ "\$1" = "install" ]
+then
+$phastlight_dir/bin/composer.phar global require "\$2=\$3"
+fi
 # set back the composer home 
-COMPOSER_HOME=$OLD_COMPOSER_HOME
+COMPOSER_HOME=\$OLD_COMPOSER_HOME
 EOF
 
 # generate phastlight executable  
