@@ -78,7 +78,7 @@ Tested on:
 
 #### install with the installation script 
 ```
-curl -sS https://raw.github.com/phastlight/phastlight/master/scripts/install.sh | sudo sh
+curl -sS https://raw.github.com/phastlight/phastlight/master/scripts/install.sh | sh
 ```
 #### To run the server, do phastlight [server file full path]
 
