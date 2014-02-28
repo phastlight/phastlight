@@ -4,7 +4,9 @@ echo "Starting phastlight installation..."
 phastlight_dir=/usr/local/phastlight 
 # the php version that is tied to phastlight 
 phpversion="5.5.9" 
-phastlight_version="v0.2.6"
+
+# by default find out the lastest phastlight release
+phastlight_version=$(curl -s https://github.com/phastlight/phastlight/releases | grep tag | grep "tag-name" | sed -e "s/>/ /g" | sed -e "s/</ /g" | awk '{print $3}' | head -n 1)
 # the path of the phastlight executable
 phastlight_executable_path=/usr/local/bin
 
