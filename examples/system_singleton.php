@@ -1,5 +1,5 @@
 <?php 
-use \Phastlight\System;
+use \Phastlight\System as p;
 
-$console = System::getInstance()->import("console");
+$console = p::load("console");
 $console->log("from system singleton");

@@ -23,6 +23,14 @@ class System extends EventEmitter
         return static::$instance;
     }
 
+    /**
+     * load a module
+     */
+    public static function load($name) 
+    {
+        return static::getInstance()->import($name);
+    }
+
     public function __construct()
     {
 
