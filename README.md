@@ -101,9 +101,6 @@ Phastlight supports a flexible module system with export and import, the followi
 module that can print "hello world"
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 class MyModule extends \Phastlight\Module
 {
   public function hello($word)
@@ -122,9 +119,6 @@ $module->hello("world");
 Event Emitter is a core component in phastlight, we can use it to emit and handle an event
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $eventEmitter = new \Phastlight\EventEmitter();
 
 $eventEmitter->on("test", function(){
@@ -139,9 +133,6 @@ When error occured, phastlight will emit system.error event, and we can use this
 polish the error handling
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 $system->on("system.error", function($error){
   print $error->getFilePath()."\n";
@@ -158,9 +149,6 @@ When exception occurred, phastlight will emit system.exception event, and we can
 to further polish the exception handling
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 $system->on("system.exception", function($exception){
   print $exception->getMessage()."\n";
@@ -174,9 +162,6 @@ throw new Exception('Uncaught Exception');
 ### Simple HTTP server, benchmarked with PHP 5.5.9 and Node.js v0.10.25
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $console = $system->import("console");
@@ -236,9 +221,6 @@ Node.js
 In the script below, we import the timer module and make the timer run every 1 second, after the counter hits 3, we stop the timer.
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $timer = $system->import("timer");
@@ -258,9 +240,6 @@ $intervalId = $timer->setInterval(function($word) use (&$count, &$intervalId, $t
 Phastlight can do console logging like javascript
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $console = $system->import("console");
@@ -273,9 +252,6 @@ We can distribute some heavy tasks into every "tick" of the server and make it n
 In the script below, we do sum from 1 to 100 keeping track of the counter value, we distribute the sum operation into every "tick"
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $console = $system->import("console");
@@ -310,9 +286,6 @@ Now in the command line, run phastlight server/server.php, we should see:
 Phastlight can create child processes to execute a command.
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 $childProcess = $system->import("child_process");
 $childProcess->exec("ls -latr", function($error, $stdout, $stderr){
@@ -329,9 +302,6 @@ $childProcess->exec("ls -latr", function($error, $stdout, $stderr){
 The example belows show how to read the content of the current directory in the async fashion
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $fs = $system->import("fs");
@@ -344,9 +314,6 @@ $fs->readDir(".",function($result, $data){
 The example below will create a file named "test" and write the string "hello world" in it in async fashion
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 $fs = $system->import("fs");
 
@@ -361,9 +328,6 @@ $fs->open("test", "w", function($fd) use ($fs) {
 The example below shows how to log a message into weblog in async fashion when there is a http request comes in
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $console = $system->import("console");
@@ -389,9 +353,6 @@ $console->log('Server running at http://127.0.0.1:1337/');
 In the example below, we rename a file named "test" in the current directory to "test2"
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $fs = $system->import("fs");
@@ -408,9 +369,6 @@ $fs->rename("test","test2",function($result) use ($console){
 In the example below, we remove a filed named "test" in the current directory
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $fs = $system->import("fs");
@@ -425,10 +383,6 @@ $fs->unlink("test",function($result){
 In the example below, we will monitor the php script itself and see its information in async fashion
 ```php
 <?php
-
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 $fs = $system->import("fs");
 
@@ -443,9 +397,6 @@ $fs->lstat(__FILE__, function($result, $data){
 Below is an example to create a TCP server using the network module
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $net = $system->import("net");
@@ -467,9 +418,6 @@ When a tcp connection is created and starts writing to the server, we then can s
 from the server.
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $net = $system->import("net");
@@ -500,10 +448,6 @@ Phastlight has the os module to return some data related to the operating system
 /**
  * OS Information in phastlight
  */
-
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $os = $system->import("os");
@@ -521,9 +465,6 @@ Using process next tick technique, we can perform mult-tasking in one single eve
 In the script below, we perform a heavy task for suming 1 to 1 million, while also setting up a http server listening to port 1337
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $console = $system->import("console");
@@ -591,9 +532,6 @@ class ClosureRouter extends \Phalcon_Router_Regex
   }
 }
 
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $router = new \ClosureRouter();
 
 $router->addRoute('/news/:year/:month/:day', function($req, $res, $params){
@@ -632,9 +570,6 @@ The benchmark is not bad, ab -n 10000 -c 500 shows 3245.07 reqs/second in centos
 
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -660,8 +595,6 @@ Assuming DBSlayer is running at host 127.0.0.1 and port 9090, the example below 
 ```php 
 <?php
 //Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $net = $system->import("net");
@@ -693,9 +626,6 @@ For more details on the memcached tcp protocol, please click [here](http://memca
 
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $net = $system->import("net");
@@ -733,9 +663,6 @@ For more details on the redis tcp protocol, please click [here](http://redis.io/
 
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $net = $system->import("net");
@@ -763,9 +690,6 @@ The example below shows how to connect to gearman asynchronously over TCP
 For more details on the gearman tcp protocol, please click [here](http://gearman.org/protocol), we can now create some async gearman libraries just by following the protocol.
 
 ```php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 
 $net = $system->import("net");
