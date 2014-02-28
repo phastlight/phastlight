@@ -105,7 +105,7 @@ sudo cat > $phastlight_dir/bin/phastlight <<EOF
 
 if [ "\$#" -eq 0 ]
 then 
-    /usr/local/phastlight/bin/php -c /usr/local/phastlight/php.ini \$*
+    $phastlight_dir/bin/php -c /usr/local/phastlight/php.ini \$*
 fi
 
 if [ -f \$1 ]
