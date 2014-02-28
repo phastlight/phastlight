@@ -9,9 +9,19 @@ namespace Phastlight;
 class System extends EventEmitter
 {
 
+    private static $instance;
+
     private $eventLoop;
     private $moduleMap; //the modules map
     private $modules; //the module instances
+
+    public static function getInstance()
+    {
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
 
     public function __construct()
     {
