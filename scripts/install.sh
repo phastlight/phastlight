@@ -10,6 +10,8 @@ phastlight_executable_path=/usr/local/bin
 
 CURUSER=$(whoami)
 
+export PHP_AUTOCONF=$(which autoconf)
+
 for i in "$@"
 do 
     case $i in 
