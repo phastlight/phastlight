@@ -44,17 +44,14 @@ echo "Installing php..."
 CURDIR=$(pwd)
 cd $phastlight_dir 
 
-if [ -d $phastlight_dir/php-$phpversion ]
-then
-    # Download php src and enable sockets extension
-    wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O php-$phpversion.tar.gz 
-    tar xvf php-$phpversion.tar.gz 
-    cd php-$phpversion
-    ./configure --enable-sockets --with-openssl --enable-mbstring --prefix=$phastlight_dir 
-    make 
-    make install
-    cd ..
-fi
+# Download php src and enable sockets extension
+wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O php-$phpversion.tar.gz 
+tar xvf php-$phpversion.tar.gz 
+cd php-$phpversion
+./configure --enable-sockets --with-openssl --enable-mbstring --prefix=$phastlight_dir 
+make 
+make install
+cd ..
 
 # get the current $PATH 
 OLDPATH=$PATH 
