@@ -90,7 +90,7 @@ COMPOSER_HOME=$OLD_COMPOSER_HOME
 
 # generate a run file 
 echo "Generating run file"
-cat > $phastlight_dir/bin/run.php <<EOF 
+sudo cat > $phastlight_dir/bin/run.php <<EOF 
 <?php
 require_once "$phastlight_dir/vendor/autoload.php";
 \$target_file = \$argv[1];
@@ -100,8 +100,14 @@ EOF
 # generate phastlight executable  
 echo "Generating phastlight binary"
 
-cat > $phastlight_dir/bin/phastlight <<EOF 
-#!/bin/bash
+sudo cat > $phastlight_dir/bin/phastlight <<EOF 
+#!/bin/bash 
+
+if [ "\$#" -eq 0 ]
+then 
+    /usr/local/phastlight/bin/php -c /usr/local/phastlight/php.ini \$*
+fi
+
 if [ -f \$1 ]
 then 
     $phastlight_dir/bin/php -c $phastlight_dir/php.ini $phastlight_dir/bin/run.php \$1
@@ -111,13 +117,14 @@ fi
 EOF
 
 sudo chmod u+x $phastlight_dir/bin/phastlight 
+sudo chown $(whoami) $phastlight_dir/bin/phastlight 
 sudo rm -f $phastlight_executable_path/phastlight
 sudo ln -s $phastlight_dir/bin/phastlight $phastlight_executable_path/phastlight
 
 
 if [ $($phastlight_executable_path/phastlight -m | grep uv | wc -l) -eq 1 ]; then
     echo "Installation completed, you can start phastlight with"
-    echo "phastlight [Your sever file]"
+    echo "$phastlight_executable_path/phastlight [Your sever file]"
 else
     echo "Fail installing uv.so extension to $phastlight_dir/bin/php"
 fi 
