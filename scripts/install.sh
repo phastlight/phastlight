@@ -105,7 +105,7 @@ EOF
 echo "Generating phastlight package manager"
 cat > $phastlight_dir/bin/phastlightpm << EOF 
 #!/bin/bash 
-$phastlight_dir/bin/composer.phar global require "$1=$2"
+$phastlight_dir/bin/composer.phar global require "\$1=\$2"
 EOF
 
 # generate phastlight executable  
