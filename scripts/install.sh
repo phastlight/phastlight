@@ -8,6 +8,8 @@ phastlight_version="v0.2.4"
 # the path of the phastlight executable
 phastlight_executable_path=/usr/local/bin
 
+CURUSER=$(whoami)
+
 for i in "$@"
 do 
     case $i in 
@@ -119,8 +121,8 @@ EOF
 sudo chmod u+x $phastlight_dir/bin/phastlight 
 sudo rm -f $phastlight_executable_path/phastlight
 sudo ln -s $phastlight_dir/bin/phastlight $phastlight_executable_path/phastlight
-sudo chown $(whoami) $phastlight_dir/bin/phastlight 
-sudo chown $(whoami) $phastlight_executable_path/phastlight 
+sudo chown $CURUSER $phastlight_dir/bin/phastlight 
+sudo chown $CURUSER $phastlight_executable_path/phastlight 
 
 if [ $($phastlight_executable_path/phastlight -m | grep uv | wc -l) -eq 1 ]; then
     echo "Installation completed, you can start phastlight with"
