@@ -86,9 +86,6 @@ curl -sS https://raw.github.com/phastlight/phastlight/master/scripts/install.sh 
 Phastlight object allows dynamic method creation, in the example below, we create a hello method in the system object
 ```php
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
-require_once __DIR__.'/../vendor/autoload.php';
-
 $system = new \Phastlight\System();
 $system->method("hello", function($word){
   echo "Hello $word\n";
@@ -594,7 +591,6 @@ Assuming DBSlayer is running at host 127.0.0.1 and port 9090, the example below 
 
 ```php 
 <?php
-//Assuming this is server/server.php and the composer vendor directory is ../vendor
 $system = new \Phastlight\System();
 
 $net = $system->import("net");
