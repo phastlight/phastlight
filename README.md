@@ -91,7 +91,7 @@ rm -f phastlight_install.sh
 #### To run the server, do phastlight [server file full path]
 
 ### Dynamic method creation
-Phastlight object allows dynamic method creation, in the example below, we create a hello method in the system object
+Phastlight allows dynamic method creation, in the example below, we create a hello method in the system object
 ```php
 <?php
 $system = new \Phastlight\System();
