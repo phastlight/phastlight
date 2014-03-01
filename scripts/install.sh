@@ -50,7 +50,7 @@ cd $phastlight_dir
 wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O php-$phpversion.tar.gz 
 tar xvf php-$phpversion.tar.gz 
 cd php-$phpversion
-./configure --enable-sockets --with-openssl --enable-mbstring --prefix=$phastlight_dir 
+./configure --enable-sockets --with-openssl --enable-mbstring --enable-debug --enable-maintainer-zts --enable-pthreads --prefix=$phastlight_dir 
 make 
 make install
 cd ..
