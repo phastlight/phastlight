@@ -15,7 +15,7 @@ class Application
 
     public function run() 
     {
-        $this->timer->setInterval(array($this, "handleInterval"), 1000);
+        $this->intervalId = $this->timer->setInterval(array($this, "handleInterval"), 1000);
     }
 
     /**
@@ -24,6 +24,7 @@ class Application
     public function handleInterval()
     {
         print "ok";
+        $this->timer->clearInterval($this->intervalId);
     }
 }
 
