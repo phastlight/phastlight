@@ -10,6 +10,7 @@ class Application
     {
         $this->system = new \Phastlight\System();
         $this->timer = $this->system->import("timer");
+        $this->console = $this->system->import("console");
         $this->count = 0;
     }
 
@@ -23,7 +24,7 @@ class Application
      */
     public function handleInterval()
     {
-        print "ok";
+        $this->console->log("ok");
         $this->timer->clearInterval($this->intervalId);
     }
 }
