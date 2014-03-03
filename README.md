@@ -97,10 +97,11 @@ Phastlight allows dynamic method creation, in the example below, we create a hel
 <?php
 $system = new \Phastlight\System();
 $system->method("hello", function($word){
-  echo "Hello $word\n";
+  echo "Hello $word";
 });
 $system->hello("world");
 ```
+Save this file as server.php, then do: phastlight server.php, we should see the result "Hello world".
 
 ### Module creation
 Phastlight supports a flexible module system with export and import, the following example shows how to create a simple
