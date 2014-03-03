@@ -67,6 +67,7 @@ class System extends EventEmitter
             'fs' => $modulePrefix.'FileSystem\\Main',
             'net' => $modulePrefix.'NET\\Main',
             'child_process' => $modulePrefix.'ChildProcess\\Main',
+            'cluster' => $modulePrefix.'Cluster\\Main',
         );
 
         $this->modules = array();
