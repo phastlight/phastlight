@@ -81,6 +81,7 @@ Tested on:
 curl -sS https://raw.github.com/phastlight/phastlight/master/scripts/install.sh | sh
 ```
 This will install phastlight to /usr/local/phastlight directory, and the phastlight executable will be at /usr/local/bin/phastlight
+
 To install phastlight executable to a different directory, for example, the ~/bin directory, do:
 ```
 curl -sS https://raw.github.com/phastlight/phastlight/master/scripts/install.sh > phastlight_install.sh
