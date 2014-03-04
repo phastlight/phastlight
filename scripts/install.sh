@@ -85,7 +85,7 @@ echo $nl >> php.ini
 echo "extension=uv.so" >> php.ini
 
 # installing composer 
-echo "Installing composer...\n"
+echo "Installing composer..."
 curl -sS https://getcomposer.org/installer | $phastlight_dir/bin/php -- --install-dir=$phastlight_dir/bin
 
 # tmperarily set composer home 
