@@ -36,26 +36,12 @@ class Cluster extends \Phastlight\EventEmitter
         $worker = new Worker();
         $childProcess = $this->childProcess->fork();
         $pid = $childProcess->getPid();
-        if ($pid > 0) {
-            if (posix_getpid() != $this->curPid) {
-                echo "Successfully fork child process $pid\n";
-            } else {
-                echo "This is the master process with pid {$this->curPid}\n";
-            }
+        if ($pid == -1){
+            die("could not fork"); 
+        } else if ($pid > 0) {
+            echo "Successfully fork child process $pid\n";
             exit();
-        } else if ($pid == 0) {
-            if (posix_getppid() != $this->curPid) {
-                $this->isMaster = false;
-                $this->isWorker = true;
-                echo "this is child process ".posix_getpid().", and forked from parent process: ".posix_getppid()."\n";
-                // loop forever performing tasks
-                while (1) {
-
-                    // do something interesting here
-
-                }
-            }
-        }
+        } 
         return $worker; 
     }
 }
