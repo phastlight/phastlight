@@ -7,4 +7,6 @@ if ($cluster->isMaster()) {
     $cluster->fork();
     $cluster->fork();
     $cluster->fork();
+} else if ($cluster->isWorker()) {
+    echo "here";
 }

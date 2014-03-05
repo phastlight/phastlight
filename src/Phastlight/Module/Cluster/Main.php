@@ -15,6 +15,11 @@ class Main extends \Phastlight\Module
         return $this->cluster->isMaster();
     }
 
+    public function isWorker()
+    {
+        return $this->cluster->isWorker();
+    }
+
     public function fork()
     {
         return $this->cluster->fork();

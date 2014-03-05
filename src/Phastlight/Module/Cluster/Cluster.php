@@ -41,7 +41,10 @@ class Cluster extends \Phastlight\EventEmitter
         } else if ($pid > 0) {
             echo "Successfully fork child process $pid\n";
             exit();
-        } 
+        } else if ($pid == 0) {
+            $this->isMaster = false;
+            $this->isWorker = true;
+        }
         return $worker; 
     }
 }
