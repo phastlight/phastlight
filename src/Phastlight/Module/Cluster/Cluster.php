@@ -1,4 +1,4 @@
-<?php 
+<?php  
 namespace Phastlight\Module\Cluster;
 
 use Phastlight\System as system;
@@ -11,10 +11,8 @@ class Cluster extends \Phastlight\EventEmitter
 
     public function __construct()
     {
-        declare(ticks=1);
         $this->curPid = posix_getpid();
-        pcntl_signal(SIGTERM, array($this, "handleSignal"));
-        pcntl_signal(SIGHUP, array($this, "handleSignal"));
+        $this->handleSignals();
     }
 
     public function fork($workerClosure, $numOfWorkers) {
@@ -27,7 +25,7 @@ class Cluster extends \Phastlight\EventEmitter
                 } else if ($pid > 0) { //Successfully forked a worker process 
                     $process = new ChildProcess($pid);
                     $this->workers[$pid] = new Worker($process);
-                } else if ($pid == 0) { //we are now in the worker process
+                } else if ($pid == 0) { //we are now in the worker process 
                     $pid = posix_getpid();
                     $process = new ChildProcess($pid);
                     $worker = new Worker($process);
@@ -37,21 +35,30 @@ class Cluster extends \Phastlight\EventEmitter
         }
     }
 
-    private function handleSignal($signo)
+    private function handleSignals()
     {
-        switch ($signo) {
-        case SIGTERM:
-            // handle shutdown tasks 
-            $pid = posix_getpid();
-            echo "process $pid is killed\n";
-            exit();
-            break;
-        case SIGHUP:
-            // handle restart tasks 
-            echo "detected sigup\n";
-            break;
-        default:
-            // handle all other signals
+        $signalHandler = function($signo) {
+            switch ($signo) {
+            case SIGTERM:
+                // handle shutdown tasks 
+                $pid = posix_getpid();
+                echo "process $pid is killed\n";
+                exit();
+                break;
+            case SIGHUP:
+                // handle restart tasks 
+                echo "detected sigup\n";
+                exit();
+                break;
+            default:
+                // handle all other signals
+            }
+        }; 
+
+        $signals = array(SIGTERM, SIGHUP, SIGUSR1);
+        declare(ticks = 1);
+        foreach($signals as $signal) {
+            pcntl_signal($signal, $signalHandler);
         }
     }
 
