@@ -7,7 +7,7 @@ Phastlight is built on top of libuv, the same library used behind Node.js.
 
 [Install Phastlight](#installation)
 
-[Benchmark against Node.js](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
+[Benchmark against Node.js](#simple-http-server-benchmarked-with-php-559-and-nodejs-v01025)
 
 At this time, Phastlight is on its very early development phrases,it currently supports the following features:
 
@@ -19,7 +19,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
   + [Error Handling and system.error event](#error-handling)
   + [Exception Handling and system.exception event](#exception-handling)
 + HTTP
-  + [Async HTTP Server](#simple-http-server-benchmarked-with-php-546-and-nodejs-v088)
+  + [Async HTTP Server](#simple-http-server-benchmarked-with-php-559-and-nodejs-v01025)
   + PHP server variables simulation on HTTP Request
 
     Phastlight simulates the following PHP server variables on each HTTP Request:
