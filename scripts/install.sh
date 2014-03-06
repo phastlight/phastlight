@@ -99,7 +99,6 @@ COMPOSER_HOME=$OLD_COMPOSER_HOME
 echo "Generating run file"
 cat > $phastlight_dir/bin/run.php <<EOF 
 <?php 
-declare(ticks = 1);
 require_once "$phastlight_dir/vendor/autoload.php";
 \$target_file = \$argv[1];
 require_once \$target_file;
