@@ -21,7 +21,9 @@ class Cluster extends \Phastlight\EventEmitter
                 $childProcess = System::load("child_process")->fork();
                 $pid = $childProcess->getPid();
                 if ($pid == -1) {
-                    die("count not fork");
+                    $message = "Error forking child process from parent process {$this->curPid}";
+                    $ChildProcess->emit("error");
+                    die();
                 } else if ($pid > 0) { //Successfully forked a worker process 
                     $process = new ChildProcess($pid);
                     $this->workers[$pid] = new Worker($process);
@@ -29,6 +31,7 @@ class Cluster extends \Phastlight\EventEmitter
                     $pid = posix_getpid();
                     $process = new ChildProcess($pid);
                     $worker = new Worker($process);
+                    $this->workers[$pid] = $worker; //immediately record workers in the queue
                     call_user_func_array($workerClosure, array($worker));
                 }
             }
@@ -37,17 +40,21 @@ class Cluster extends \Phastlight\EventEmitter
 
     private function handleSignals()
     {
-        $signalHandler = function($signo) {
+        $self = $this;
+        $signalHandler = function($signo) use ($self) {
             switch ($signo) {
             case SIGTERM:
                 // handle shutdown tasks 
                 $pid = posix_getpid();
-                echo "process $pid is killed\n";
+                $worker = $self->getWorkerByPid($pid);
+                $worker->emit("exit", array($signo));
                 exit();
                 break;
             case SIGHUP:
                 // handle restart tasks 
-                echo "detected sigup\n";
+                $pid = posix_getpid();
+                $worker = $self->getWorkerByPid($pid);
+                $worker->emit("exit", $signo);
                 exit();
                 break;
             default:
@@ -62,7 +69,7 @@ class Cluster extends \Phastlight\EventEmitter
         }
     }
 
-    public function getProcessId()
+    public function getPId()
     {
         return $this->curPid;
     }
@@ -71,4 +78,10 @@ class Cluster extends \Phastlight\EventEmitter
     {
         return $this->workers;
     }
+
+    public function getWorkerByPid($pid) 
+    {
+        return $this->workers[$pid];
+    }
+
 }
