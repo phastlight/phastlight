@@ -42,29 +42,16 @@ class Cluster extends \Phastlight\EventEmitter
     {
         $self = $this;
         $signalHandler = function($signo) use ($self) {
-            switch ($signo) {
-            case SIGTERM:
-                // handle shutdown tasks 
-                $pid = posix_getpid();
-                $worker = $self->getWorkerByPid($pid);
-                $worker->emit("exit", $signo);
-                exit();
-                break;
-            case SIGHUP:
-                // handle restart tasks 
-                $pid = posix_getpid();
-                $worker = $self->getWorkerByPid($pid);
-                $worker->emit("exit", $signo);
-                exit();
-                break;
-            default:
-                // handle all other signals
-            }
+            // handle shutdown tasks 
+            $pid = posix_getpid();
+            $worker = $self->getWorkerByPid($pid);
+            $worker->emit("exit", $signo);
+            exit();
         }; 
 
-        $signals = array(SIGTERM, SIGHUP, SIGUSR1);
+        $signals = array("SIGTERM", "SIGHUP", "SIGUSR1", "SIGQUIT", "SIGINT");
         foreach($signals as $signal) {
-            pcntl_signal($signal, $signalHandler);
+            pcntl_signal(constant($signal), $signalHandler);
         }
     }
 

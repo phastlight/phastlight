@@ -15,7 +15,7 @@ class ChildProcess extends \Phastlight\EventEmitter
         return $this->pid;
     }
 
-    public function kill($signal = SIGHUP) 
+    public function kill($signal = "SIGHUP") 
     {
         posix_kill($this->pid, $signal);
     }
