@@ -56,6 +56,8 @@ At this time, Phastlight is on its very early development phrases,it currently s
 + Operating System
   + [Get CPU Information](#operating-system-information)
   + [Get Memory Information](#operating-system-information)
++ Cluster 
+  + [Worker forking](#working-forking)
 
 More features will be on the way, stay tuned...
 
@@ -691,18 +693,27 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 6379), function()
 });
 ```
 
-### Connect to gearman server asynchronously
-The example below shows how to connect to gearman asynchronously over TCP
-For more details on the gearman tcp protocol, please click [here](http://gearman.org/protocol), we can now create some async gearman libraries just by following the protocol.
+### Working Forking 
+Phastlight now has a simple cluster module to allow forking worker processes 
 
-```php
+In the example below, we fork 3 worker processes, and we detect when it is closed.
+```
+<?php  
 $system = new \Phastlight\System();
+$cluster = $system->import("cluster");
 
-$net = $system->import("net");
+$cluster->fork(function($worker) {
+    echo "This is worker ".$worker->getProcess()->getPid()."\n"; 
+    $worker->on("close", function($signal) use (&$worker) {
+        echo "Worker ".$worker->getProcess()->getPid()." is closed now with signal: $signal\n";
+    });
+    for(;;) {
+        $worker->kill();
+    }
+}, 3); //we fork 3 workers
 
-$client = $net->connect(array('host' => '127.0.0.1', 'port' => 4730));
-
-$client->on('connect',  function() use (&$client) {
-    print "connected to gearman server...\n";
-});
+$workers = $cluster->getAllWorkers();
+foreach($workers as $pid => $woker) {
+    print "forked worker with pid: ".$pid."\n";
+}
 ```
