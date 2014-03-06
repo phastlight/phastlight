@@ -32,8 +32,6 @@ class Cluster extends \Phastlight\EventEmitter
                     $this->workers[$pid] = $worker; //immediately record workers in the queue
                     call_user_func_array($workerClosure, array($worker));
                 }
-
-                pcntl_signal_dispatch();
             }
         }
     }
