@@ -15,6 +15,10 @@ class Cluster extends \Phastlight\EventEmitter
         $this->curPid = posix_getpid();
         pcntl_signal(SIGTERM, array($this, "signalHandler"));
         pcntl_signal(SIGHUP, array($this, "signalHandler"));
+        // detatch from the controlling terminal
+        if (posix_setsid() == -1) {
+            die("could not detach from terminal");
+        }
     }
 
     public function fork($workerClosure, $numOfWorkers) {
@@ -24,12 +28,10 @@ class Cluster extends \Phastlight\EventEmitter
                 $pid = $childProcess->getPid();
                 if ($pid == -1) {
                     die("count not fork");
-                } else if ($pid > 0) { //Successfully forked a worker process
-                    $pid = posix_getpid();
+                } else if ($pid > 0) { //Successfully forked a worker process 
                     $process = new ChildProcess($pid);
                     $this->workers[$pid] = new Worker($process);
-                    return;
-                } else if ($pid == 0) {
+                } else if ($pid == 0) { //we are now in the worker process
                     $pid = posix_getpid();
                     $process = new ChildProcess($pid);
                     $worker = new Worker($process);
