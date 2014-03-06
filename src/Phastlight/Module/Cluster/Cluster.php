@@ -12,7 +12,6 @@ class Cluster extends \Phastlight\EventEmitter
     public function __construct()
     {
         $this->curPid = posix_getpid();
-        $this->handleSignals();
     }
 
     public function fork($workerClosure, $numOfWorkers) {
@@ -21,9 +20,8 @@ class Cluster extends \Phastlight\EventEmitter
                 $childProcess = System::load("child_process")->fork();
                 $pid = $childProcess->getPid();
                 if ($pid == -1) {
-                    $message = "Error forking child process from parent process {$this->curPid}";
-                    $childProcess->emit("error");
-                    die();
+                    $childProcess->emit("error", $pid);
+                    exit();
                 } else if ($pid > 0) { //Successfully forked a worker process 
                     $process = new ChildProcess($pid);
                     $this->workers[$pid] = new Worker($process);
@@ -34,26 +32,10 @@ class Cluster extends \Phastlight\EventEmitter
                     $this->workers[$pid] = $worker; //immediately record workers in the queue
                     call_user_func_array($workerClosure, array($worker));
                 }
+
+                pcntl_signal_dispatch();
             }
         }
-    }
-
-    private function handleSignals()
-    {
-        $self = $this;
-        $signalHandler = function($signo) use ($self) {
-            // handle shutdown tasks 
-            $pid = posix_getpid();
-            $worker = $self->getWorkerByPid($pid);
-            $worker->emit("exit", $signo);
-            exit();
-        }; 
-
-        $signals = array("SIGTERM", "SIGHUP", "SIGUSR1", "SIGQUIT", "SIGINT");
-        foreach($signals as $signal) {
-            pcntl_signal(constant($signal), $signalHandler);
-        }
-        pcntl_signal_dispatch(); # for php 5.3, use this to dispatch signals instead of declare ticks
     }
 
     public function getPId()

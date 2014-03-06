@@ -17,6 +17,7 @@ class Worker extends \Phastlight\EventEmitter
     
     public function kill($signal = "SIGHUP")
     {
+        $this->emit("close", $signal);
         $this->process->kill($signal);
     }
 }

@@ -4,8 +4,8 @@ $cluster = $system->import("cluster");
 
 $cluster->fork(function($worker) {
     echo "This is worker ".$worker->getProcess()->getPid()."\n"; 
-    $worker->on("exit", function($signalNumber) use (&$worker) {
-        echo "Worker ".$worker->getProcess()->getPid()." is existed now with signal number: $signalNumber\n";
+    $worker->on("close", function($signal) use (&$worker) {
+        echo "Worker ".$worker->getProcess()->getPid()." is closed now with signal: $signal\n";
     });
     for(;;) {
         $worker->kill();
