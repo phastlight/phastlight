@@ -22,7 +22,7 @@ class Cluster extends \Phastlight\EventEmitter
                 $pid = $childProcess->getPid();
                 if ($pid == -1) {
                     $message = "Error forking child process from parent process {$this->curPid}";
-                    $ChildProcess->emit("error");
+                    $childProcess->emit("error");
                     die();
                 } else if ($pid > 0) { //Successfully forked a worker process 
                     $process = new ChildProcess($pid);
