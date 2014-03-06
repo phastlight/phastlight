@@ -47,7 +47,7 @@ class Cluster extends \Phastlight\EventEmitter
                 // handle shutdown tasks 
                 $pid = posix_getpid();
                 $worker = $self->getWorkerByPid($pid);
-                $worker->emit("exit", array($signo));
+                $worker->emit("exit", $signo);
                 exit();
                 break;
             case SIGHUP:
@@ -63,7 +63,6 @@ class Cluster extends \Phastlight\EventEmitter
         }; 
 
         $signals = array(SIGTERM, SIGHUP, SIGUSR1);
-        declare(ticks = 1);
         foreach($signals as $signal) {
             pcntl_signal($signal, $signalHandler);
         }

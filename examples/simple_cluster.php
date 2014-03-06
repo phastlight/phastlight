@@ -1,4 +1,4 @@
-<?php 
+<?php  
 $system = new \Phastlight\System();
 $cluster = $system->import("cluster");
 
