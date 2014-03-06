@@ -1,4 +1,6 @@
-<?php
+<?php 
+declare(ticks=1);
+
 namespace Phastlight\Module\Cluster;
 
 class Main extends \Phastlight\Module 
@@ -10,18 +12,13 @@ class Main extends \Phastlight\Module
         $this->cluster = new \Phastlight\Module\Cluster\Cluster();
     }
 
-    public function isMaster()
+    public function fork($workerClosure, $numOfWorkers = 1)
     {
-        return $this->cluster->isMaster();
+        $this->cluster->fork($workerClosure, $numOfWorkers);
     }
 
-    public function isWorker()
+    public function getAllWorkers()
     {
-        return $this->cluster->isWorker();
-    }
-
-    public function fork()
-    {
-        return $this->cluster->fork();
+        return $this->cluster->getAllWorkers();
     }
 }

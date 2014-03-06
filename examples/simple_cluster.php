@@ -1,12 +1,7 @@
 <?php 
-use Phastlight\system as p;
-$cluster = p::load("cluster");
+$system = new \Phastlight\System();
+$cluster = $system->import("cluster");
 
-if ($cluster->isMaster()) {
-    $cluster->fork();
-    $cluster->fork();
-    $cluster->fork();
-    $cluster->fork();
-} else if ($cluster->isWorker()) {
-    echo "here";
-}
+$cluster->fork(function($worker) {
+   echo "This is worker ".$worker->getProcess()->getPid()."\n"; 
+}, 5);

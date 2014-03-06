@@ -3,12 +3,19 @@ namespace Phastlight\Module\Cluster;
 
 class Worker extends \Phastlight\EventEmitter 
 {
-    public function send($message, $sendHandle = "")
-    {
+    private $process; #the child process object that this worker binds to 
 
+    public function __construct($process)
+    {
+        $this->process = $process;
     }
 
-    public function kill($signal = "SIGTERM")
+    public function getProcess()
+    {
+        return $this->process;
+    }
+    
+    public function kill()
     {
 
     }

@@ -2,49 +2,68 @@
 namespace Phastlight\Module\Cluster;
 
 use Phastlight\System as system;
+use Phastlight\Module\ChildProcess\ChildProcess as ChildProcess;
 
 class Cluster extends \Phastlight\EventEmitter 
 {
-    private $curPid; //store the current process id
-    private $childProcess; 
-    private $isMaster;
-    private $isWorker; 
+    private $curPid; //the current process id
+    private $workers; //all workers in this cluster
 
     public function __construct()
     {
+        declare(ticks=1);
         $this->curPid = posix_getpid();
-        $this->childProcess = system::load("child_process");
-        $this->isMaster = true;
-        $this->isWorker = false;
+        pcntl_signal(SIGTERM, array($this, "signalHandler"));
+        pcntl_signal(SIGHUP, array($this, "signalHandler"));
     }
 
-    public function isMaster()
-    {
-        return $this->isMaster;
-    }
-
-    public function isWorker()
-    {
-       return $this->isWorker; 
-    }
-
-    /**
-     * fork a worker
-     */
-    public function fork()
-    {
-        $worker = new Worker();
-        $childProcess = $this->childProcess->fork();
-        $pid = $childProcess->getPid();
-        if ($pid == -1){
-            die("could not fork"); 
-        } else if ($pid > 0) {
-            echo "Successfully fork child process $pid\n";
-            exit();
-        } else if ($pid == 0) {
-            $this->isMaster = false;
-            $this->isWorker = true;
+    public function fork($workerClosure, $numOfWorkers) {
+        if (is_callable($workerClosure)) {
+            for ($i = 1; $i <= $numOfWorkers; $i++) {
+                $childProcess = System::load("child_process")->fork();
+                $pid = $childProcess->getPid();
+                if ($pid == -1) {
+                    die("count not fork");
+                } else if ($pid > 0) { //Successfully forked a worker process
+                    $pid = posix_getpid();
+                    $process = new ChildProcess($pid);
+                    $this->workers[$pid] = new Worker($process);
+                    return;
+                } else if ($pid == 0) {
+                    $pid = posix_getpid();
+                    $process = new ChildProcess($pid);
+                    $worker = new Worker($process);
+                    call_user_func_array($workerClosure, array($worker));
+                }
+            }
         }
-        return $worker; 
+    }
+
+    private function handleSignal($signo)
+    {
+        switch ($signo) {
+        case SIGTERM:
+            // handle shutdown tasks 
+            $pid = posix_getpid();
+            echo "process $pid is killed\n";
+            exit();
+            break;
+        case SIGHUP:
+            // handle restart tasks 
+            echo "detected sigup\n";
+            break;
+        default:
+            // handle all other signals
+        }
+    }
+
+    public function getProcessId()
+    {
+        return $this->curPid;
+    }
+
+    public function getAllWorkers() 
+    {
+        return $this->workers;
     }
 }
