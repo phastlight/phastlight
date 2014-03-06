@@ -52,8 +52,8 @@ class Cluster extends \Phastlight\EventEmitter
         $signals = array("SIGTERM", "SIGHUP", "SIGUSR1", "SIGQUIT", "SIGINT");
         foreach($signals as $signal) {
             pcntl_signal(constant($signal), $signalHandler);
-            pcntl_signal_dispatch(); # for php 5.3, use this the dispatch signals instead of declare ticks
         }
+        pcntl_signal_dispatch(); # for php 5.3, use this to dispatch signals instead of declare ticks
     }
 
     public function getPId()
