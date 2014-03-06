@@ -697,7 +697,7 @@ $client = $net->connect(array('host' => '127.0.0.1', 'port' => 6379), function()
 Phastlight now has a simple cluster module to allow forking worker processes 
 
 In the example below, we fork 3 worker processes, and we detect when it is closed.
-```
+```php
 <?php  
 $system = new \Phastlight\System();
 $cluster = $system->import("cluster");
