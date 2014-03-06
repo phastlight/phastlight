@@ -13,12 +13,8 @@ class Cluster extends \Phastlight\EventEmitter
     {
         declare(ticks=1);
         $this->curPid = posix_getpid();
-        pcntl_signal(SIGTERM, array($this, "signalHandler"));
-        pcntl_signal(SIGHUP, array($this, "signalHandler"));
-        // detatch from the controlling terminal
-        if (posix_setsid() == -1) {
-            die("could not detach from terminal");
-        }
+        pcntl_signal(SIGTERM, array($this, "handleSignal"));
+        pcntl_signal(SIGHUP, array($this, "handleSignal"));
     }
 
     public function fork($workerClosure, $numOfWorkers) {
