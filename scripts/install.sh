@@ -51,6 +51,7 @@ wget http://us2.php.net/get/php-$phpversion.tar.gz/from/this/mirror -O php-$phpv
 tar xvf php-$phpversion.tar.gz 
 cd php-$phpversion
 ./configure --enable-sockets --with-openssl --enable-mbstring --enable-pcntl --enable-maintainer-zts --prefix=$phastlight_dir 
+make clean
 make 
 make install
 cd ..
