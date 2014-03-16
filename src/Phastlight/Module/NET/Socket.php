@@ -35,7 +35,7 @@ class Socket extends \Phastlight\EventEmitter
                     if ($nread > 0) { //we got some data from server
                         $self->emit('data', $buffer);
                     }
-                    
+
                     if ($self->shouldClose) {
                         uv_close($stream); 
                         $self->emit('close');
