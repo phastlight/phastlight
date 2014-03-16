@@ -142,7 +142,7 @@ class Main extends \Phastlight\Module
             $dataCount = count($data); 
 
             if ($dataCount > 0) { 
-                $status_code = $response->getStatusCode();
+                $statusCode = $response->getStatusCode();
                 $statusMessage = $response->getReasonPhrase();
                 $headers = $response->getHeaders();
                 $header = "";
@@ -152,7 +152,7 @@ class Main extends \Phastlight\Module
                     }
                 } 
 
-                $message = "HTTP/1.1 $status_code $statusMessage\r\n$header\r\n".implode("", $data)."\r\n";
+                $message = "HTTP/1.1 $statusCode $statusMessage\r\n$header\r\n".implode("", $data)."\r\n";
                 uv_write($request->getSocket(), $message);
                 $response->flushData();
                 $pair[0] = $request;
