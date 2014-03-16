@@ -11,11 +11,11 @@ class RequestQueue
     }
 
     /**
-     * push request from the right
+     * push element from the right
      */
-    public function rpush($request) 
+    public function rpush($element) 
     {
-        $this->queue[] = $request;
+        $this->queue[] = $element;
     }
 
     /**

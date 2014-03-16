@@ -147,7 +147,7 @@ class Main extends \Phastlight\Module
             if ($response->shouldClose()) {
                 uv_close($request->getSocket());
             } else { //this request should not end, add it back 
-                $this->requestQueue->rpush($request);
+                $this->requestQueue->rpush($pair);
             }
         }
         $this->process->nextTick(array($this, "processRequestQueue"));

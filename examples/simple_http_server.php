@@ -10,6 +10,6 @@ $port = 1337;
 
 $http->createServer(function($req, $res) use ($port) {
     $res->writeHead(200, array('Content-Type' => 'text/plain'));
-    $res->end($req->getUrl());
+    $res->write($req->getUrl());
 })->listen($port, $ip);
 $console->log("Server is running on port $port");
