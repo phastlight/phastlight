@@ -37,6 +37,7 @@ class Main extends \Phastlight\Module
         $system = $this->getSystem();
 
         $this->server = uv_tcp_init();
+        uv_tcp_nodelay($this->server, true);
 
         $requestListener = $self->getRequestListener();
 
@@ -112,6 +113,11 @@ class Main extends \Phastlight\Module
         return $this->requestQueue;
     }
 
+    public function getEventEmitter()
+    {
+        return $this->eventEmitter;
+    }
+
     public function processRequestQueue()
     {
         $pair = $this->requestQueue->lpop();
@@ -140,10 +146,19 @@ class Main extends \Phastlight\Module
             } 
             $data = $response->getData();
 
-            $message = "HTTP/1.1 $status_code $statusMessage\r\n$header\r\n$data";
+            //$message = "HTTP/1.1 $status_code $statusMessage\r\n$header\r\n$data";
+            $dataCount = count($data); 
 
-            //should this request end? 
-            uv_write($request->getSocket(), $message);
+            if ($dataCount > 0) {
+                $message = implode("", $data)."\r\n";
+                uv_write($request->getSocket(), $message);
+                $request->removeAllListeners("request");
+                $response->flushData();
+                $pair[0] = $request;
+                $pair[1] = $response;
+            }
+
+            //should this response end? 
             if ($response->shouldClose()) {
                 uv_close($request->getSocket());
             } else { //this request should not end, add it back 

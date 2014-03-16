@@ -3,7 +3,7 @@ namespace Phastlight\Module\HTTP;
 
 class ServerResponse extends \Phastlight\EventEmitter
 {
-    private $data = "";
+    private $data = array();
     private $statusCode = 200;
     private $reasonPhrase = "OK";
     private $headers = array();
@@ -27,12 +27,14 @@ class ServerResponse extends \Phastlight\EventEmitter
 
     public function write($data, $encoding = "UTF-8")
     {
-        $this->data = $data;
+        $this->data[] = $data;
     }
 
     public function end($data, $encoding = "UTF-8")
     {
-        $this->write($data."\r\n");
+        if (strlen($data) > 0) {
+            $this->write($data);
+        }
         $this->shouldClose = true;
     }
 
@@ -59,5 +61,10 @@ class ServerResponse extends \Phastlight\EventEmitter
     public function getData()
     {
         return $this->data; 
+    }
+
+    public function flushData()
+    {
+        $this->data = array();
     }
 } 
