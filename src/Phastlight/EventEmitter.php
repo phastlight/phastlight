@@ -42,7 +42,7 @@ class EventEmitter extends \Phastlight\Object
     public function getListeners($event)
     {
         $listeners = array();
-        if (!isset($this->eventListeners[$event])) {
+        if (isset($this->eventListeners[$event])) {
             $listeners = $this->eventListeners[$event];
         }
         return $listeners;

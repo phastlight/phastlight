@@ -127,32 +127,33 @@ class Main extends \Phastlight\Module
             $request = $pair[0];
             $response = $pair[1];
 
-            $socket = $request->getSocket();
-            $request->emit("socket", $socket);
+            $requestListeners = $request->getListeners("request");
+            if (count($requestListeners) > 0) {
+                $socket = $request->getSocket();
+                $request->emit("socket", $socket);
+                $buffer = $request->getBuffer();
+                $this->generateServerVariables($buffer, $socket);
+                $request->emit("request", $request, $response);
+                $request->removeAllListeners("request");
+            }
             
-            $buffer = $request->getBuffer();
-            $this->generateServerVariables($buffer, $socket);
-
-            $request->emit("request", $request, $response);
-
-            $status_code = $response->getStatusCode();
-            $statusMessage = $response->getReasonPhrase();
-            $headers = $response->getHeaders();
-            $header = "";
-            if (count($headers) > 0) {
-                foreach ($headers as $key => $val) {
-                    $header .= $key.": ".$val."\r\n";
-                }
-            } 
             $data = $response->getData();
 
-            //$message = "HTTP/1.1 $status_code $statusMessage\r\n$header\r\n$data";
             $dataCount = count($data); 
 
-            if ($dataCount > 0) {
-                $message = implode("", $data)."\r\n";
+            if ($dataCount > 0) { 
+                $status_code = $response->getStatusCode();
+                $statusMessage = $response->getReasonPhrase();
+                $headers = $response->getHeaders();
+                $header = "";
+                if (count($headers) > 0) {
+                    foreach ($headers as $key => $val) {
+                        $header .= $key.": ".$val."\r\n";
+                    }
+                } 
+
+                $message = "HTTP/1.1 $status_code $statusMessage\r\n$header\r\n".implode("", $data)."\r\n";
                 uv_write($request->getSocket(), $message);
-                $request->removeAllListeners("request");
                 $response->flushData();
                 $pair[0] = $request;
                 $pair[1] = $response;
