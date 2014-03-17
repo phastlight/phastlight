@@ -16,6 +16,7 @@ class EventEmitter extends \Phastlight\Object
             $this->eventListeners[$event] = array();
         }  
         $this->eventListeners[$event][] = $listener;
+        return $this;
     } 
 
 
@@ -25,11 +26,13 @@ class EventEmitter extends \Phastlight\Object
     public function on($event, $listener)
     {
         $this->addListener($event, $listener);
+        return $this;
     }
 
     public function removeListener($event, $listener)
     {
         // TO DO...
+        return $this;
     }
 
     public function removeAllListeners($event)
@@ -37,6 +40,7 @@ class EventEmitter extends \Phastlight\Object
         if (!isset($this->eventListeners[$even])) {
             unset($this->eventListeners[$event]);
         }
+        return $this;
     }
 
     public function getListeners($event)
@@ -58,5 +62,6 @@ class EventEmitter extends \Phastlight\Object
                 call_user_func_array($this->eventListeners[$event][$k], $args);
             }
         }
+        return $this;
     }
-} 
+ } 
