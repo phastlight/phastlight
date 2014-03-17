@@ -32,6 +32,7 @@ At this time, Phastlight is on its very early development phrases,it currently s
     $_SERVER['REQUEST_URI']
     $_SERVER['PATH_INFO'], 
     $_SERVER['HTTP_USER_AGENT']
+    $_SERVER['RAW_HTTP_HEADER']
     ```
 + Timer
   + [Async Timer](#server-side-timer) similar to http://nodejs.org/api/timers.html
