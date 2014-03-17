@@ -3,9 +3,11 @@ namespace Phastlight\Module\HTTP;
 
 class Main extends \Phastlight\Module
 {
+    private $server;
+
     public function createServer($requestListener)
     {
-        $server = new Server($requestListener);
-        return $server;
+        $this->server = new Server($requestListener);
+        return $this->server;
     } 
 }
