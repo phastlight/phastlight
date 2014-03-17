@@ -3,55 +3,32 @@ namespace Phastlight\Module\Process;
 
 class Main extends \Phastlight\Module
 {
-    private $tickCallbacks = array();
-    private $tick = 0;
+    private $tickCallbacks;
+    private $idle;
+    private $loop;
 
-    public function addTickCallback($callback)
+    public function __construct()
     {
-        $this->tick ++;
-        $this->tickCallbacks[$this->tick] = $callback;
-    }
-
-    public function getTickCallback($tick)
-    {
-        return $this->tickCallbacks[$tick]; 
-    }
-
-    public function removeTickCallback($tick)
-    {
-        unset($this->tickCallbacks[$tick]); 
-    }
-
-    public function getTickCallbacks()
-    {
-        return $this->tickCallbacks; 
+        $this->tickCallbacks = array();
     }
 
     public function nextTick($callback)
     {
-        $loop = $this->getSystem()->getEventLoop();
+        $this->tickCallbacks[] = $callback;
+        if ($this->loop === NULL) {
+            $this->loop = $this->getSystem()->getEventLoop();
+            $this->idle = uv_idle_init($this->loop);
+            uv_idle_start($this->idle,array($this, "idleCallback"));
+        }
+    }
 
-        $plugin = $this;
-        $plugin->addTickCallback($callback);
-
-        $tick = $this->tick;
-
-        if ($tick == 1) {
-            $f = function($r, $status) use ($plugin, &$tick) {
-                $callback = $plugin->getTickCallback($tick);
-                if (is_callable($callback)) {
-                    call_user_func($callback);
-                    $plugin->removeTickCallback($tick);
-                    $tick ++;
-                    uv_async_send($r);
-                }
-                else{
-                    uv_close($r); 
-                }
-            };
-
-            $r = uv_async_init($loop, $f);
-            uv_async_send($r);
+    public function idleCallback()
+    {
+        $tickCallback = array_shift($this->tickCallbacks);
+        if (is_callable($tickCallback)) {
+            $tickCallback();
+        } else {
+            uv_idle_stop($this->idle);
         }
     }
 }

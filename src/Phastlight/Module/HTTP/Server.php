@@ -15,14 +15,21 @@ class Server extends \Phastlight\EventEmitter
     private $process;
     private $server;
     private $numOfConnections;
+    private $config;
+    private $autoGenPHPServerVar;
 
-    public function __construct($requestListener = "")
+    public function __construct($requestListener = "", $config = array())
     {
+        $this->config = $config;
         $this->requestListener = $requestListener;
         $this->requestQueue = new RequestQueue();
         $this->httpParser = new HTTPParser();
         $this->system = \Phastlight\System::getInstance();
         $this->numOfConnections = 0;
+        $this->autoGenPHPServerVar = true;
+        if (isset($config["autoGenPHPServerVar"]) && $config["autoGenPHPServerVar"] === FALSE) {
+           $this->autoGenPHPServerVar = false; 
+        }
     }
 
     public function listen($port, $host = '127.0.0.1', $backlog = 100)
@@ -72,9 +79,11 @@ class Server extends \Phastlight\EventEmitter
                 if ($entry[2] == 0){
                     $this->numOfConnections ++;
                     $entry[2] = 1; //now the request handler is called 
-                    $buffer = $request->getBuffer();
-                    $socket = $request->getSocket();
-                    $this->generateServerVariables($buffer, $socket);
+                    if ($this->autoGenPHPServerVar) {
+                        $buffer = $request->getBuffer();
+                        $socket = $request->getSocket();
+                        $this->generateServerVariables($buffer, $socket);
+                    }
                     call_user_func_array($this->requestListener, array($request, $response));
                 }
 

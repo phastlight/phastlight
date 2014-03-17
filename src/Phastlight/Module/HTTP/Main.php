@@ -5,9 +5,9 @@ class Main extends \Phastlight\Module
 {
     private $server;
 
-    public function createServer($requestListener)
+    public function createServer($requestListener, $config = array())
     {
-        $this->server = new Server($requestListener);
+        $this->server = new Server($requestListener, $config);
         return $this->server;
     } 
 }
