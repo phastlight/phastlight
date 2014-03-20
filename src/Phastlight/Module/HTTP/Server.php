@@ -18,14 +18,19 @@ class Server extends \Phastlight\EventEmitter
     private $config;
     private $autoGenPHPServerVar;
 
-    public function __construct($requestListener = "", $config = array())
+    public function __construct($requestListener = "")
     {
-        $this->config = $config;
         $this->requestListener = $requestListener;
         $this->requestQueue = new RequestQueue();
         $this->httpParser = new HTTPParser();
         $this->system = \Phastlight\System::getInstance();
+        $this->process = $this->system->import("process");
         $this->numOfConnections = 0;
+    }
+
+    public function config($config) 
+    {
+        $this->config = $config;
         $this->autoGenPHPServerVar = true;
         if (isset($config["autoGenPHPServerVar"]) && $config["autoGenPHPServerVar"] === FALSE) {
            $this->autoGenPHPServerVar = false; 
@@ -40,7 +45,6 @@ class Server extends \Phastlight\EventEmitter
         uv_tcp_nodelay($this->server, true);
         uv_tcp_bind($this->server, uv_ip4_addr($host, $port));
         uv_listen($this->server, $backlog, array($this, "onListenCallback"));
-        $this->process = $this->system->import("process");
         $this->process->nextTick(array($this, "processRequestQueue"));
     }
 
